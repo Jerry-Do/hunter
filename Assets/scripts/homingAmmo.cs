@@ -7,7 +7,7 @@ public class homingAmmo : MonoBehaviour
 {
     public float speed = 0.5f;
     private GameObject player;
-    public playerControl playerControl;
+    private playerControl playerControl;
     private int damage = 1;
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class homingAmmo : MonoBehaviour
             Destroy(gameObject);
             playerControl.minusHealth(damage);
         }
-        else if(collision.gameObject.CompareTag("Obsticle"))
+        if(collision.gameObject.CompareTag("Obsticle"))
         {
             Destroy(gameObject);
         }

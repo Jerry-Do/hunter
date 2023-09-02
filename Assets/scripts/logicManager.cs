@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+//using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class logicManager : MonoBehaviour
 {
@@ -40,13 +40,13 @@ public class logicManager : MonoBehaviour
 
         //time -= Time.deltaTime;
         timer.text = "Time: " + ((int)time).ToString();
-        playerhealth.text = "Health: " + player.health.ToString();
-        ammo.text = "Ammo: " + player.ammo.ToString() + "/" + player.maxNumAmmo.ToString();
-        reloadTime.text  = "Reload Time : " + player.reloadTimer.ToString();
+        playerhealth.text = "Health: " + player.ReturnHealth().ToString();
+        ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
+        reloadTime.text  = "Reload Time : " + player.ReturnReloadTime().ToString();
         score.text = "Score: " + player.score;
         //houseHealh.text = "House Health : " + house.health.ToString();
-        money.text = "Money: " + player.money.ToString();
-        if(player.health <= 0)
+        money.text = "Money: " + player.ReturnMoney().ToString();
+        if(player.ReturnHealth() <= 0)
         {
             GameOver();
         }
@@ -65,11 +65,11 @@ public class logicManager : MonoBehaviour
         gameOver.SetActive(true);
 
     }
-    public void upgradeMobs()
-    {
-        spawnerL.upgradeMob();
-        spawnerR.upgradeMob();
-    }
+    //public void upgradeMobs()
+    //{
+    //    spawnerL.upgradeMob();
+    //    spawnerR.upgradeMob();
+    //}
     public void restartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

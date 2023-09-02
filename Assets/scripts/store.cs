@@ -21,45 +21,5 @@ public class store : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
         spearScript = spear.GetComponent<spearSpawn>();
     }
-     void Update()
-    {
-        costHealth.text = "Cost: " + cost.ToString();
-        costDamage.text = "Cost: " + cost.ToString();
-        costAmmo.text = "Cost: " + cost.ToString();
-    }
-    public void increaseMaxHealth()
-    {
-        if (player.money == cost)
-        {
-            player.health++;
-            returnNormal();
-        }
-    }
-   
-   public void inceraseAmmoCapacity()
-    {
-        if (player.money == cost)
-        {
-            player.maxNumAmmo++;
-            returnNormal();
-        }
-    }
-
-   public void inceraseDamage()
-   {
-        if (player.money == cost)
-        {
-            spearScript.damage++;
-            returnNormal();
-        }
-   }
-   
-   public void returnNormal()
-   {
-        //logic.upgradeMobs(); 
-        storeUI.SetActive(false);
-        Time.timeScale = 1.0f;
-        logic.time = logic.orginalTime;
-
-    }
+ 
 }

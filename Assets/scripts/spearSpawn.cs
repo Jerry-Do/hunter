@@ -39,7 +39,13 @@ public class spearSpawn : MonoBehaviour
         if(collision.gameObject.CompareTag("enemy"))
         {
             Destroy(gameObject);
-            GameObject.FindGameObjectWithTag("enemy").GetComponent<enemyScript>().minusHealth(damage);
+            string name = collision.gameObject.name.Substring(0, collision.gameObject.name.Length - 7);
+            enemy enemyObject = collision.gameObject.GetComponent(name) as enemy;
+            enemyObject.minusHealth(damage);
+        }
+        if (collision.gameObject.CompareTag("Obsticle"))
+        {
+            Destroy(gameObject);
         }
     }
 }

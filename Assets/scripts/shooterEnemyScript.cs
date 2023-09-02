@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class shooterEnemyScript : MonoBehaviour
+public class shooterEnemyScript : enemy
 {
     // Start is called before the first frame update
     private float timer = 0;
@@ -24,7 +24,7 @@ public class shooterEnemyScript : MonoBehaviour
     void Start()
     {
 
-        hitSound = GetComponent<AudioSource>();
+//hitSound = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
         myTransform = transform;
@@ -42,7 +42,7 @@ public class shooterEnemyScript : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            playerControl.increaseMoney(rewardMoney);
+            //playerControl.increaseMoney(rewardMoney);
             playerControl.addScore(score);
         }
         if (myTransform.position != lastPosition)
@@ -71,9 +71,9 @@ public class shooterEnemyScript : MonoBehaviour
 
 
     }
-    public void minusHealth(int damage)
+    public override void minusHealth(int damage)
     {
-        hitSound.Play();
+        //hitSound.Play();
         health -= damage;
     }
     private void OnCollisionEnter2D(Collision2D collision)

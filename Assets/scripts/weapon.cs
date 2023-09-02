@@ -16,4 +16,6 @@ public abstract class weapon: MonoBehaviour
     public abstract float returnSpeed();
     public abstract float returnTimer();
     public abstract int returnMaxNumAmmo();
+
+
 }

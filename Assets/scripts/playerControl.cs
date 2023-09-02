@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
 
@@ -20,20 +21,23 @@ public class playerControl : MonoBehaviour
     private InputAction move;
     private InputAction shoot;
     public Transform shooter;
+    public GameObject reloading;
+    private SpriteRenderer gunSprite;
+    public GameObject gun;
     public int score;
     public string weaponName;
     private float leftBoundry = 0.03f;
     private float rightBoundry = 4.765f;
     private float upperBoundry = 3.325f;
     private float lowerBoundry = 0.044f;
-    public int health = 10;
-    public int ammo = 0;
-    public int maxNumAmmo = 0;
-    public float reloadTimer = 0;
+    private int health = 10;
+    private int ammo = 0;
+    private int maxNumAmmo = 0;
+    private float reloadTimer = 0;
+    private float speed = 2;
+    private float timer = 0;
+    private int money = 0;
     private bool shootFlag = true;
-    public float speed = 0;
-    public float timer = 0;
-    public int money = 0;
     Vector3 moveDirection;
     private void Awake()
     {
@@ -55,8 +59,8 @@ public class playerControl : MonoBehaviour
     }
     void Start()
     {
-        
-        
+
+        gunSprite = gun.GetComponent<SpriteRenderer>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -67,7 +71,9 @@ public class playerControl : MonoBehaviour
         
         if(ammo == 0 && weaponName != "")
         {
+            reloading.SetActive(true);
             StartCoroutine(ReloadTime());
+            
         }
         if(shootFlag == false)
         {
@@ -94,6 +100,7 @@ public class playerControl : MonoBehaviour
         {
             transform.position = new Vector2(transform.position.x, lowerBoundry);
         }
+
     }
     private void FixedUpdate()
     {
@@ -127,6 +134,7 @@ public class playerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("weapon"))
         {
             weapon = collision.gameObject.GetComponent(collision.gameObject.name) as weapon;
+            gunSprite.sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             ammo = weapon.returnMaxNumAmmo();
             weaponName = weapon.returnName();
             shootingFunction = weapon.shooting;
@@ -146,10 +154,36 @@ public class playerControl : MonoBehaviour
     {
         yield return new WaitForSeconds(reloadTimer);
         ammo = maxNumAmmo;
+        reloading.SetActive(false);
     }
     IEnumerator cooldown()
     {
         yield return new WaitForSeconds(timer);
         shootFlag = true;
+    }
+
+    public int ReturnMoney()
+    {
+        return money;
+    }
+
+    public int ReturnMaxAmmo()
+    {
+        return maxNumAmmo;
+    }
+
+    public int ReturnHealth()
+    {
+        return health;
+    }
+
+    public int ReturnCurrentAmmo()
+    {
+        return ammo;
+    }
+
+    public float ReturnReloadTime()
+    {
+        return reloadTimer;
     }
 }

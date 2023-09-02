@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class enemyScript : MonoBehaviour
+public class enemyScript : enemy
 {
     // Start is called before the first frame update
+   
+    private AudioSource hitSound;
+    public Rigidbody2D rb;
+    private GameObject player;
+    public GameObject money;
     private int score = 1;
     public int health = 10;
     public int enemyDamage = 1;
-    private AudioSource hitSound;
-    public Rigidbody2D rb;
-
-    private GameObject player;
-    public int rewardMoney = 3;
     public float speed = 1.0f;
-    public playerControl playerControl;
+    private playerControl playerControl;
     public bool change = false;
     void Start()
     {
@@ -32,12 +32,12 @@ public class enemyScript : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            playerControl.increaseMoney(rewardMoney); 
+            Instantiate(money, transform.position, transform.rotation);
             playerControl.addScore(score);
         }
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
     }
-    public void minusHealth(int damage)
+    public override void minusHealth(int damage)
     {
         hitSound.Play();
         health-= damage;

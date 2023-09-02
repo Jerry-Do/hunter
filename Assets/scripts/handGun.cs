@@ -17,12 +17,15 @@ public class handGun : weapon
     private playerControl playerControl;
     public GameObject ammo;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-        playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
-    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
+        }
+        
+    }
     // Update is called once per frame
     public override void shooting()
     {

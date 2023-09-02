@@ -126,12 +126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca370f2885709b4685f5926dbcdae5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 4572621137608143296}
+  money: {fileID: 29805307164737379, guid: fd0c156da7d5b584ea8bd4cf8527814d, type: 3}
   health: 10
   enemyDamage: 1
-  rb: {fileID: 4572621137608143296}
-  rewardMoney: 3
   speed: 1
-  playerControl: {fileID: 0}
   change: 0
 --- !u!50 &4572621137608143296
 Rigidbody2D:
