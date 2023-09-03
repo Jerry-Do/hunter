@@ -5,9 +5,11 @@ using UnityEngine;
 public class rotateSprite : MonoBehaviour
 {
     // Start is called before the first frame update
+    private playerControl player;
+    public Animator animator;
     void Start()
     {
-        
+        player = gameObject.GetComponentInParent<playerControl>();
     }
 
     // Update is called once per frame
@@ -22,5 +24,11 @@ public class rotateSprite : MonoBehaviour
         {
             transform.eulerAngles = Vector3.forward * 0;
         }
+        
     }
+    public void SetSpeed(float speed)
+    {
+        animator.SetFloat("speed", speed);
+    }
+
 }

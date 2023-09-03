@@ -24,6 +24,7 @@ public class playerControl : MonoBehaviour
     public GameObject reloading;
     private SpriteRenderer gunSprite;
     public GameObject gun;
+    private rotateSprite sprite;
     public int score;
     public string weaponName;
     private float leftBoundry = 0.03f;
@@ -59,7 +60,7 @@ public class playerControl : MonoBehaviour
     }
     void Start()
     {
-
+        sprite = gameObject.GetComponentInChildren<rotateSprite>();
         gunSprite = gun.GetComponent<SpriteRenderer>();
         sound = GetComponent<AudioSource>();
     }
@@ -105,7 +106,10 @@ public class playerControl : MonoBehaviour
     private void FixedUpdate()
     {
         moveDirection = move.ReadValue<Vector2>();
+        float horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
         transform.position += moveDirection * speed * Time.fixedDeltaTime;
+        sprite.SetSpeed(Mathf.Abs(horizontalMove));
+        
     }
     private void Fire(InputAction.CallbackContext context)
     {
@@ -185,5 +189,10 @@ public class playerControl : MonoBehaviour
     public float ReturnReloadTime()
     {
         return reloadTimer;
+    }
+
+    public float ReturnSpeed()
+    {
+        return speed;
     }
 }
