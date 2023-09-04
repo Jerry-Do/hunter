@@ -9,9 +9,9 @@ public class handGun : weapon
     {
         weaponName = "Hand Gun";
         reloadTimer = 1.5f;
-        speed = 2.2f;
-        timer = 0.5f;
+        rateOfFire = 1f;
         maxNumAmmo = 10;
+        damage = 4;
     }
 
     private playerControl playerControl;
@@ -29,6 +29,7 @@ public class handGun : weapon
     // Update is called once per frame
     public override void shooting()
     {
+        ammo.GetComponent<spearSpawn>().damage = damage;
         Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
         
     }
@@ -43,14 +44,10 @@ public class handGun : weapon
         return reloadTimer;
     }
 
-    public override float returnSpeed()
-    {
-        return speed;
-    }
 
-    public override float returnTimer()
+    public override float returnRateOfFire()
     {
-        return timer;
+        return rateOfFire;
     }
 
     public override int returnMaxNumAmmo()

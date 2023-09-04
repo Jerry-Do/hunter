@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6697307251545519265}
   m_Layer: 0
   m_Name: homingAmmo
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  playerControl: {fileID: 0}
 --- !u!61 &-6697307251545519265
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,21 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shotGun : weapon
+public class machineGun : weapon
 {
-    public shotGun()
+    public machineGun()
     {
-        weaponName = "Shot Gun";
-        reloadTimer = 3f;
-        rateOfFire = 1.0f;
-        maxNumAmmo = 5;
-        damage = 3;
+        weaponName = "Machine Gun";
+        reloadTimer = 4f;
+        rateOfFire = 0.1f;
+        maxNumAmmo = 30;
+        damage = 1;
     }
 
     private playerControl playerControl;
     public GameObject ammo;
     // Start is called before the first frame update
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -24,14 +26,12 @@ public class shotGun : weapon
         }
 
     }
-
     // Update is called once per frame
     public override void shooting()
     {
         ammo.GetComponent<spearSpawn>().damage = damage;
         Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
-        Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
-        Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
+
     }
 
     public override string returnName()

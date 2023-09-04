@@ -5,7 +5,7 @@ using UnityEngine;
 public class spearSpawn : MonoBehaviour
 {
     public float speed = 5.0f;
-    public int damage = 10;
+    public int damage = 0;
     private GameObject player;
     private Vector3 mousePos;
     private Camera mainCam;
@@ -46,6 +46,11 @@ public class spearSpawn : MonoBehaviour
         if (collision.gameObject.CompareTag("Obsticle"))
         {
             Destroy(gameObject);
+        }
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
         }
     }
 }

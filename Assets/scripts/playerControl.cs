@@ -9,11 +9,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
-
+using UnityEngine.SceneManagement;
 public class playerControl : MonoBehaviour
 {
     // Start is called before the first frame update
-    
+    private playerControl instance;
     private weapon weapon;
     private Action shootingFunction;
     private AudioSource sound;
@@ -36,14 +36,20 @@ public class playerControl : MonoBehaviour
     private int maxNumAmmo = 0;
     private float reloadTimer = 0;
     private float speed = 2;
-    private float timer = 0;
+    private float rateOfFire = 0;
     private int money = 0;
     private bool shootFlag = true;
     Vector3 moveDirection;
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(instance);
+            return;
+        }
         DefaultInputActions = new DefaultInputActions();
-   
+        instance = this;
+        DontDestroyOnLoad(instance);
     }
     private void OnEnable()
     {
@@ -67,9 +73,7 @@ public class playerControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        float rotateY = transform.rotation.y;
-        
+    {        
         if(ammo == 0 && weaponName != "")
         {
             reloading.SetActive(true);
@@ -81,34 +85,34 @@ public class playerControl : MonoBehaviour
             StartCoroutine(cooldown());
             
         }
-        //if(health == 0)
+        if(health == 0)
+        {
+            sprite.SetDeath();
+        }
+        ////if (transform.position.x < leftBoundry)
+        ////{
+        ////    transform.position = new Vector2(leftBoundry, transform.position.y);
+        ////}
+        //if (transform.position.x > rightBoundry)
         //{
-        //    Destroy(gameObject);
+        //    transform.position = new Vector2(rightBoundry, transform.position.y);
         //}
-        if (transform.position.x < leftBoundry)
-        {
-            transform.position = new Vector2(leftBoundry, transform.position.y);
-        }
-        if (transform.position.x > rightBoundry)
-        {
-            transform.position = new Vector2(rightBoundry, transform.position.y);
-        }
-        if (transform.position.y > upperBoundry)
-        {
-            transform.position = new Vector2(transform.position.x, upperBoundry);
-        }
-        if (transform.position.y < lowerBoundry)
-        {
-            transform.position = new Vector2(transform.position.x, lowerBoundry);
-        }
-
+        //if (transform.position.y > upperBoundry)
+        //{
+        //    transform.position = new Vector2(transform.position.x, upperBoundry);
+        //}
+        //if (transform.position.y < lowerBoundry)
+        //{
+        //    transform.position = new Vector2(transform.position.x, lowerBoundry);
+        //}
     }
     private void FixedUpdate()
     {
         moveDirection = move.ReadValue<Vector2>();
-        float horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
+ 
         transform.position += moveDirection * speed * Time.fixedDeltaTime;
-        sprite.SetSpeed(Mathf.Abs(horizontalMove));
+        
+        sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));
         
     }
     private void Fire(InputAction.CallbackContext context)
@@ -119,7 +123,7 @@ public class playerControl : MonoBehaviour
             shootingFunction();
             shootFlag = false;
             ammo--;
-            timer = 0.5f;
+            rateOfFire = weapon.returnRateOfFire();
         }
     }
 
@@ -143,13 +147,12 @@ public class playerControl : MonoBehaviour
             weaponName = weapon.returnName();
             shootingFunction = weapon.shooting;
             maxNumAmmo = weapon.returnMaxNumAmmo();
-            speed = weapon.returnSpeed();
-            timer = weapon.returnTimer();
             reloadTimer = weapon.returnReloadTimer();
             Destroy(collision.gameObject);    
         }
     }
 
+    
     public void addScore(int amount)
     {
         score += amount;
@@ -162,7 +165,7 @@ public class playerControl : MonoBehaviour
     }
     IEnumerator cooldown()
     {
-        yield return new WaitForSeconds(timer);
+        yield return new WaitForSeconds(rateOfFire);
         shootFlag = true;
     }
 

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  damage: 10
+  damage: 1
   spear: {fileID: 1095219610385823441}
   test: {x: 0, y: 0}
 --- !u!50 &1095219610385823441

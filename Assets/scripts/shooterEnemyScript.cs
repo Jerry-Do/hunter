@@ -42,7 +42,7 @@ public class shooterEnemyScript : enemy
         if (health <= 0)
         {
             Destroy(gameObject);
-            //playerControl.increaseMoney(rewardMoney);
+            
             playerControl.addScore(score);
         }
         if (myTransform.position != lastPosition)

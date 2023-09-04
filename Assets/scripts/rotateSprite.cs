@@ -31,4 +31,8 @@ public class rotateSprite : MonoBehaviour
         animator.SetFloat("speed", speed);
     }
 
+    public void SetDeath()
+    {
+        animator.SetBool("deathFlag", true);
+    }
 }
