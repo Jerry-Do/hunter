@@ -24,7 +24,7 @@ public class shooterEnemyScript : enemy
     void Start()
     {
 
-//hitSound = GetComponent<AudioSource>();
+        //hitSound = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
         myTransform = transform;

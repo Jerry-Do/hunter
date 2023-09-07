@@ -10,6 +10,7 @@ public class goToShop : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            
             SceneManager.LoadScene("store");
         }
     }

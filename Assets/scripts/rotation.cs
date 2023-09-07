@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class rotation : MonoBehaviour
 {
     private Camera mainCam;
     private Vector3 mousePos;
+    private rotation instance;
     // Start is called before the first frame update
     void Start()
     {
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+       
         
     }
-
     // Update is called once per frame
     void Update()
     {
+
+        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
         Vector3 rotation = mousePos - transform.position;

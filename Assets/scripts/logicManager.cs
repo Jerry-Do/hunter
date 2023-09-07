@@ -11,21 +11,29 @@ public class logicManager : MonoBehaviour
     //public Text health;
 
     public GameObject gameOver;
-    public GameObject store;
     public Text ammo;
     public Text score;
-    public Text reloadTime;
-    public Text houseHealh;
+    public Text reloadIndicator;
     public Text playerhealth;
     public Text money;
     public Text weaponName;
-    //public House house;
     public playerControl player;
     public Text timer;
     private spawner spawnerL;
     private spawner spawnerR;
     public float time = 31;
     public float orginalTime;
+    private logicManager instance;
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(instance);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(instance);
+    }
     void Start()
     {
         orginalTime = time;
@@ -37,12 +45,18 @@ public class logicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(GameObject.FindGameObjectsWithTag("UI").Length == 2)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("UI")[1]);
+        }
+        if (GameObject.FindGameObjectsWithTag("logic").Length == 2)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("logic")[1]);
+        }
         //time -= Time.deltaTime;
         timer.text = "Time: " + ((int)time).ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
-        reloadTime.text  = "Reload Time : " + player.ReturnReloadTime().ToString();
         score.text = "Score: " + player.score;
         //houseHealh.text = "House Health : " + house.health.ToString();
         money.text = "Money: " + player.ReturnMoney().ToString();
@@ -50,13 +64,16 @@ public class logicManager : MonoBehaviour
         {
             GameOver();
         }
-        if(time <= 0)
+        if(player.ReturnCurrentAmmo() == 0)
         {
-            Time.timeScale = 0;
-            store.SetActive(true);
+            reloadIndicator.text = "Reloading...";
         }
-        
+        else
+        {
+            reloadIndicator.text = "";
+        }
     }
+   
     void GameOver()
     {
         player.enabled = false;
@@ -74,4 +91,6 @@ public class logicManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    
 }

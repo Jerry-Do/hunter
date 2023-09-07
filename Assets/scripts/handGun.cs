@@ -16,6 +16,7 @@ public class handGun : weapon
 
     private playerControl playerControl;
     public GameObject ammo;
+    public handGun instance;
     // Start is called before the first frame update
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -23,6 +24,7 @@ public class handGun : weapon
         if (collision.gameObject.CompareTag("Player"))
         {
             playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
+       
         }
         
     }

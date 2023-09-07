@@ -21,21 +21,18 @@ public class playerControl : MonoBehaviour
     private InputAction move;
     private InputAction shoot;
     public Transform shooter;
-    public GameObject reloading;
+    public logicManager logic;
     private SpriteRenderer gunSprite;
     public GameObject gun;
     private rotateSprite sprite;
+
     public int score;
-    public string weaponName;
-    private float leftBoundry = 0.03f;
-    private float rightBoundry = 4.765f;
-    private float upperBoundry = 3.325f;
-    private float lowerBoundry = 0.044f;
+    private string weaponName;
     private int health = 10;
-    private int ammo = 0;
+    private int ammo = -1;
     private int maxNumAmmo = 0;
     private float reloadTimer = 0;
-    private float speed = 2;
+    private float speed = 7;
     private float rateOfFire = 0;
     private int money = 0;
     private bool shootFlag = true;
@@ -67,7 +64,7 @@ public class playerControl : MonoBehaviour
     void Start()
     {
         sprite = gameObject.GetComponentInChildren<rotateSprite>();
-        gunSprite = gun.GetComponent<SpriteRenderer>();
+        logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicManager>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -76,9 +73,9 @@ public class playerControl : MonoBehaviour
     {        
         if(ammo == 0 && weaponName != "")
         {
-            reloading.SetActive(true);
-            StartCoroutine(ReloadTime());
             
+            StartCoroutine(ReloadTime());
+           
         }
         if(shootFlag == false)
         {
@@ -89,22 +86,6 @@ public class playerControl : MonoBehaviour
         {
             sprite.SetDeath();
         }
-        ////if (transform.position.x < leftBoundry)
-        ////{
-        ////    transform.position = new Vector2(leftBoundry, transform.position.y);
-        ////}
-        //if (transform.position.x > rightBoundry)
-        //{
-        //    transform.position = new Vector2(rightBoundry, transform.position.y);
-        //}
-        //if (transform.position.y > upperBoundry)
-        //{
-        //    transform.position = new Vector2(transform.position.x, upperBoundry);
-        //}
-        //if (transform.position.y < lowerBoundry)
-        //{
-        //    transform.position = new Vector2(transform.position.x, lowerBoundry);
-        //}
     }
     private void FixedUpdate()
     {
@@ -141,6 +122,7 @@ public class playerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("weapon"))
         {
+            gunSprite = gun.GetComponent<SpriteRenderer>();
             weapon = collision.gameObject.GetComponent(collision.gameObject.name) as weapon;
             gunSprite.sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             ammo = weapon.returnMaxNumAmmo();
@@ -150,18 +132,21 @@ public class playerControl : MonoBehaviour
             reloadTimer = weapon.returnReloadTimer();
             Destroy(collision.gameObject);    
         }
+        
     }
 
     
+
     public void addScore(int amount)
     {
         score += amount;
     }
     IEnumerator ReloadTime()
     {
+
         yield return new WaitForSeconds(reloadTimer);
         ammo = maxNumAmmo;
-        reloading.SetActive(false);
+        
     }
     IEnumerator cooldown()
     {
@@ -198,4 +183,6 @@ public class playerControl : MonoBehaviour
     {
         return speed;
     }
+
+ 
 }

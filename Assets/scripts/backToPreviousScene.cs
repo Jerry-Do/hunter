@@ -10,6 +10,7 @@ public class backToPreviousScene : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Destroy(GameObject.FindGameObjectWithTag("MainCamera"));
             SceneManager.LoadScene("SampleScene");
         }
     }
