@@ -6,12 +6,15 @@ using UnityEngine.SceneManagement;
 public class backToPreviousScene : MonoBehaviour
 {
     // Start is called before the first frame update
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") )
         {
-            Destroy(GameObject.FindGameObjectWithTag("MainCamera"));
+            
             SceneManager.LoadScene("SampleScene");
+           
         }
     }
 }

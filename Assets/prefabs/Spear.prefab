@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 282212139760422052}
   - component: {fileID: 1095219610385823441}
   - component: {fileID: 7051980234428063520}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Spear
   m_TagString: ammo
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3066501494295576802}
   m_LocalRotation: {x: -0.38268295, y: 0, z: 0, w: 0.9238798}
   m_LocalPosition: {x: -3.8877, y: -8.2976, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef87420f9be8c94d9bbb5cf85e0ee1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  damage: 1
+  speed: 25
+  damage: 0
   spear: {fileID: 1095219610385823441}
   test: {x: 0, y: 0}
 --- !u!50 &1095219610385823441

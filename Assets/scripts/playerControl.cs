@@ -20,8 +20,9 @@ public class playerControl : MonoBehaviour
     public DefaultInputActions DefaultInputActions;
     private InputAction move;
     private InputAction shoot;
+    [SerializeField] private InputActionReference interact;
     public Transform shooter;
-    public logicManager logic;
+    private logicManager logic;
     private SpriteRenderer gunSprite;
     public GameObject gun;
     private rotateSprite sprite;
@@ -55,6 +56,7 @@ public class playerControl : MonoBehaviour
         shoot = DefaultInputActions.Player.Fire;
         shoot.Enable();
         shoot.performed += Fire;
+
     }
     private void OnDisable()
     {
@@ -135,7 +137,14 @@ public class playerControl : MonoBehaviour
         
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("door"))
+        {
+            logic.LoadScene(collision.gameObject.name);
+        }
+    }
+
 
     public void addScore(int amount)
     {

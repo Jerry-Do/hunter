@@ -12,11 +12,15 @@ TagManager:
   - weapon
   - enemy
   - obsticle
+  - ammo
+  - EnemyBullet
+  - door
+  - landing
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - enemy
   - Water
   - UI
   - 

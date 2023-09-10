@@ -4,7 +4,7 @@ using UnityEngine;
 //TODO: make the spear go in the direction where the character is facing
 public class spearSpawn : MonoBehaviour
 {
-    public float speed = 5.0f;
+    public float speed = 12.0f;
     public int damage = 0;
     private GameObject player;
     private Vector3 mousePos;
@@ -29,7 +29,7 @@ public class spearSpawn : MonoBehaviour
     void Update()
     {
         float dist = Vector3.Distance(player.transform.position, transform.position);
-        if(dist > 5.0f)
+        if(dist > 75.0f)
         {
             Destroy(gameObject);
         }
@@ -39,11 +39,10 @@ public class spearSpawn : MonoBehaviour
         if(collision.gameObject.CompareTag("enemy"))
         {
             Destroy(gameObject);
-            string name = collision.gameObject.name.Substring(0, collision.gameObject.name.Length - 7);
-            enemy enemyObject = collision.gameObject.GetComponent(name) as enemy;
+            enemy enemyObject = collision.gameObject.GetComponent<enemy>();
             enemyObject.minusHealth(damage);
         }
-        if (collision.gameObject.CompareTag("Obsticle"))
+        if (collision.gameObject.CompareTag("obsticle"))
         {
             Destroy(gameObject);
         }

@@ -23,6 +23,7 @@ public class keepCamera : MonoBehaviour
 
     private void Start()
     {
+
         player = GameObject.FindGameObjectWithTag("Player");
         vCamera.Follow = player.transform;
     }

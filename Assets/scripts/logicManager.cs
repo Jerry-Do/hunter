@@ -45,14 +45,7 @@ public class logicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameObject.FindGameObjectsWithTag("UI").Length == 2)
-        {
-            Destroy(GameObject.FindGameObjectsWithTag("UI")[1]);
-        }
-        if (GameObject.FindGameObjectsWithTag("logic").Length == 2)
-        {
-            Destroy(GameObject.FindGameObjectsWithTag("logic")[1]);
-        }
+        CheckFOrDuplicate();
         //time -= Time.deltaTime;
         timer.text = "Time: " + ((int)time).ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
@@ -74,6 +67,21 @@ public class logicManager : MonoBehaviour
         }
     }
    
+    void CheckFOrDuplicate()
+    {
+        if (GameObject.FindGameObjectsWithTag("UI").Length == 2)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("UI")[1]);
+        }
+        if (GameObject.FindGameObjectsWithTag("logic").Length == 2)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("logic")[1]);
+        }
+        if (GameObject.FindGameObjectsWithTag("MainCamera").Length == 2)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("MainCamera")[1]);
+        }
+    }
     void GameOver()
     {
         player.enabled = false;
@@ -92,5 +100,8 @@ public class logicManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    
+    public void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
 }
