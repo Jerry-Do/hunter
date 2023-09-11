@@ -7,12 +7,28 @@ using UnityEngine;
 public class zombieTrigger : MonoBehaviour
 {
     public GameObject[] zombie;
+    public GameObject shotGun;
+    private bool flag = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        for(int i = 0; i < zombie.Length; i++)
+        if (SceneTriggerManager.instance.CemeteryTrigger == false)
         {
-            zombie[i].SetActive(true);
+            for (int i = 0; i < zombie.Length; i++)
+            {
+                zombie[i].SetActive(true);
+            }
+            flag = true;
         }
-        Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if(GameObject.FindGameObjectsWithTag("enemy").Length == 0 && flag == true)
+        {
+            shotGun.SetActive(true);
+            Destroy(gameObject);
+            SceneTriggerManager.instance.CemeteryTrigger = true;
+        }
+        
     }
 }

@@ -26,6 +26,7 @@ public class playerControl : MonoBehaviour
     private SpriteRenderer gunSprite;
     public GameObject gun;
     private rotateSprite sprite;
+    [SerializeField] private Rigidbody2D rb;
 
     public int score;
     private string weaponName;
@@ -95,6 +96,8 @@ public class playerControl : MonoBehaviour
  
         transform.position += moveDirection * speed * Time.fixedDeltaTime;
         
+        rb.MovePosition(transform.position);
+
         sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));
         
     }
@@ -106,7 +109,7 @@ public class playerControl : MonoBehaviour
             shootingFunction();
             shootFlag = false;
             ammo--;
-            rateOfFire = weapon.returnRateOfFire();
+            
         }
     }
 
@@ -125,7 +128,7 @@ public class playerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("weapon"))
         {
             gunSprite = gun.GetComponent<SpriteRenderer>();
-            weapon = collision.gameObject.GetComponent(collision.gameObject.name) as weapon;
+            weapon = collision.gameObject.GetComponent<weapon>();
             gunSprite.sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             ammo = weapon.returnMaxNumAmmo();
             weaponName = weapon.returnName();
@@ -133,6 +136,10 @@ public class playerControl : MonoBehaviour
             maxNumAmmo = weapon.returnMaxNumAmmo();
             reloadTimer = weapon.returnReloadTimer();
             Destroy(collision.gameObject);    
+        }
+        if(collision.gameObject.CompareTag("obsticle"))
+        {
+            Debug.Log("Collided");
         }
         
     }
@@ -159,7 +166,7 @@ public class playerControl : MonoBehaviour
     }
     IEnumerator cooldown()
     {
-        yield return new WaitForSeconds(rateOfFire);
+        yield return new WaitForSeconds(weapon.returnRateOfFire());
         shootFlag = true;
     }
 

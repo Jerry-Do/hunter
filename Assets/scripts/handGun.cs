@@ -9,7 +9,7 @@ public class handGun : weapon
     {
         weaponName = "Hand Gun";
         reloadTimer = 1.5f;
-        rateOfFire = 1f;
+        rateOfFire = 2f;
         maxNumAmmo = 10;
         damage = 4;
     }
@@ -24,7 +24,7 @@ public class handGun : weapon
         if (collision.gameObject.CompareTag("Player"))
         {
             playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
-       
+            
         }
         
     }

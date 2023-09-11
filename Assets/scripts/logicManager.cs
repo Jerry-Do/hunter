@@ -38,8 +38,6 @@ public class logicManager : MonoBehaviour
     {
         orginalTime = time;
         player =  GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
-        spawnerL = GameObject.FindGameObjectWithTag("spawnerL").GetComponent<spawner>();
-        spawnerR = GameObject.FindGameObjectWithTag("spawnerR").GetComponent<spawner>();
     }
 
     // Update is called once per frame

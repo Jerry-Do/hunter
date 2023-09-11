@@ -16,6 +16,7 @@ TagManager:
   - EnemyBullet
   - door
   - landing
+  - SceneManager
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - enemy
   - Water
   - UI
-  - 
-  - 
+  - ammo
+  - player
   - 
   - 
   - 

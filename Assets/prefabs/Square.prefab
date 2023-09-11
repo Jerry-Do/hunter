@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3284562769097656861}
   - component: {fileID: 3284562769097656862}
   - component: {fileID: 3284562769097656863}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rotatepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159ea5ed10fc88148a02c7c974feed90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 3284562769097656863}
 --- !u!212 &3284562769097656863
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -110,7 +111,7 @@ GameObject:
   - component: {fileID: 3284562769485986663}
   - component: {fileID: 3284562769485986662}
   - component: {fileID: 3284562769485986648}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3284562769671385718}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullettransformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,9 +263,9 @@ GameObject:
   - component: {fileID: 3284562770142554762}
   - component: {fileID: 3284562770142554761}
   - component: {fileID: 3284562770142554765}
-  - component: {fileID: 3284562770142554766}
   - component: {fileID: -5362841968555197190}
-  m_Layer: 0
+  - component: {fileID: -4720296652207591808}
+  m_Layer: 7
   m_Name: Square
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -352,9 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6575d0b0137b61244b1beacd0b130a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interact: {fileID: 0}
   shooter: {fileID: 3284562769671385718}
-  logic: {fileID: 0}
   gun: {fileID: 3284562769097656860}
+  rb: {fileID: -4720296652207591808}
   score: 0
 --- !u!114 &3284562770142554761
 MonoBehaviour:
@@ -483,7 +485,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!50 &3284562770142554766
+--- !u!58 &-5362841968555197190
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3284562770142554774}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!50 &-4720296652207591808
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -504,19 +522,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &-5362841968555197190
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3284562770142554774}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
