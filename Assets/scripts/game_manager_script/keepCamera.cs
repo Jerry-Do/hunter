@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*This is used to keep the old camera and destroy any duplicate camera created from entering or reentering a scene*/
 public class keepCamera : MonoBehaviour
 {
 

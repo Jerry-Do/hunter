@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+
 public class playerControl : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -92,13 +93,14 @@ public class playerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        //Moving Character
         moveDirection = move.ReadValue<Vector2>();
  
         transform.position += moveDirection * speed * Time.fixedDeltaTime;
         
         rb.MovePosition(transform.position);
-
-        sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));
+        
+        sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));//set the speed of the sprite animation
         
     }
     private void Fire(InputAction.CallbackContext context)
@@ -125,7 +127,7 @@ public class playerControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("weapon"))
+        if (collision.gameObject.CompareTag("weapon"))//Pick up weapon
         {
             gunSprite = gun.GetComponent<SpriteRenderer>();
             weapon = collision.gameObject.GetComponent<weapon>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Script for rotating the gun
 public class rotation : MonoBehaviour
 {
     private Camera mainCam;

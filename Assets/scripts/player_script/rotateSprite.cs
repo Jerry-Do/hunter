@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*This is used to turn sprite based on the direction that the player presses
+ Can not put this script on the parent object since weird things will happens*/
 public class rotateSprite : MonoBehaviour
 {
     // Start is called before the first frame update

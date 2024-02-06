@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//This script is created to check if a certain condition of a screen is already triggered or not 
 public class SceneTriggerManager : MonoBehaviour
 {
     public static SceneTriggerManager instance { get; private set; }
