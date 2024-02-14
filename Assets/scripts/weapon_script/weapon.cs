@@ -10,7 +10,7 @@ public abstract class weapon: MonoBehaviour
     protected int maxNumAmmo;
     protected int damage;
 
-    public abstract void shooting();
+    public abstract void shooting(bool speedingFlag);
     public abstract string returnName();
     public abstract float returnReloadTimer();
     public abstract float returnRateOfFire();

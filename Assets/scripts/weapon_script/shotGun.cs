@@ -26,7 +26,7 @@ public class shotGun : weapon
     }
 
     // Update is called once per frame
-    public override void shooting()
+    public override void shooting(bool speedingFlag)
     {
         ammo.GetComponent<spearSpawn>().damage = damage;
         Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);

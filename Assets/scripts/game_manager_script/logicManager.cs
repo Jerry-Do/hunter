@@ -11,6 +11,7 @@ public class logicManager : MonoBehaviour
     //public Text health;
 
     public GameObject gameOver;
+    public Text speedFuel;
     public Text ammo;
     public Text score;
     public Text reloadIndicator;
@@ -46,6 +47,7 @@ public class logicManager : MonoBehaviour
         CheckFOrDuplicate();
         //time -= Time.deltaTime;
         timer.text = "Time: " + ((int)time).ToString();
+        speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
         score.text = "Score: " + player.score;

@@ -27,15 +27,17 @@ public class playerControl : MonoBehaviour
     private SpriteRenderer gunSprite;
     public GameObject gun;
     private rotateSprite sprite;
+    private bool speedingFlag;
     [SerializeField] private Rigidbody2D rb;
 
+    private float speedFuel = 100;
     public int score;
     private string weaponName;
     private int health = 10;
     private int ammo = -1;
     private int maxNumAmmo = 0;
     private float reloadTimer = 0;
-    private float speed = 7;
+    private float speed = 10;
     private float rateOfFire = 0;
     private int money = 0;
     private bool shootFlag = true;
@@ -94,12 +96,34 @@ public class playerControl : MonoBehaviour
     private void FixedUpdate()
     {
         //Moving Character
+        float speedBoost = 1;
+        speedingFlag = false;
         moveDirection = move.ReadValue<Vector2>();
- 
-        transform.position += moveDirection * speed * Time.fixedDeltaTime;
+        moveDirection.Normalize();
+        //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
         
-        rb.MovePosition(transform.position);
+       
         
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            speedingFlag = true;
+            if (speedFuel > 0)
+            {
+                speedBoost = 2;
+                speedFuel -= Time.fixedDeltaTime * 20;
+            }
+            if(speedFuel < 0)
+            {
+                speedFuel = 0;
+                speedBoost = 1;
+            }
+        }
+        if(speedFuel < 100)
+        {
+            speedFuel += Time.fixedDeltaTime * 10;
+        }
+        rb.velocity = moveDirection * speed * speedBoost;
         sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));//set the speed of the sprite animation
         
     }
@@ -108,7 +132,7 @@ public class playerControl : MonoBehaviour
         if (shootFlag && ammo > 0)
         {
             sound.Play();
-            shootingFunction();
+            weapon.shooting(speedingFlag);
             shootFlag = false;
             ammo--;
             
@@ -134,7 +158,7 @@ public class playerControl : MonoBehaviour
             gunSprite.sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             ammo = weapon.returnMaxNumAmmo();
             weaponName = weapon.returnName();
-            shootingFunction = weapon.shooting;
+             
             maxNumAmmo = weapon.returnMaxNumAmmo();
             reloadTimer = weapon.returnReloadTimer();
             Destroy(collision.gameObject);    
@@ -171,7 +195,7 @@ public class playerControl : MonoBehaviour
         yield return new WaitForSeconds(weapon.returnRateOfFire());
         shootFlag = true;
     }
-
+   
     public int ReturnMoney()
     {
         return money;
@@ -202,5 +226,8 @@ public class playerControl : MonoBehaviour
         return speed;
     }
 
- 
+    public float ReturnFuel()
+    {
+        return speedFuel;
+    }
 }

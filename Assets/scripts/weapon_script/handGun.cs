@@ -29,10 +29,12 @@ public class handGun : weapon
         
     }
     // Update is called once per frame
-    public override void shooting()
+    public override void shooting(bool speedingFlag)
     {
+        float randomAngle = UnityEngine.Random.Range(-5, 5);
         ammo.GetComponent<spearSpawn>().damage = damage;
-        Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
+        
+        Instantiate(ammo, playerControl.shooter.transform.position, (speedingFlag == true ? Quaternion.Euler(new Vector3(randomAngle, 0, 0)) : Quaternion.identity));
         
     }
 
