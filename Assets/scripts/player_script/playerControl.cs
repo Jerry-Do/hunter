@@ -31,6 +31,11 @@ public class playerControl : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
 
     private float speedFuel = 100;
+   
+    private float dashCounter = 0.0f;
+    private float dashLength = 1f;
+    private float dashCooldown = 3.0f;
+    private float dashCoolCounter = 0.0f;
     public int score;
     private string weaponName;
     private int health = 10;
@@ -102,15 +107,15 @@ public class playerControl : MonoBehaviour
         moveDirection.Normalize();
         //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
         
-       
-        
 
-        if (Input.GetKey(KeyCode.Space))
+
+
+        if (Input.GetKey(KeyCode.Space))//sprint
         {
             speedingFlag = true;
             if (speedFuel > 0)
             {
-                speedBoost = 2;
+                speedBoost = 1.5f;
                 speedFuel -= Time.fixedDeltaTime * 20;
             }
             if(speedFuel < 0)
@@ -123,7 +128,35 @@ public class playerControl : MonoBehaviour
         {
             speedFuel += Time.fixedDeltaTime * 10;
         }
+        if(Input.GetKey(KeyCode.LeftShift) && speedingFlag == true)//dash
+        {
+           if(dashCoolCounter <= 0 && dashCounter <= 0)
+            {
+                speedBoost *= 10;
+                dashCounter = dashLength;
+            }
+          
+        }
+        if(dashCounter > 0)
+        {
+            Debug.Log("Dashing");
+            dashCounter -= Time.fixedDeltaTime;
+            if(dashCounter <= 0)
+            {
+                speedBoost = 1;
+                dashCoolCounter = dashCooldown;
+            }
+
+        }
+
+        if(dashCoolCounter > 0)
+        {
+            dashCoolCounter -= Time.fixedDeltaTime; 
+        }
+       
+       
         rb.velocity = moveDirection * speed * speedBoost;
+        
         sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));//set the speed of the sprite animation
         
     }
