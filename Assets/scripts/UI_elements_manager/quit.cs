@@ -12,6 +12,6 @@ public class quit : MonoBehaviour
     {
         n++;
         Debug.Log("Quit Button clicked " + n + " times.");
-        //SceneManager.LoadScene("startNewConfirmation");
+        SceneManager.LoadScene("startNewConfirmation");
     }
 }

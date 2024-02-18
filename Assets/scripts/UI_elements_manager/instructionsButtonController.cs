@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class instructionsButtonController : MonoBehaviour
 {
-    int n;
-    // navigate sound settings screen
+    //int n;
+    // navigate intructions screen
     public void OnButtonPress()
     {
-        n++;
-        Debug.Log("Instructions Settings Button clicked " + n + " times.");
-        //SceneManager.LoadScene("instructions");
+        //n++;
+        //Debug.Log("Instructions Settings Button clicked " + n + " times.");
+        SceneManager.LoadScene("instructions");
     }
 }

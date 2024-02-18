@@ -14,6 +14,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/cementary.unity
     guid: e772fa8bd5cc5ff4b8de84c8727eb51d
+  - enabled: 1
+    path: Assets/Scenes/setting.unity
+    guid: 1f9763930914b4e80af78751c09044fe
+  - enabled: 1
+    path: Assets/Scenes/soundSetting.unity
+    guid: deace5699bdf747f884c97d259665e1c
+  - enabled: 1
+    path: Assets/Scenes/instructions.unity
+    guid: c86498ff96b3743a78a054e9356b7788
+  - enabled: 1
+    path: Assets/Scenes/pause.unity
+    guid: ce0d7e0a8a74c4dcfac4144afc71030a
+  - enabled: 1
+    path: Assets/Scenes/startNewConfirmation.unity
+    guid: bde1dea1ba3e74e55975dc23916116a2
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 84241b7bb7150164f8e06b202024a514,
       type: 2}
