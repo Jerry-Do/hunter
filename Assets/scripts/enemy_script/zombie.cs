@@ -8,7 +8,6 @@ public class zombie : enemy
 
     private AudioSource hitSound;
     private GameObject player;
-    public GameObject money;
     public Animator sprite;
     //private int score = 1;
     public int health = 10;
@@ -32,8 +31,7 @@ public class zombie : enemy
         {
             sprite.SetBool("Dead", true);
             Destroy(gameObject);
-            Instantiate(money, transform.position, transform.rotation);
-            //playerControl.addScore(score);
+
         }
         float distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance == 6)

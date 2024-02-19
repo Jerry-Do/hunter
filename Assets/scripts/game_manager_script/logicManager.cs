@@ -26,8 +26,8 @@ public class logicManager : MonoBehaviour
     public float orginalTime;
     private logicManager instance;
 
-    [SerializeField] private Slider HealthBar;
-
+    [SerializeField] private Slider healthBar;
+    [SerializeField] private Slider fuelBar;
     private void Awake()
     {
         if (instance != null)
@@ -52,14 +52,12 @@ public class logicManager : MonoBehaviour
         timer.text = "Time: " + ((int)time).ToString();
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
-
-        HealthBar.value = player.ReturnHealth();
-
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
         score.text = "Score: " + player.score;
-        //houseHealh.text = "House Health : " + house.health.ToString();
         money.text = "Money: " + player.ReturnMoney().ToString();
-        if(player.ReturnHealth() <= 0)
+        healthBar.value = player.ReturnHealth();
+        fuelBar.value = player.ReturnFuel();
+        if (player.ReturnHealth() <= 0)
         {
             GameOver();
         }

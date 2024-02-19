@@ -30,7 +30,7 @@ public class playerControl : MonoBehaviour
     private bool speedingFlag;
     [SerializeField] private Rigidbody2D rb;
 
-    private float speedFuel = 100;
+    private float speedFuel = 100.00f;
    
     private float dashCounter = 0.0f;
     private float dashLength = 1f;
@@ -200,7 +200,11 @@ public class playerControl : MonoBehaviour
         {
             Debug.Log("Collided");
         }
-        
+        if (collision.gameObject.CompareTag("item"))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            item.pick(this);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -211,7 +215,14 @@ public class playerControl : MonoBehaviour
         }
     }
 
-
+    public void plusHealth(int amount)
+    {
+        health += amount;
+    }
+    public void plusFuel(int amount)
+    {
+        speedFuel += amount;
+    }
     public void addScore(int amount)
     {
         score += amount;
