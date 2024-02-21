@@ -7,7 +7,6 @@ public class zombie : enemy
     // Start is called before the first frame update
 
     private AudioSource hitSound;
-    private GameObject player;
     public Animator sprite;
     //private int score = 1;
     public int health = 10;
@@ -15,18 +14,16 @@ public class zombie : enemy
     [SerializeField] private float speed = 3.0f;
     private playerControl playerControl;
     public bool change = false;
-    void Start()
-    {
-        //hitSound = GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
-        //Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-
-    }
+ 
+    
 
     // Update is called once per frame
     void Update()
     {
+        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
+        {
+            ReturnEnemy();
+        }
         if (health <= 0)
         {
             sprite.SetBool("Dead", true);
