@@ -30,7 +30,7 @@ public class playerControl : MonoBehaviour
     private bool speedingFlag;
     [SerializeField] private Rigidbody2D rb;
 
-<<<<<<< HEAD
+
 
     [Header("PlayerStats")]
 
@@ -45,15 +45,8 @@ public class playerControl : MonoBehaviour
     [SerializeField]private float speed = 10;
 
 
-=======
-    private float speedFuel = 100;
-   
-    private float dashCounter = 0.0f;
-    private float dashLength = 1f;
-    private float dashCooldown = 3.0f;
-    private float dashCoolCounter = 0.0f;
-    public int score;
->>>>>>> parent of 4914668 (Merge branch 'main' of https://github.com/Jerry-Do/hunter)
+
+
     private string weaponName;
     
     private int ammo = -1;
@@ -231,7 +224,7 @@ public class playerControl : MonoBehaviour
 
     public void addScore(int amount)
     {
-<<<<<<< HEAD
+
         if (health < maxHealth)
         {
             health += amount;
@@ -245,10 +238,7 @@ public class playerControl : MonoBehaviour
         }
     }
   
-=======
-        score += amount;
-    }
->>>>>>> parent of 4914668 (Merge branch 'main' of https://github.com/Jerry-Do/hunter)
+
     IEnumerator ReloadTime()
     {
 

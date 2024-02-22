@@ -50,7 +50,6 @@ public class logicManager : MonoBehaviour
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
-        score.text = "Score: " + player.score;
         //houseHealh.text = "House Health : " + house.health.ToString();
         money.text = "Money: " + player.ReturnMoney().ToString();
         if(player.ReturnHealth() <= 0)
