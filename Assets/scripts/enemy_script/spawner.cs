@@ -1,19 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class spawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public GameObject[] enemy;
-    private enemyScript enemyScript;
-    private float spawnRate = 5;
-    private float timer = 0;
-   
     [System.Serializable]
     public class Wave
     {
-        //enemyScript = enemy.GetComponent<enemyScript>();
         public string waveName;
         public List<EnemyGroup> enemyGroups;
         public int waveQuota;//Maxium enemy in one wave
@@ -21,8 +15,6 @@ public class spawner : MonoBehaviour
         public int spawnCount;//number of spawned enemies in the wave
     }
 
-    // Update is called once per frame
-   
     [System.Serializable]
     public class EnemyGroup
     {
@@ -49,17 +41,17 @@ public class spawner : MonoBehaviour
     {
         player = FindObjectOfType<playerControl>().transform;
         CalculateWaveQuota();
-
+       
     }
 
     private void FixedUpdate()
     {
-        if (currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0)
+        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0)
         {
             StartCoroutine(BeginNextWave());
         }
         spawnTimer += Time.fixedDeltaTime;
-        if (spawnTimer >= waves[currentWaveCount].spawnInterval)
+        if(spawnTimer >= waves[currentWaveCount].spawnInterval)
         {
             spawnTimer = 0f;
             SpawnEnemy();
@@ -70,15 +62,12 @@ public class spawner : MonoBehaviour
     {
         yield return new WaitForSeconds(waveInterval);
 
-        if (timer < spawnRate)
-            //If there are more waves to start after the current wave, spawn the next wave
-            if (currentWaveCount < waves.Count - 1)
-            {
-                timer += Time.deltaTime;
-                currentWaveCount++;
-                CalculateWaveQuota();
-            }
-           
+        //If there are more waves to start after the current wave, spawn the next wave
+        if(currentWaveCount < waves.Count - 1)
+        {
+            currentWaveCount++;
+            CalculateWaveQuota();
+        }
     }
     void CalculateWaveQuota()//Calculate the quota of the current wave
     {
@@ -95,14 +84,11 @@ public class spawner : MonoBehaviour
     {
         if (waves[currentWaveCount].spawnCount < waves[currentWaveCount].waveQuota && !maxEnemiesReached)//If the the current wave quota is not reached and maxium enemy is not reached then spawn enemy
         {
-            int enemeyIndex = UnityEngine.Random.Range(0, 2);
-            Instantiate(enemy[enemeyIndex], new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-            timer = UnityEngine.Random.Range(0, 3);
-            foreach (var enemyGroup in waves[currentWaveCount].enemyGroups)
+            foreach(var enemyGroup in waves[currentWaveCount].enemyGroups)
             {
-                if (enemyGroup.spawnCount < enemyGroup.enemyCount)//Check if the amount of an enemy group has been reached or not
+                if(enemyGroup.spawnCount < enemyGroup.enemyCount)//Check if the amount of an enemy group has been reached or not
                 {
-                    if (enemiesAlive >= maxEnemiesAllowed)
+                    if(enemiesAlive >= maxEnemiesAllowed)
                     {
                         maxEnemiesReached = true;
                         return;
@@ -128,11 +114,5 @@ public class spawner : MonoBehaviour
         enemiesAlive--;
     }
 
-    //public void upgradeMob()
-    //{
-    //    enemyScript.health += 1;
-    //    enemyScript.enemyDamage += 1;
-    //    spawnRate--;
-    //}
-
+   
 }

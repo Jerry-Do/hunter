@@ -7,8 +7,6 @@ public class zombie : enemy
     // Start is called before the first frame update
 
     private AudioSource hitSound;
-    private GameObject player;
-    public GameObject money;
     public Animator sprite;
     //private int score = 1;
     public int health = 10;
@@ -16,27 +14,24 @@ public class zombie : enemy
     [SerializeField] private float speed = 3.0f;
     private playerControl playerControl;
     public bool change = false;
-    void Start()
-    {
-        //hitSound = GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
-        //Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-
-    }
+ 
+    
 
     // Update is called once per frame
     void Update()
     {
+        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
+        {
+            ReturnEnemy();
+        }
         if (health <= 0)
         {
             sprite.SetBool("Dead", true);
             Destroy(gameObject);
-            Instantiate(money, transform.position, transform.rotation);
-            //playerControl.addScore(score);
+
         }
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance == 6)
+        if (distance <= 6)
         {
             speed *= 2;
         }
@@ -47,20 +42,19 @@ public class zombie : enemy
         //hitSound.Play();
         sprite.SetBool("Hit", true);
        
-        StartCoroutine(cooldown());
+        StartCoroutine(Stunned());
         health -= damage;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
             playerControl.minusHealth(enemyDamage);
         }
     }
-    IEnumerator cooldown()
+    IEnumerator Stunned()
     {
-        yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.1f);
         sprite.SetBool("Hit", false);
     }
 }
