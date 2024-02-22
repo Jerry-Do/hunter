@@ -17,9 +17,9 @@ public class playerControl : MonoBehaviour
     private playerControl instance;
     private weapon weapon;
     private AudioSource sound;
-    public DefaultInputActions DefaultInputActions;
-    private InputAction move;
-    private InputAction shoot;
+    //public DefaultInputActions DefaultInputActions;
+    //private InputAction move;
+    //private InputAction shoot;
     [SerializeField] private InputActionReference interact;
     public Transform shooter;
     private logicManager logic;
@@ -50,6 +50,7 @@ public class playerControl : MonoBehaviour
     private int money = 0;
     private bool shootFlag = true;
     Vector3 moveDirection;
+    public InputActionsManager InputActionsManager;
     private void Awake()
     {
         if (instance != null)
@@ -57,23 +58,26 @@ public class playerControl : MonoBehaviour
             Destroy(instance);
             return;
         }
-        DefaultInputActions = new DefaultInputActions();
+        //DefaultInputActions = new DefaultInputActions();
+        InputActionsManager = FindObjectOfType<InputActionsManager>();
         instance = this;
         DontDestroyOnLoad(instance);
     }
     private void OnEnable()
     {
-        move = DefaultInputActions.Player.Move;
-        move.Enable();
-        shoot = DefaultInputActions.Player.Fire;
-        shoot.Enable();
-        shoot.performed += Fire;
-
+        //move = DefaultInputActions.Player.Move;
+        //move.Enable();
+        //shoot = DefaultInputActions.Player.Fire;
+        //shoot.Enable();
+        //shoot.performed += Fire;
+        InputActionsManager.EnableInputActions();
+        InputActionsManager.shoot.performed += Fire;
     }
     private void OnDisable()
     {
-        move.Disable();
-        shoot.Disable();
+        //move.Disable();
+        //shoot.Disable();
+        InputActionsManager.DisableInputActions();
     }
     void Start()
     {
@@ -106,7 +110,7 @@ public class playerControl : MonoBehaviour
         //Moving Character
         float speedBoost = 1;
         speedingFlag = false;
-        moveDirection = move.ReadValue<Vector2>();
+        moveDirection = InputActionsManager.move.ReadValue<Vector2>();
         moveDirection.Normalize();
         //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
         
