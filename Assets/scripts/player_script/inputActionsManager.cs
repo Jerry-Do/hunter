@@ -41,7 +41,41 @@ public class InputActionsManager : MonoBehaviour
         controls.Add("Left", KeyCode.A);
         controls.Add("Right", KeyCode.D);
         controls.Add("fire", KeyCode.Mouse0);
-        LoadBindings();
+        if (PlayerPrefs.GetInt("BindingsModified", 0) == 0)
+        {
+            ApplyDefaultBindings();
+        }
+        else
+        {
+            LoadBindings();
+        }
+        PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
+        PlayerPrefs.Save();
+        UpdateButtonLabels();
+    }
+    private void UpdateButtonLabels()
+    {
+        // For each control, update its corresponding button label with the saved or default key
+        foreach (var control in controls)
+        {
+            foreach (Button button in buttons)
+            {
+                if (button.name.StartsWith(control.Key, StringComparison.OrdinalIgnoreCase))
+                {
+                    button.GetComponentInChildren<Text>().text = control.Value.ToString();
+                    break; // Found the matching button, no need to continue this inner loop
+                }
+            }
+        }
+    }
+    private void ApplyDefaultBindings()
+    {
+        // Set default bindings here, e.g., for WASD and arrow keys
+        BindAction("Up", KeyCode.W);
+        BindAction("Down", KeyCode.S);
+        BindAction("Left", KeyCode.A);
+        BindAction("Right", KeyCode.D);
+        BindFireAction("<Mouse>/leftButton");
     }
 
     public void ChangeControls(string control)
@@ -104,7 +138,7 @@ public class InputActionsManager : MonoBehaviour
         {
             BindMoveAction(actionName, keyPath);
         }
-
+        PlayerPrefs.SetInt("BindingsModified", 1); // Set the flag
         PlayerPrefs.SetString($"{actionName}Binding", keyPath);
         PlayerPrefs.Save();
     }
@@ -115,27 +149,39 @@ public class InputActionsManager : MonoBehaviour
             var fireBindingPath = PlayerPrefs.GetString("fireBinding");
             BindFireAction(fireBindingPath);
         }
+
         if (PlayerPrefs.HasKey("UpBinding"))
         {
-            var UpBindingPath = PlayerPrefs.GetString("UpBinding");
-            BindMoveAction("up", UpBindingPath);
+            
+            // Load the saved binding
+            var DownBindingPath = PlayerPrefs.GetString("UpBinding");
+            BindMoveAction("up", DownBindingPath);
         }
+
         if (PlayerPrefs.HasKey("DownBinding"))
         {
-            var downBindingPath = PlayerPrefs.GetString("DownBinding");
-            BindMoveAction("down", downBindingPath);
+            
+            // Load the saved binding
+            var DownBindingPath = PlayerPrefs.GetString("DownBinding");
+            BindMoveAction("down", DownBindingPath);
         }
-        if (PlayerPrefs.HasKey("RightBinding"))
-        {
-            var rightBindingPath = PlayerPrefs.GetString("RightBinding");
-            BindMoveAction("right", rightBindingPath);
-        }
+
         if (PlayerPrefs.HasKey("LeftBinding"))
         {
-            var leftBindingPath = PlayerPrefs.GetString("LeftBinding");
-            BindMoveAction("left", leftBindingPath);
+         
+            // Load the saved binding
+            var LeftBindingPath = PlayerPrefs.GetString("LeftBinding");
+            BindMoveAction("left", LeftBindingPath);
         }
-       
+
+        if (PlayerPrefs.HasKey("RightBinding"))
+        {
+            
+            // Load the saved binding
+            var RightBindingPath = PlayerPrefs.GetString("RightBinding");
+            BindMoveAction("right", RightBindingPath);
+        }
+
     }
 
     // Helper method to convert KeyCode to the path format used by the new Input System
