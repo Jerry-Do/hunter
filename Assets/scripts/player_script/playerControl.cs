@@ -16,7 +16,6 @@ public class playerControl : MonoBehaviour
     // Start is called before the first frame update
     private playerControl instance;
     private weapon weapon;
-    private Action shootingFunction;
     private AudioSource sound;
     public DefaultInputActions DefaultInputActions;
     private InputAction move;
@@ -31,7 +30,6 @@ public class playerControl : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
 
 
-
     [Header("PlayerStats")]
 
     [SerializeField] private float maxHealth = 10.0f;
@@ -41,18 +39,13 @@ public class playerControl : MonoBehaviour
     [SerializeField] private float dashLength = 1f;
     [SerializeField] private float dashCooldown = 3.0f;
     [SerializeField] private float dashCoolCounter = 0.0f;
-    [SerializeField] private int health = 10;
-    [SerializeField]private float speed = 10;
-
-
-
 
     private string weaponName;
-    
+    private int health = 10;
     private int ammo = -1;
     private int maxNumAmmo = 0;
     private float reloadTimer = 0;
-    
+    private float speed = 10;
     private float rateOfFire = 0;
     private int money = 0;
     private bool shootFlag = true;
@@ -210,7 +203,12 @@ public class playerControl : MonoBehaviour
         {
             Debug.Log("Collided");
         }
-        
+        if (collision.gameObject.CompareTag("item"))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            item.pick(this);
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -221,24 +219,15 @@ public class playerControl : MonoBehaviour
         }
     }
 
-
-    public void addScore(int amount)
+    public void plusHealth(int amount)
     {
-
-        if (health < maxHealth)
-        {
-            health += amount;
-        }
+        health += amount;
     }
     public void plusFuel(int amount)
     {
-        if (speedFuel < maxFuel)
-        {
-            speedFuel += amount;
-        }
+        speedFuel += amount;
     }
   
-
     IEnumerator ReloadTime()
     {
 
