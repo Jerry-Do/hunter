@@ -122,10 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d5358ad3eb7044fb93e7bdd778431b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  despawnDistance: 20
   sprite: {fileID: 3578734657076376963}
   health: 10
   enemyDamage: 1
-  speed: 3
+  speed: 2
   change: 0
 --- !u!61 &-4072485807201995184
 BoxCollider2D:

@@ -16,7 +16,6 @@ public class playerControl : MonoBehaviour
     // Start is called before the first frame update
     private playerControl instance;
     private weapon weapon;
-    private Action shootingFunction;
     private AudioSource sound;
     public DefaultInputActions DefaultInputActions;
     private InputAction move;
@@ -30,13 +29,17 @@ public class playerControl : MonoBehaviour
     private bool speedingFlag;
     [SerializeField] private Rigidbody2D rb;
 
-    private float speedFuel = 100.00f;
-   
-    private float dashCounter = 0.0f;
-    private float dashLength = 1f;
-    private float dashCooldown = 3.0f;
-    private float dashCoolCounter = 0.0f;
-    public int score;
+
+    [Header("PlayerStats")]
+
+    [SerializeField] private float maxHealth = 10.0f;
+    [SerializeField] private float maxFuel = 100.0f;
+    [SerializeField] private float speedFuel = 100.00f;
+    [SerializeField] private float dashCounter = 0.0f;
+    [SerializeField] private float dashLength = 1f;
+    [SerializeField] private float dashCooldown = 3.0f;
+    [SerializeField] private float dashCoolCounter = 0.0f;
+
     private string weaponName;
     private int health = 10;
     private int ammo = -1;
@@ -204,6 +207,7 @@ public class playerControl : MonoBehaviour
         {
             Item item = collision.gameObject.GetComponent<Item>();
             item.pick(this);
+            Destroy(collision.gameObject);
         }
     }
 
@@ -223,10 +227,7 @@ public class playerControl : MonoBehaviour
     {
         speedFuel += amount;
     }
-    public void addScore(int amount)
-    {
-        score += amount;
-    }
+  
     IEnumerator ReloadTime()
     {
 
