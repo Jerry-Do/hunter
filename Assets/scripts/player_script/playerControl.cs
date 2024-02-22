@@ -16,6 +16,7 @@ public class playerControl : MonoBehaviour
     // Start is called before the first frame update
     private playerControl instance;
     private weapon weapon;
+    private Action shootingFunction;
     private AudioSource sound;
     public DefaultInputActions DefaultInputActions;
     private InputAction move;
@@ -29,6 +30,7 @@ public class playerControl : MonoBehaviour
     private bool speedingFlag;
     [SerializeField] private Rigidbody2D rb;
 
+<<<<<<< HEAD
 
     [Header("PlayerStats")]
 
@@ -43,6 +45,15 @@ public class playerControl : MonoBehaviour
     [SerializeField]private float speed = 10;
 
 
+=======
+    private float speedFuel = 100;
+   
+    private float dashCounter = 0.0f;
+    private float dashLength = 1f;
+    private float dashCooldown = 3.0f;
+    private float dashCoolCounter = 0.0f;
+    public int score;
+>>>>>>> parent of 4914668 (Merge branch 'main' of https://github.com/Jerry-Do/hunter)
     private string weaponName;
     
     private int ammo = -1;
@@ -206,12 +217,7 @@ public class playerControl : MonoBehaviour
         {
             Debug.Log("Collided");
         }
-        if (collision.gameObject.CompareTag("item"))
-        {
-            Item item = collision.gameObject.GetComponent<Item>();
-            item.pick(this);
-            Destroy(collision.gameObject);
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -222,8 +228,10 @@ public class playerControl : MonoBehaviour
         }
     }
 
-    public void plusHealth(int amount)
+
+    public void addScore(int amount)
     {
+<<<<<<< HEAD
         if (health < maxHealth)
         {
             health += amount;
@@ -237,6 +245,10 @@ public class playerControl : MonoBehaviour
         }
     }
   
+=======
+        score += amount;
+    }
+>>>>>>> parent of 4914668 (Merge branch 'main' of https://github.com/Jerry-Do/hunter)
     IEnumerator ReloadTime()
     {
 

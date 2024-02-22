@@ -100,11 +100,7 @@ public class Solder_Script : enemy
 
 
 
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-            playerControl.addScore(score);
-        }
+     
 
         if (Vector3.Distance(player.transform.position, transform.position) > 2)
         {
