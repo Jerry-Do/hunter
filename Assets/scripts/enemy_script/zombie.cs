@@ -31,7 +31,7 @@ public class zombie : enemy
 
         }
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance == 6)
+        if (distance <= 6)
         {
             speed *= 2;
         }
@@ -42,20 +42,19 @@ public class zombie : enemy
         //hitSound.Play();
         sprite.SetBool("Hit", true);
        
-        StartCoroutine(cooldown());
+        StartCoroutine(Stunned());
         health -= damage;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
             playerControl.minusHealth(enemyDamage);
         }
     }
-    IEnumerator cooldown()
+    IEnumerator Stunned()
     {
-        yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.1f);
         sprite.SetBool("Hit", false);
     }
 }

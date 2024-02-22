@@ -53,7 +53,7 @@ public class logicManager : MonoBehaviour
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
-        score.text = "Score: " + player.score;
+
         money.text = "Money: " + player.ReturnMoney().ToString();
         healthBar.value = player.ReturnHealth();
         fuelBar.value = player.ReturnFuel();
@@ -94,11 +94,7 @@ public class logicManager : MonoBehaviour
         gameOver.SetActive(true);
 
     }
-    //public void upgradeMobs()
-    //{
-    //    spawnerL.upgradeMob();
-    //    spawnerR.upgradeMob();
-    //}
+ 
     public void restartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
