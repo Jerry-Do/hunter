@@ -10,6 +10,9 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using static System.Collections.Specialized.BitVector32;
+using System.IO;
+using static UnityEditor.Recorder.OutputPath;
 
 public class playerControl : MonoBehaviour
 {
@@ -19,8 +22,8 @@ public class playerControl : MonoBehaviour
     private Action shootingFunction;
     private AudioSource sound;
     public DefaultInputActions DefaultInputActions;
-    private InputAction move;
-    private InputAction shoot;
+    //private InputAction move;
+    //private InputAction shoot;
     [SerializeField] private InputActionReference interact;
     public Transform shooter;
     private logicManager logic;
@@ -31,7 +34,7 @@ public class playerControl : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
 
     private float speedFuel = 100.00f;
-   
+
     private float dashCounter = 0.0f;
     private float dashLength = 1f;
     private float dashCooldown = 3.0f;
@@ -47,31 +50,38 @@ public class playerControl : MonoBehaviour
     private int money = 0;
     private bool shootFlag = true;
     Vector3 moveDirection;
+
+    public InputActionsManager InputActionsManager;
+
     private void Awake()
     {
+        
         if (instance != null)
         {
             Destroy(instance);
             return;
         }
-        DefaultInputActions = new DefaultInputActions();
+        InputActionsManager = FindObjectOfType<InputActionsManager>();
         instance = this;
         DontDestroyOnLoad(instance);
+
+        
     }
+
     private void OnEnable()
     {
-        move = DefaultInputActions.Player.Move;
-        move.Enable();
-        shoot = DefaultInputActions.Player.Fire;
-        shoot.Enable();
-        shoot.performed += Fire;
-
+        InputActionsManager.EnableInputActions();
+        InputActionsManager.shoot.performed += Fire;
     }
+
     private void OnDisable()
     {
-        move.Disable();
-        shoot.Disable();
+        // Safely disable input actions if CustomInput is available
+
+        InputActionsManager.DisableInputActions();
+        
     }
+
     void Start()
     {
         sprite = gameObject.GetComponentInChildren<rotateSprite>();
@@ -81,19 +91,19 @@ public class playerControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-        if(ammo == 0 && weaponName != "")
+    {
+        if (ammo == 0 && weaponName != "")
         {
-            
+
             StartCoroutine(ReloadTime());
-           
+
         }
-        if(shootFlag == false)
+        if (shootFlag == false)
         {
             StartCoroutine(cooldown());
-            
+
         }
-        if(health == 0)
+        if (health == 0)
         {
             sprite.SetDeath();
         }
@@ -103,10 +113,10 @@ public class playerControl : MonoBehaviour
         //Moving Character
         float speedBoost = 1;
         speedingFlag = false;
-        moveDirection = move.ReadValue<Vector2>();
+        moveDirection = InputActionsManager.move.ReadValue<Vector2>();
         moveDirection.Normalize();
         //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
-        
+
 
 
 
@@ -118,30 +128,30 @@ public class playerControl : MonoBehaviour
                 speedBoost = 1.5f;
                 speedFuel -= Time.fixedDeltaTime * 20;
             }
-            if(speedFuel < 0)
+            if (speedFuel < 0)
             {
                 speedFuel = 0;
                 speedBoost = 1;
             }
         }
-        if(speedFuel < 100)
+        if (speedFuel < 100)
         {
             speedFuel += Time.fixedDeltaTime * 10;
         }
-        if(Input.GetKey(KeyCode.LeftShift) && speedingFlag == true)//dash
+        if (Input.GetKey(KeyCode.LeftShift) && speedingFlag == true)//dash
         {
-           if(dashCoolCounter <= 0 && dashCounter <= 0)
+            if (dashCoolCounter <= 0 && dashCounter <= 0)
             {
                 speedBoost *= 10;
                 dashCounter = dashLength;
             }
-          
+
         }
-        if(dashCounter > 0)
+        if (dashCounter > 0)
         {
             Debug.Log("Dashing");
             dashCounter -= Time.fixedDeltaTime;
-            if(dashCounter <= 0)
+            if (dashCounter <= 0)
             {
                 speedBoost = 1;
                 dashCoolCounter = dashCooldown;
@@ -149,16 +159,16 @@ public class playerControl : MonoBehaviour
 
         }
 
-        if(dashCoolCounter > 0)
+        if (dashCoolCounter > 0)
         {
-            dashCoolCounter -= Time.fixedDeltaTime; 
+            dashCoolCounter -= Time.fixedDeltaTime;
         }
-       
-       
+
+
         rb.velocity = moveDirection * speed * speedBoost;
-        
+
         sprite.SetSpeed(Mathf.Abs(Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.y)));//set the speed of the sprite animation
-        
+
     }
     private void Fire(InputAction.CallbackContext context)
     {
@@ -168,7 +178,7 @@ public class playerControl : MonoBehaviour
             weapon.shooting(speedingFlag);
             shootFlag = false;
             ammo--;
-            
+
         }
     }
 
@@ -191,12 +201,12 @@ public class playerControl : MonoBehaviour
             gunSprite.sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             ammo = weapon.returnMaxNumAmmo();
             weaponName = weapon.returnName();
-             
+
             maxNumAmmo = weapon.returnMaxNumAmmo();
             reloadTimer = weapon.returnReloadTimer();
-            Destroy(collision.gameObject);    
+            Destroy(collision.gameObject);
         }
-        if(collision.gameObject.CompareTag("obsticle"))
+        if (collision.gameObject.CompareTag("obsticle"))
         {
             Debug.Log("Collided");
         }
@@ -209,7 +219,7 @@ public class playerControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("door"))
+        if (collision.gameObject.CompareTag("door"))
         {
             logic.LoadScene(collision.gameObject.name);
         }
@@ -232,14 +242,14 @@ public class playerControl : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTimer);
         ammo = maxNumAmmo;
-        
+
     }
     IEnumerator cooldown()
     {
         yield return new WaitForSeconds(weapon.returnRateOfFire());
         shootFlag = true;
     }
-   
+
     public int ReturnMoney()
     {
         return money;
