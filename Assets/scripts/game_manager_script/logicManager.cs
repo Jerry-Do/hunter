@@ -92,7 +92,8 @@ public class logicManager : MonoBehaviour
         spawnerL.enabled = false;
         spawnerR.enabled = false;
         gameOver.SetActive(true);
-
+        // navigate to game over screen
+        SceneManager.LoadScene("gameOver");
     }
  
     public void restartGame()
