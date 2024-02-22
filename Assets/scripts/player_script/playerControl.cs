@@ -39,13 +39,16 @@ public class playerControl : MonoBehaviour
     [SerializeField] private float dashLength = 1f;
     [SerializeField] private float dashCooldown = 3.0f;
     [SerializeField] private float dashCoolCounter = 0.0f;
+    [SerializeField] private int health = 10;
+    [SerializeField]private float speed = 10;
+
 
     private string weaponName;
-    private int health = 10;
+    
     private int ammo = -1;
     private int maxNumAmmo = 0;
     private float reloadTimer = 0;
-    private float speed = 10;
+    
     private float rateOfFire = 0;
     private int money = 0;
     private bool shootFlag = true;
@@ -221,11 +224,17 @@ public class playerControl : MonoBehaviour
 
     public void plusHealth(int amount)
     {
-        health += amount;
+        if (health < maxHealth)
+        {
+            health += amount;
+        }
     }
     public void plusFuel(int amount)
     {
-        speedFuel += amount;
+        if (speedFuel < maxFuel)
+        {
+            speedFuel += amount;
+        }
     }
   
     IEnumerator ReloadTime()
