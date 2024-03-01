@@ -357,7 +357,15 @@ MonoBehaviour:
   shooter: {fileID: 3284562769671385718}
   gun: {fileID: 3284562769097656860}
   rb: {fileID: -4720296652207591808}
-  score: 0
+  rs: {fileID: 3284562769485986662}
+  maxHealth: 10
+  maxFuel: 100
+  speedFuel: 100
+  dashCounter: 0
+  dashLength: 1
+  dashCooldown: 3
+  dashCoolCounter: 0
+  InputActionsManager: {fileID: 0}
 --- !u!114 &3284562770142554761
 MonoBehaviour:
   m_ObjectHideFlags: 0

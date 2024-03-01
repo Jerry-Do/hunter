@@ -28,7 +28,7 @@ public class playerControl : MonoBehaviour
     private rotateSprite sprite;
     private bool speedingFlag;
     [SerializeField] private Rigidbody2D rb;
-
+    [SerializeField] private rotateSprite rs;
 
     [Header("PlayerStats")]
 
@@ -111,6 +111,14 @@ public class playerControl : MonoBehaviour
         float speedBoost = 1;
         speedingFlag = false;
         moveDirection = InputActionsManager.move.ReadValue<Vector2>();
+        if(InputActionsManager.move.IsPressed() && moveDirection.x < 0)
+        { 
+            rs.RotateBackward();
+        }
+        if (InputActionsManager.move.IsPressed() && moveDirection.x > 0)
+        {
+            rs.RotateForward();
+        }
         moveDirection.Normalize();
         //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
         

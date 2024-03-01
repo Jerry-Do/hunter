@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 //using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class logicManager : MonoBehaviour
 {
     // Start is called before the first frame update
     //public Text health;
-
+    //Mark the begining of the wave
+    //Find a way to mark the end of the wave
+    //if the end of a wave pause the game and run spawn weapon
     public GameObject gameOver;
     public Text speedFuel;
     public Text ammo;
@@ -25,7 +28,7 @@ public class logicManager : MonoBehaviour
     public float time = 31;
     public float orginalTime;
     private logicManager instance;
-
+    [SerializeField] private List<GameObject> weapons;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider fuelBar;
     private void Awake()
@@ -104,5 +107,13 @@ public class logicManager : MonoBehaviour
     public void LoadScene(string name)
     {
         SceneManager.LoadScene(name);
+    }
+
+    public void spawnRandomWeapon()
+    {
+        Transform playerSprite = FindAnyObjectByType<rotateSprite>().transform;
+        Transform player = FindAnyObjectByType<playerControl>().transform;
+        Instantiate(weapons[0],new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+         
     }
 }

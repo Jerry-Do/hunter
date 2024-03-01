@@ -13,6 +13,7 @@ public class spawner : MonoBehaviour
         public int waveQuota;//Maxium enemy in one wave
         public float spawnInterval;//The interval at which enemies are spawned
         public int spawnCount;//number of spawned enemies in the wave
+        public int enemyAlive;
     }
 
     [System.Serializable]
@@ -34,7 +35,6 @@ public class spawner : MonoBehaviour
     public int maxEnemiesAllowed;
     public bool maxEnemiesReached = false;
     public float waveInterval;
-
     [Header("SpawnPosition")]
     public List<Transform> relativeSpawnPos;
     private void Start()
@@ -46,6 +46,7 @@ public class spawner : MonoBehaviour
 
     private void FixedUpdate()
     {
+       
         if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0)
         {
             StartCoroutine(BeginNextWave());
@@ -56,10 +57,12 @@ public class spawner : MonoBehaviour
             spawnTimer = 0f;
             SpawnEnemy();
         }
+      
     }
 
     IEnumerator BeginNextWave()
     {
+        
         yield return new WaitForSeconds(waveInterval);
 
         //If there are more waves to start after the current wave, spawn the next wave
@@ -77,6 +80,7 @@ public class spawner : MonoBehaviour
             currentWaveQuota += enemyGroup.enemyCount;
         }
         waves[currentWaveCount].waveQuota = currentWaveQuota;
+        waves[currentWaveCount].enemyAlive = currentWaveQuota;
         Debug.Log(currentWaveQuota);
     }
 
@@ -112,6 +116,12 @@ public class spawner : MonoBehaviour
     public void OnEnemyKilled()
     {
         enemiesAlive--;
+        waves[currentWaveCount].enemyAlive--;
+        if (waves[currentWaveCount].enemyAlive == 0)
+        {
+            logicManager lm = FindObjectOfType<logicManager>();
+            lm.spawnRandomWeapon();
+        }
     }
 
    

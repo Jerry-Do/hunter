@@ -13,20 +13,7 @@ public class rotateSprite : MonoBehaviour
         player = gameObject.GetComponentInParent<playerControl>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            transform.eulerAngles = Vector3.up * 180;
-
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            transform.eulerAngles = Vector3.forward * 0;
-        }
-        
-    }
+    // Update is called once per framews
     public void SetSpeed(float speed)
     {
         animator.SetFloat("speed", speed);
@@ -35,5 +22,13 @@ public class rotateSprite : MonoBehaviour
     public void SetDeath()
     {
         animator.SetBool("deathFlag", true);
+    }
+    public void RotateBackward()
+    {
+        transform.eulerAngles = Vector3.up * 180;
+    }
+    public void RotateForward()
+    {
+        transform.eulerAngles = Vector3.forward * 0;
     }
 }

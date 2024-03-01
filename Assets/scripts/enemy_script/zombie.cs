@@ -31,11 +31,8 @@ public class zombie : enemy
 
         }
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance <= 6)
-        {
-            speed *= 2;
-        }
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
+       
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x , player.transform.position.y ), speed * Time.deltaTime);
     }
     public override void minusHealth(int damage)
     {
