@@ -502,6 +502,8 @@ MonoBehaviour:
   timer: {fileID: 1838448925}
   time: 31
   orginalTime: 0
+  weapons:
+  - {fileID: 3994399682485130871, guid: 7f6ade2a62b6f4d4e89b873c3ac115ee, type: 3}
   healthBar: {fileID: 1419139691}
   fuelBar: {fileID: 381969342}
 --- !u!4 &64254391
@@ -2641,13 +2643,14 @@ MonoBehaviour:
   - waveName: 
     enemyGroups:
     - enemyName: Zombie
-      enemyCount: 10
+      enemyCount: 1
       spawnCount: 0
       enemyPrefab: {fileID: 3578734657076376961, guid: cbfaff5d7bd8451418628d3937f6577e,
         type: 3}
-    waveQuota: 5
+    waveQuota: 1
     spawnInterval: 1
     spawnCount: 0
+    enemyAlive: 0
   currentWaveCount: 0
   enemiesAlive: 0
   maxEnemiesAllowed: 10
@@ -20388,6 +20391,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1988300517}
     m_Modifications:
+    - target: {fileID: 410920377856264954, guid: a4fb1c0c2f6b73d4ca99cd58a83fc78c,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.5728226
+      objectReference: {fileID: 0}
+    - target: {fileID: 410920377856264954, guid: a4fb1c0c2f6b73d4ca99cd58a83fc78c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.5268536
+      objectReference: {fileID: 0}
+    - target: {fileID: 410920377856264954, guid: a4fb1c0c2f6b73d4ca99cd58a83fc78c,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 6.745432
+      objectReference: {fileID: 0}
+    - target: {fileID: 410920377856264954, guid: a4fb1c0c2f6b73d4ca99cd58a83fc78c,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.26342678
+      objectReference: {fileID: 0}
     - target: {fileID: 2530303141778445881, guid: a4fb1c0c2f6b73d4ca99cd58a83fc78c,
         type: 3}
       propertyPath: m_RootOrder
@@ -20478,7 +20501,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: obsticle
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 410920377856264954, guid: a4fb1c0c2f6b73d4ca99cd58a83fc78c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -20525,7 +20549,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.3801012, y: -0.09115648}
+  m_Offset: {x: 6.7904396, y: -0.30117226}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -20536,7 +20560,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3875141, y: 1.136735}
+  m_Size: {x: 0.54906845, y: 1.5567665}
   m_EdgeRadius: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
