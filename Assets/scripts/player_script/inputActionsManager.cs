@@ -29,8 +29,18 @@ public class InputActionsManager : MonoBehaviour
     }
     public void OnButtonPress()
     {
+        //LoadBindings(); // Assumes LoadBindings() is your method to load and apply saved bindings
+        //EnableInputActions(); // Make sure your input actions are enabled
+        //Time.timeScale = 1f;
         SceneManager.LoadScene("SampleScene");
+        /*for (int i = 0; i < move.bindings.Count; i++)
+        {
+
+            Debug.Log(move.bindings[i]);
+
+        }*/
     }
+    
     private void Awake()
     {
         defaultInputActions = new DefaultInputActions();
