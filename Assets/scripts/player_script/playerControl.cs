@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class playerControl : MonoBehaviour
 {
@@ -65,6 +66,10 @@ public class playerControl : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(instance);
     }
+    public bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
     private void OnEnable()
     {
         //move = DefaultInputActions.Player.Move;
@@ -91,6 +96,15 @@ public class playerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (instance.IsPointerOverUI())
+        {
+            shootFlag = false;
+        }
+        else if (!instance.IsPointerOverUI())
+        {
+            shootFlag = true;
+        }
+        
         if (ammo == 0 && weaponName != "")
         {
 
@@ -106,10 +120,7 @@ public class playerControl : MonoBehaviour
         {
             sprite.SetDeath();
         }
-        if (!gameStateManager.IsGamePaused)
-        {
-            print("rotate");
-        }
+
     }
     private void FixedUpdate()
     {
@@ -189,7 +200,7 @@ public class playerControl : MonoBehaviour
             weapon.shooting(speedingFlag);
             shootFlag = false;
             ammo--;
-            
+
         }
     }
 
