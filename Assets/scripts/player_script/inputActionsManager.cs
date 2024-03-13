@@ -129,6 +129,25 @@ public class InputActionsManager : MonoBehaviour
             
         }
     }
+    public bool IsShootBoundToLeftClick()
+    {
+        foreach (Button button in buttons)
+        {
+            if (button.name == "shootButton")
+            {
+                
+                if(button.GetComponentInChildren<Text>().text == "Left Click")
+                {
+                    return true;
+                }
+               
+            }
+
+
+        }
+        return false;
+    }
+
     // This method now takes KeyCode and converts it to the correct path
     public void BindAction(string actionName, KeyCode key)
     {

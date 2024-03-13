@@ -96,15 +96,16 @@ public class playerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (instance.IsPointerOverUI())
-        {
-            shootFlag = false;
-        }
-        else if (!instance.IsPointerOverUI())
+        if (InputActionsManager.IsShootBoundToLeftClick() && !IsPointerOverUI())
         {
             shootFlag = true;
         }
-        
+        else
+        {
+            shootFlag = false;
+        }
+
+
         if (ammo == 0 && weaponName != "")
         {
 
