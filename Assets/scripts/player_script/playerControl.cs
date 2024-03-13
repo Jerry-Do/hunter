@@ -96,7 +96,7 @@ public class playerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InputActionsManager.IsShootBoundToLeftClick() && !IsPointerOverUI())
+        if (!IsPointerOverUI())
         {
             shootFlag = true;
         }
