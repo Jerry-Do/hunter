@@ -12,6 +12,7 @@ public class handGun : weapon
         rateOfFire = 2f;
         maxNumAmmo = 10;
         damage = 4;
+        rarity = "c";
     }
 
     private playerControl playerControl;

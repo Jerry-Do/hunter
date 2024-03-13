@@ -12,6 +12,7 @@ public class machineGun : weapon
         rateOfFire = 0.1f;
         maxNumAmmo = 30;
         damage = 1;
+        rarity = "r";
     }
 
     private playerControl playerControl;

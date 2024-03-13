@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using static dropManger;
 //using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class logicManager : MonoBehaviour
@@ -28,7 +29,9 @@ public class logicManager : MonoBehaviour
     public float time = 31;
     public float orginalTime;
     private logicManager instance;
-    [SerializeField] private List<GameObject> weapons;
+    [SerializeField] private List<GameObject> weaponsListCommon;
+    [SerializeField] private List<GameObject> weaponsListRare;
+    [SerializeField] private List<GameObject> weaponsListSuperRare;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider fuelBar;
     private void Awake()
@@ -113,7 +116,23 @@ public class logicManager : MonoBehaviour
     {
         Transform playerSprite = FindAnyObjectByType<rotateSprite>().transform;
         Transform player = FindAnyObjectByType<playerControl>().transform;
-        Instantiate(weapons[0],new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+        float randomType = UnityEngine.Random.Range(1f, 8f);
+        if(randomType >= 7)
+        {
+            int randomWeapon =  Random.Range(0, weaponsListCommon.Count);
+            Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+        }
+        else if(randomType >= 5)
+        {
+            int randomWeapon = Random.Range(0, weaponsListCommon.Count);
+            Instantiate(weaponsListRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+        }
+        else if(randomType >= 1)
+        {
+            int randomWeapon = Random.Range(0, weaponsListCommon.Count);
+            Instantiate(weaponsListCommon[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+        }
+        
          
     }
 }

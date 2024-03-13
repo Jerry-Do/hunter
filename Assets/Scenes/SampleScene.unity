@@ -500,12 +500,13 @@ MonoBehaviour:
   weaponName: {fileID: 0}
   player: {fileID: 0}
   timer: {fileID: 1838448925}
-  spawnerL: {fileID: 0}
-  spawnerR: {fileID: 0}
   time: 31
   orginalTime: 0
-  instance: {fileID: 0}
-  weapons:
+  weaponsListCommon:
+  - {fileID: 2844658226922663890, guid: a5c67f1d12922094698e73d4400fd3ab, type: 3}
+  weaponsListRare:
+  - {fileID: 4830346260207090099, guid: 1a20eee1dd2e3404da6057deea73f349, type: 3}
+  weaponsListSuperRare:
   - {fileID: 3994399682485130871, guid: 7f6ade2a62b6f4d4e89b873c3ac115ee, type: 3}
   healthBar: {fileID: 1419139691}
   fuelBar: {fileID: 381969342}
@@ -3580,8 +3581,6 @@ MonoBehaviour:
     spawnCount: 0
     enemyAlive: 0
   currentWaveCount: 0
-  player: {fileID: 0}
-  spawnTimer: 0
   enemiesAlive: 0
   maxEnemiesAllowed: 10
   maxEnemiesReached: 0
@@ -6094,8 +6093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dad748c5c03d1d40ae5800acee33356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storeTrigger: 0
-  cemeteryTrigger: 0
 --- !u!4 &1646258213
 Transform:
   m_ObjectHideFlags: 0
@@ -7163,7 +7160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb348ac8176d561488a3ce36d3f93fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instance: {fileID: 0}
 --- !u!1 &1913348091
 GameObject:
   m_ObjectHideFlags: 0

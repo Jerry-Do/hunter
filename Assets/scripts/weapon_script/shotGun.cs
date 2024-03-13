@@ -11,6 +11,7 @@ public class shotGun : weapon
         rateOfFire = 1.0f;
         maxNumAmmo = 5;
         damage = 3;
+        rarity = "sr";
     }
 
     private playerControl playerControl;
