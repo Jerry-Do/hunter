@@ -10,25 +10,27 @@ public class rotation : MonoBehaviour
     private Vector3 mousePos;
     private rotation instance;
     [SerializeField] private SpriteRenderer sprite;
+    public gameStateManager gameStateManager;
     // Start is called before the first frame update
     void Start()
     {
-       
-        
+        gameStateManager = FindObjectOfType<gameStateManager>();
+
     }
     // Update is called once per frame
     void Update()
     {
+        if (!gameStateManager.IsGamePaused)
+        {
+            mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 rotation = mousePos - transform.position;
 
-        Vector3 rotation = mousePos - transform.position;
+            float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
-        float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0, 0, rotZ);
-    
+            transform.rotation = Quaternion.Euler(0, 0, rotZ);
+        }
     }
 }
 

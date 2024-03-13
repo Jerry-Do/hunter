@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class playerControl : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class playerControl : MonoBehaviour
     private bool shootFlag = true;
     Vector3 moveDirection;
     public InputActionsManager InputActionsManager;
+    public gameStateManager gameStateManager;
     private void Awake()
     {
         if (instance != null)
@@ -60,8 +62,13 @@ public class playerControl : MonoBehaviour
         }
         //DefaultInputActions = new DefaultInputActions();
         InputActionsManager = FindObjectOfType<InputActionsManager>();
+        gameStateManager = FindObjectOfType<gameStateManager>();
         instance = this;
         DontDestroyOnLoad(instance);
+    }
+    public bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
     private void OnEnable()
     {
@@ -88,22 +95,33 @@ public class playerControl : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-        if(ammo == 0 && weaponName != "")
+    {
+        if (!IsPointerOverUI())
         {
-            
-            StartCoroutine(ReloadTime());
-           
+            shootFlag = true;
         }
-        if(shootFlag == false)
+        else
+        {
+            shootFlag = false;
+        }
+
+
+        if (ammo == 0 && weaponName != "")
+        {
+
+            StartCoroutine(ReloadTime());
+
+        }
+        if (shootFlag == false)
         {
             StartCoroutine(cooldown());
-            
+
         }
-        if(health == 0)
+        if (health == 0)
         {
             sprite.SetDeath();
         }
+
     }
     private void FixedUpdate()
     {
@@ -111,21 +129,21 @@ public class playerControl : MonoBehaviour
         float speedBoost = 1;
         speedingFlag = false;
         moveDirection = InputActionsManager.move.ReadValue<Vector2>();
-        if(InputActionsManager.move.IsPressed() && moveDirection.x < 0)
-        { 
-            rs.RotateBackward();
-        }
-        if (InputActionsManager.move.IsPressed() && moveDirection.x > 0)
-        {
-            rs.RotateForward();
-        }
-        moveDirection.Normalize();
-        //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
         
+            if(InputActionsManager.move.IsPressed() && moveDirection.x < 0)
+            { 
+                rs.RotateBackward();
+            }
+            if (InputActionsManager.move.IsPressed() && moveDirection.x > 0)
+            {
+                rs.RotateForward();
+            }
+            moveDirection.Normalize();
+        //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
 
 
 
-        if (Input.GetKey(KeyCode.Space))//sprint
+        if (InputActionsManager.speedUp.IsPressed())//sprint
         {
             speedingFlag = true;
             if (speedFuel > 0)
@@ -143,7 +161,7 @@ public class playerControl : MonoBehaviour
         {
             speedFuel += Time.fixedDeltaTime * 10;
         }
-        if(Input.GetKey(KeyCode.LeftShift) && speedingFlag == true)//dash
+        if (InputActionsManager.dash.IsPressed() && speedingFlag == true)//dash  
         {
            if(dashCoolCounter <= 0 && dashCounter <= 0)
             {
@@ -183,7 +201,7 @@ public class playerControl : MonoBehaviour
             weapon.shooting(speedingFlag);
             shootFlag = false;
             ammo--;
-            
+
         }
     }
 

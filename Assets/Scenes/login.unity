@@ -220,7 +220,7 @@ MonoBehaviour:
   m_OnDidEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 799165119}
+      - m_Target: {fileID: 1174068808}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
         m_MethodName: readPasswordInput
         m_Mode: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 799165119}
+      - m_Target: {fileID: 1174068808}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
         m_MethodName: OnLoginButtonPress
         m_Mode: 1
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_OnDidEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 799165119}
+      - m_Target: {fileID: 1174068808}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
         m_MethodName: readEmailInput
         m_Mode: 0
@@ -857,7 +857,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 799165119}
+      - m_Target: {fileID: 1174068808}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
         m_MethodName: OnRegisterButtonPress
         m_Mode: 1
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 799165119}
+      - m_Target: {fileID: 1174068808}
         m_TargetAssemblyTypeName: login, Assembly-CSharp
         m_MethodName: OnForgotPasswordButtonPress
         m_Mode: 1
@@ -1468,6 +1468,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080950643}
   m_CullTransparentMesh: 1
+--- !u!1 &1174068807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1174068809}
+  - component: {fileID: 1174068808}
+  m_Layer: 0
+  m_Name: loginController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1174068808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174068807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59889301b1a964f5f83d041de9b037d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1174068809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174068807}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 744.04877, y: 225.29169, z: -8.772817}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210247127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,3 +2320,4 @@ SceneRoots:
   - {fileID: 799165118}
   - {fileID: 843225538}
   - {fileID: 556861174}
+  - {fileID: 1174068809}
