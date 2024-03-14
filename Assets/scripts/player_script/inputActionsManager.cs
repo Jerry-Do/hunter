@@ -45,7 +45,7 @@ public class InputActionsManager : MonoBehaviour
         controls.Add("Down", KeyCode.S);
         controls.Add("Left", KeyCode.A);
         controls.Add("Right", KeyCode.D);
-        controls.Add("fire", KeyCode.Mouse0);
+        controls.Add("shoot", KeyCode.Mouse0);
         speedUp = new InputAction("Speed", binding: "<Keyboard>/space");
         dash = new InputAction("Dash", binding: "<Keyboard>/leftShift");
         controls.Add("Dash", KeyCode.LeftShift);
@@ -60,9 +60,9 @@ public class InputActionsManager : MonoBehaviour
         }
         PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
         PlayerPrefs.Save();
-        //UpdateButtonLabels();
+        UpdateButtonLabels();
     }
-    /*private void UpdateButtonLabels()
+    private void UpdateButtonLabels()
     {
         // For each control, update its corresponding button label with the saved or default key
         foreach (var control in controls)
@@ -71,12 +71,21 @@ public class InputActionsManager : MonoBehaviour
             {
                 if (button.name.StartsWith(control.Key, StringComparison.OrdinalIgnoreCase))
                 {
-                    button.GetComponentInChildren<Text>().text = control.Value.ToString();
-                    break; // Found the matching button, no need to continue this inner loop
+                    if (control.Value.ToString() == "Mouse0")
+                    {
+                        button.GetComponentInChildren<Text>().text = "Left Click";
+                        break;
+                    }
+                    else
+                    {
+                        button.GetComponentInChildren<Text>().text = control.Value.ToString();
+                        break;
+                    }
+                     // Found the matching button, no need to continue this inner loop
                 }
             }
         }
-    }*/
+    }
     // initialize default bindings
     private void ApplyDefaultBindings()
     {
@@ -152,7 +161,7 @@ public class InputActionsManager : MonoBehaviour
     public void BindAction(string actionName, KeyCode key)
     {
         InputAction actionToBind;
-        if (actionName == "fire")
+        if (actionName == "shoot")
         {
             actionToBind = shoot;
         }
@@ -297,7 +306,6 @@ public class InputActionsManager : MonoBehaviour
         // Re-enable the move action
         move.Enable();
         // Check each binding in the move action
-
     }
 
     public void EnableInputActions()
