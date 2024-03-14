@@ -1,35 +1,25 @@
+using System.Security.Cryptography;
+using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class login : MonoBehaviour
+public class Login : MonoBehaviour
 {
     private MongoClient client;
-    private IMongoDatabase database;
     private IMongoCollection<BsonDocument> collection;
 
+    public string email;
+    public string password;
 
-    private string email;
-    private string password;
-    int n, m, i;
     // Start is called before the first frame update
     void Start()
     {
         // Initialize MongoDB connection
         client = new MongoClient("mongodb+srv://esomeh:ZndxWXyeRBTpe2GG@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
-        database = client.GetDatabase("RegisterDB");
-        collection = database.GetCollection<BsonDocument>("users");
-
+        var database = client.GetDatabase("RegisterDB");
+        collection = database.GetCollection<BsonDocument>("RegisterUnityCollection");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void readEmailInput(string emailInput)
     {
         email = emailInput;
@@ -41,29 +31,49 @@ public class login : MonoBehaviour
         password = passwordInput;
         Debug.Log(password);
     }
-    // login function
-    public void OnLoginButtonPress()
+
+    public string HashPassword(string password)
     {
-        n++;
-        Debug.Log("Login Button clicked " + n + " times.");
-    }
-    // navigate register page
-    public void OnRegisterButtonPress()
-    {
-        m++;
-        Debug.Log("Register Button clicked " + m + " times.");
-        //SceneManager.LoadScene("register");
-    }
-    // forgot password login
-    public void OnForgotPasswordButtonPress()
-    {
-        var newUser = new BsonDocument
+        using (SHA256 sha256 = SHA256.Create())
         {
-            {"email", email},
-            {"password", password} // Consider hashing the password before storing
-        };
-        i++;
-        Debug.Log("Forgot Password Button clicked " + i + " times.");
-        //SceneManager.LoadScene("");
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                builder.Append(bytes[i].ToString("x2"));
+            }
+            return builder.ToString();
+        }
     }
+
+    public async void OnLoginButtonPress()
+    {
+       
+
+        var filter = Builders<BsonDocument>.Filter.Eq("email", email);
+        var user = await collection.Find(filter).FirstOrDefaultAsync();
+
+        if (user != null)
+        {
+            // Email found, now check the password
+            string storedHashedPassword = user.GetValue("password").AsString;
+            string hashedPassword = HashPassword(password);
+
+            if (hashedPassword == storedHashedPassword)
+            {
+                Debug.Log("Login successful.");
+            }
+            else
+            {
+                Debug.LogError("Invalid password.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Email not found.");
+        }
+    }
+   
+
+  
 }
