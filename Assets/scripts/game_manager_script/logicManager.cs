@@ -116,18 +116,18 @@ public class logicManager : MonoBehaviour
     {
         Transform playerSprite = FindAnyObjectByType<rotateSprite>().transform;
         Transform player = FindAnyObjectByType<playerControl>().transform;
-        float randomType = UnityEngine.Random.Range(1f, 8f);
-        if(randomType >= 7)
+        float randomType = UnityEngine.Random.Range(1f, 10f);
+        if(randomType <= 5)
         {
             int randomWeapon =  Random.Range(0, weaponsListCommon.Count);
             Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
         }
-        else if(randomType >= 5)
+        else if(randomType <= 8)
         {
             int randomWeapon = Random.Range(0, weaponsListCommon.Count);
             Instantiate(weaponsListRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
         }
-        else if(randomType >= 1)
+        else if(randomType <= 10)
         {
             int randomWeapon = Random.Range(0, weaponsListCommon.Count);
             Instantiate(weaponsListCommon[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);

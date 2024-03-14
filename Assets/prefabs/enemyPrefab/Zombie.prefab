@@ -126,7 +126,7 @@ MonoBehaviour:
   sprite: {fileID: 3578734657076376963}
   health: 10
   enemyDamage: 1
-  speed: 2
+  speed: 5
   change: 0
 --- !u!61 &-4072485807201995184
 BoxCollider2D:
