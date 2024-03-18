@@ -79,6 +79,7 @@ public class playerControl : MonoBehaviour
         //shoot.performed += Fire;
         InputActionsManager.EnableInputActions();
         InputActionsManager.shoot.performed += Fire;
+        
     }
     private void OnDisable()
     {
@@ -90,19 +91,26 @@ public class playerControl : MonoBehaviour
     {
         sprite = gameObject.GetComponentInChildren<rotateSprite>();
         logic = GameObject.FindGameObjectWithTag("logic").GetComponent<logicManager>();
-        sound = GetComponent<AudioSource>();
+        //sound = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!IsPointerOverUI())
+        if (IsPointerOverUI())
         {
-            shootFlag = true;
+            if (InputActionsManager.IsShootBoundToLeftClick())
+            {
+                shootFlag = false;
+                InputActionsManager.shoot.Disable();
+            }
+            
         }
         else
         {
-            shootFlag = false;
+            shootFlag = true;
+            InputActionsManager.shoot.Enable();
         }
 
 
@@ -114,6 +122,7 @@ public class playerControl : MonoBehaviour
         }
         if (shootFlag == false)
         {
+
             StartCoroutine(cooldown());
 
         }
@@ -197,7 +206,8 @@ public class playerControl : MonoBehaviour
     {
         if (shootFlag && ammo > 0)
         {
-            sound.Play();
+            //sound.Play();
+            soundManager.instance.PlaySfx("shot");
             weapon.shooting(speedingFlag);
             shootFlag = false;
             ammo--;

@@ -19,7 +19,7 @@ public class InputActionsManager : MonoBehaviour
     public InputAction dash;
 
     public Button[] buttons;
-    
+    private bool clickFlag = false;
     public Dictionary<string, KeyCode> controls = new Dictionary<string, KeyCode>();
     [HideInInspector]
     public bool listening = false;
@@ -39,29 +39,38 @@ public class InputActionsManager : MonoBehaviour
     private void Awake()
     {
         defaultInputActions = new DefaultInputActions();
+        // initialize 
         move = defaultInputActions.Player.Move;
         shoot = defaultInputActions.Player.Fire;
+        speedUp = new InputAction("Speed", binding: "<Keyboard>/space");
+        dash = new InputAction("Dash", binding: "<Keyboard>/leftShift");
+
         controls.Add("Up", KeyCode.W);
         controls.Add("Down", KeyCode.S);
         controls.Add("Left", KeyCode.A);
         controls.Add("Right", KeyCode.D);
         controls.Add("shoot", KeyCode.Mouse0);
-        speedUp = new InputAction("Speed", binding: "<Keyboard>/space");
-        dash = new InputAction("Dash", binding: "<Keyboard>/leftShift");
+        
         controls.Add("Dash", KeyCode.LeftShift);
         controls.Add("Speed", KeyCode.Space);
+
+        // using default key bindings if there are no key bindings modified        
         if (PlayerPrefs.GetInt("BindingsModified", 0) == 0)
         {
             ApplyDefaultBindings();
         }
         else
         {
+            // load modified key bindings
             LoadBindings();
+            //clickFlag = false;
         }
         PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
         PlayerPrefs.Save();
+        // update button labels
         UpdateButtonLabels();
     }
+    // update button labels according to saved bindings
     private void UpdateButtonLabels()
     {
         // For each control, update its corresponding button label with the saved or default key
@@ -71,16 +80,10 @@ public class InputActionsManager : MonoBehaviour
             {
                 if (button.name.StartsWith(control.Key, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (control.Value.ToString() == "Mouse0")
-                    {
-                        button.GetComponentInChildren<Text>().text = "Left Click";
+                    
+                        button.GetComponentInChildren<Text>().text = PlayerPrefs.GetString(control.Key + "Binding");
                         break;
-                    }
-                    else
-                    {
-                        button.GetComponentInChildren<Text>().text = control.Value.ToString();
-                        break;
-                    }
+                    
                      // Found the matching button, no need to continue this inner loop
                 }
             }
@@ -89,20 +92,24 @@ public class InputActionsManager : MonoBehaviour
     // initialize default bindings
     private void ApplyDefaultBindings()
     {
-        // Set default bindings here, e.g., for WASD and arrow keys
+        // Set default bindings 
         BindAction("Up", KeyCode.W);
         BindAction("Down", KeyCode.S);
         BindAction("Left", KeyCode.A);
         BindAction("Right", KeyCode.D);
-        BindFireAction("<Mouse>/leftButton");
-        BindOtherActions("Dash", "<Keyboard>/leftShift");
-        BindOtherActions("Speed", "<Keyboard>/space");
+        BindAction("shoot", KeyCode.Mouse0);
+        BindAction("Dash", KeyCode.LeftShift);
+        BindAction("Speed", KeyCode.Space);
+        //BindFireAction("<Mouse>/leftButton"); // default shoot
+        //BindOtherActions("Dash", "<Keyboard>/leftShift"); // default dash
+        //BindOtherActions("Speed", "<Keyboard>/space"); // default speed up
     }
     // receive key change and update
     public void ChangeControls(string control)
     {
         listening = true;
         control_name = control;
+        // listen to key change, update button labels and bind new key binding
         foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         {
             if (Input.GetKeyDown(key))
@@ -118,46 +125,32 @@ public class InputActionsManager : MonoBehaviour
         }
 
     }
-    // update text
+    // update button label with user input
     private void UpdateButtonText(string controlName, KeyCode key)
     {
         foreach (Button button in buttons)
         {
             if (button.name == controlName + "Button")
             {
-                if (key.ToString() == "Mouse0")
-                {
-                    button.GetComponentInChildren<Text>().text = "Left Click";
-                }
-                else
-                {
-                    button.GetComponentInChildren<Text>().text = key.ToString();
-                }
+                
+                    button.GetComponentInChildren<Text>().text = ConvertKeyCodeToPath(key);
+                
             }
             
             
         }
     }
+    // check if shoot is binding to left click
     public bool IsShootBoundToLeftClick()
     {
-        foreach (Button button in buttons)
+        if (PlayerPrefs.GetString("shootBinding") == "<Mouse>/leftButton")
         {
-            if (button.name == "shootButton")
-            {
-                
-                if(button.GetComponentInChildren<Text>().text == "Left Click")
-                {
-                    return true;
-                }
-               
-            }
-
-
+            return true;
         }
         return false;
     }
 
-    // This method now takes KeyCode and converts it to the correct path
+    // bind actions with key bindings
     public void BindAction(string actionName, KeyCode key)
     {
         InputAction actionToBind;
@@ -177,10 +170,13 @@ public class InputActionsManager : MonoBehaviour
         {
             actionToBind = move;
         }
+        // convert key code to key path
         string keyPath = ConvertKeyCodeToPath(key);
+        // bind actions
         if (actionToBind == shoot)
         {
             BindFireAction(keyPath);
+            clickFlag = false;
         }
         else if (actionToBind == move)
         {
@@ -194,32 +190,13 @@ public class InputActionsManager : MonoBehaviour
         {
             BindOtherActions(actionName, keyPath);
         }
+        // save key bindings
         PlayerPrefs.SetInt("BindingsModified", 1); // Set the flag
         PlayerPrefs.SetString($"{actionName}Binding", keyPath);
         PlayerPrefs.Save();
     }
-    // This method now takes KeyCode and converts it to the correct path
-    public void BindOtherActions(string actionName, string key)
-    {
-        if (actionName == "Dash")
-        {
-            dash.Disable();
-            //dash.ChangeBinding(key);
-            //dash.ApplyBindingOverride(key);
-            dash = new InputAction("Dash", binding: key);
-            dash.Enable();
-        }
-        else if (actionName == "Speed")
-        {
-            speedUp.Disable();
-            //speedUp.ChangeBinding(key);
-            //speedUp.ApplyBindingOverride(key);
-            speedUp = new InputAction("Speed", binding: key);
-            speedUp.Enable();
-        }
-        
-    }
-    // retrieve saved bindings
+    
+    // retrieve saved bindings if there is modified key binding
     private void LoadBindings()
     {
         if (PlayerPrefs.HasKey("DashBinding"))
@@ -232,16 +209,15 @@ public class InputActionsManager : MonoBehaviour
             var speedBindingPath = PlayerPrefs.GetString("Speedinding");
             BindOtherActions("Speed", speedBindingPath);
         }
-        if (PlayerPrefs.HasKey("fireBinding"))
+        if (PlayerPrefs.HasKey("shootBinding"))
         {
-            var fireBindingPath = PlayerPrefs.GetString("fireBinding");
+            var fireBindingPath = PlayerPrefs.GetString("shootBinding");
             BindFireAction(fireBindingPath);
         }
 
         if (PlayerPrefs.HasKey("UpBinding"))
         {
             
-            // Load the saved binding
             var DownBindingPath = PlayerPrefs.GetString("UpBinding");
             BindMoveAction("up", DownBindingPath);
         }
@@ -249,7 +225,6 @@ public class InputActionsManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DownBinding"))
         {
             
-            // Load the saved binding
             var DownBindingPath = PlayerPrefs.GetString("DownBinding");
             BindMoveAction("down", DownBindingPath);
         }
@@ -257,7 +232,6 @@ public class InputActionsManager : MonoBehaviour
         if (PlayerPrefs.HasKey("LeftBinding"))
         {
          
-            // Load the saved binding
             var LeftBindingPath = PlayerPrefs.GetString("LeftBinding");
             BindMoveAction("left", LeftBindingPath);
         }
@@ -265,7 +239,6 @@ public class InputActionsManager : MonoBehaviour
         if (PlayerPrefs.HasKey("RightBinding"))
         {
             
-            // Load the saved binding
             var RightBindingPath = PlayerPrefs.GetString("RightBinding");
             BindMoveAction("right", RightBindingPath);
         }
@@ -276,7 +249,6 @@ public class InputActionsManager : MonoBehaviour
     private string ConvertKeyCodeToPath(KeyCode key)
     {
         if (key == KeyCode.Mouse0) return "<Mouse>/leftButton";
-        // Add more conversions here as needed
         return $"<Keyboard>/{key.ToString().ToLower()}";
     }
     // change control if there is any key updating
@@ -286,6 +258,32 @@ public class InputActionsManager : MonoBehaviour
         {
             ChangeControls(control_name);
         }
+    }
+    // Bind other actions not using default input actions
+    public void BindOtherActions(string actionName, string key)
+    {
+
+        if (actionName == "Dash")
+        {
+            dash.Disable();
+            //dash.ChangeBinding(key);
+            //dash.ApplyBindingOverride(key);
+
+            // assgin new key binding to dash
+            dash = new InputAction("Dash", binding: key);
+            dash.Enable();
+        }
+        else if (actionName == "Speed")
+        {
+            speedUp.Disable();
+            //speedUp.ChangeBinding(key);
+            //speedUp.ApplyBindingOverride(key);
+
+            // assgin new key binding to speedUp
+            speedUp = new InputAction("Speed", binding: key);
+            speedUp.Enable();
+        }
+
     }
     // save new key bingdings for move
     public void BindMoveAction(string direction, string keyPath)
@@ -307,7 +305,7 @@ public class InputActionsManager : MonoBehaviour
         move.Enable();
         // Check each binding in the move action
     }
-
+    // enable input actions
     public void EnableInputActions()
     {
         //move = defaultInputActions.Player.Move;
@@ -317,7 +315,7 @@ public class InputActionsManager : MonoBehaviour
         dash.Enable();
         speedUp.Enable();
     }
-
+    // disable input actions
     public void DisableInputActions()
     {
         move.Disable();
@@ -325,7 +323,7 @@ public class InputActionsManager : MonoBehaviour
         dash.Disable();
         speedUp.Disable();
     }
-    // save new key bindings for fire action
+    // save new key bindings for shoot action
     public void BindFireAction(string newPath)
     {
         // Disable the action before modifying bindings
@@ -336,8 +334,9 @@ public class InputActionsManager : MonoBehaviour
         {
             if (shoot.bindings[i].groups.Contains("Keyboard&Mouse"))
             {
-                shoot.ChangeBinding(i).Erase();
-                shoot.AddBinding(newPath).WithGroup("Keyboard&Mouse");
+                //shoot.ChangeBinding(i).Erase();
+                //shoot.AddBinding(newPath).WithGroup("Keyboard&Mouse");
+                shoot.ChangeBinding(i).WithPath(newPath);
                 shoot.ApplyBindingOverride(i, newPath);
                 break;
             }
