@@ -12,9 +12,7 @@ public class richocetAmmo : bullet
         speed = 12f;
         damage = 10;
     }
-    [SerializeField] private int richocetNumber = 3;
-    [SerializeField] private float richocetDitance = 8f;
-    private bool hit = false;
+
 
     void Update()
     {
@@ -29,11 +27,11 @@ public class richocetAmmo : bullet
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("enemy") && collision.gameObject.CompareTag("obsticle"))
+        if (collision.gameObject.CompareTag("enemy") || collision.gameObject.CompareTag("obsticle"))
         {
             Vector2 normal = collision.contacts[0].normal;
             Vector2 dir = Vector2.Reflect(rb2D.velocity, normal).normalized;
-            rb2D.velocity = dir * speed;
+            rb2D.velocity = dir * speed * 2;
             enemy enemyObject = collision.gameObject.GetComponent<enemy>();
             enemyObject.minusHealth(damage);
         }
