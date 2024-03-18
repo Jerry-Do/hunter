@@ -7,6 +7,7 @@ public class audio : MonoBehaviour
 {
     float audioVolume;
     public Slider mySlider;
+    
     void Update()
     {
         audioVolume = mySlider.value;

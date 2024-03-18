@@ -17,6 +17,8 @@ TagManager:
   - door
   - landing
   - SceneManager
+  - item
+  - pauseButton
   layers:
   - Default
   - TransparentFX

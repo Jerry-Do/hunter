@@ -18,14 +18,14 @@ public class pauseMenuController : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        gameStateManager.IsGamePaused = true; 
+        gameStateManager.IsGamePaused = true; // set pause state, weapon rotation is diabled
     }
     // resume game 
     public void resume()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
-        gameStateManager.IsGamePaused = false;
+        gameStateManager.IsGamePaused = false; // weapon rotation is enabled
     }
     // quit game 
     public void quit()
@@ -50,7 +50,7 @@ public class pauseMenuController : MonoBehaviour
     // go to control menu
     public void control()
     {
-        pauseMenu.SetActive(false);
+        pauseMenu.SetActive(false); // deactive pause menu
         Time.timeScale = 0f;
         controlMenu.SetActive(true);
 
@@ -60,7 +60,7 @@ public class pauseMenuController : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        controlMenu.SetActive(false);
+        controlMenu.SetActive(false); // deactive control menu 
     }
     // go to sound menu
     public void sound()
@@ -74,7 +74,7 @@ public class pauseMenuController : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        soundMenu.SetActive(false);
+        soundMenu.SetActive(false); // deactive sound menu
     }
 
 }
