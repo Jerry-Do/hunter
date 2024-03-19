@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using TMPro;
+using System.Data.SqlTypes;
 //using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class logicManager : MonoBehaviour
@@ -25,7 +26,10 @@ public class logicManager : MonoBehaviour
     public TMP_Text timerText;
     public Text weaponName;
     public playerControl player;
+    private GameObject weapon;
+    private bool waveEnd = false;
     private bool startTimer = false;
+    [SerializeField] private float weaponPickupMul;
     [SerializeField] private List<GameObject> weaponsListCommon;
     [SerializeField] private List<GameObject> weaponsListRare;
     [SerializeField] private List<GameObject> weaponsListSuperRare;
@@ -42,7 +46,7 @@ public class logicManager : MonoBehaviour
     void Update()
     {
 
-        
+        spawner spw = FindAnyObjectByType<spawner>();
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
@@ -63,9 +67,10 @@ public class logicManager : MonoBehaviour
         {
             reloadIndicator.text = "";
         }
-        if(startTimer)
+        if(startTimer)//Pause the spawner until the timer runs out or an item is picked up
         {
             
+            spw.setPauseFlag(true);
             timerText.enabled = true;
             timerReal -= Time.deltaTime;
             timerText.text = "Time: " + ((int)timerReal).ToString();
@@ -73,12 +78,21 @@ public class logicManager : MonoBehaviour
             {
                 startTimer = false;
                 timerText.enabled = false;
+            }  
+            if (weapon.IsDestroyed())
+            {
+                pointMultiplier += weaponPickupMul;
+                spw.setPauseFlag(false);
+                startTimer = false;
             }
+            
         }
         else
         {
             timerText.enabled = false;
+            spw.setPauseFlag(false);
         }
+       
     }
    
     void CheckFOrDuplicate()
@@ -130,22 +144,23 @@ public class logicManager : MonoBehaviour
         if(randomType <= 5)
         {
             int randomWeapon =  Random.Range(0, weaponsListCommon.Count);
-            Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+            weapon = Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
         }
         else if(randomType <= 8)
         {
             int randomWeapon = Random.Range(0, weaponsListCommon.Count);
-            Instantiate(weaponsListRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+            weapon = Instantiate(weaponsListRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
         }
         else if(randomType <= 10)
         {
             int randomWeapon = Random.Range(0, weaponsListCommon.Count);
-            Instantiate(weaponsListCommon[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+            weapon = Instantiate(weaponsListCommon[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+            
         }
-        
+        waveEnd = true;
          
     }
-
+    //get the reference of the instantiated gun, keep checking
     public void setTimerFlagToTrue()
     {
         startTimer = true;

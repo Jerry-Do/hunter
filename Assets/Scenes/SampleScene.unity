@@ -903,6 +903,7 @@ MonoBehaviour:
   timerText: {fileID: 1886295614}
   weaponName: {fileID: 0}
   player: {fileID: 0}
+  weaponPickupMul: 0.5
   weaponsListCommon:
   - {fileID: 2844658226922663890, guid: a5c67f1d12922094698e73d4400fd3ab, type: 3}
   weaponsListRare:
@@ -4837,6 +4838,17 @@ MonoBehaviour:
     spawnInterval: 1
     spawnCount: 0
     enemyAlive: 0
+  - waveName: 
+    enemyGroups:
+    - enemyName: Zombie
+      enemyCount: 1
+      spawnCount: 0
+      enemyPrefab: {fileID: 3578734657076376961, guid: cbfaff5d7bd8451418628d3937f6577e,
+        type: 3}
+    waveQuota: 1
+    spawnInterval: 1
+    spawnCount: 0
+    enemyAlive: 0
   currentWaveCount: 0
   enemiesAlive: 0
   maxEnemiesAllowed: 10
@@ -7556,8 +7568,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 843.75, y: 209.2}
-  m_SizeDelta: {x: 232.5, y: 50}
+  m_AnchoredPosition: {x: 801.38, y: 209.2}
+  m_SizeDelta: {x: 317.25, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1504883344
 MonoBehaviour:

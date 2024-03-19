@@ -127,5 +127,8 @@ public class spawner : MonoBehaviour
         }
     }
 
-   
+   public void setPauseFlag(bool flag)
+   {
+        pauseFlag = flag;
+   }
 }
