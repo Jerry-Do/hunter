@@ -4,63 +4,51 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
-using static dropManger;
+using TMPro;
 //using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class logicManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    //public Text health;
-    //Mark the begining of the wave
-    //Find a way to mark the end of the wave
-    //if the end of a wave pause the game and run spawn weapon
     public GameObject gameOver;
     public Text speedFuel;
+    private double point = 0;
+    [SerializeField] private int time;
+    private float timerReal;
+    private double pointMultiplier = 1.0f;
     public Text ammo;
-    public Text score;
+    public Text pointText;
     public Text reloadIndicator;
     public Text playerhealth;
     public Text money;
+    public TMP_Text pointMultiplierText;
+    public TMP_Text timerText;
     public Text weaponName;
     public playerControl player;
-    public Text timer;
-    private spawner spawnerL;
-    private spawner spawnerR;
-    public float time = 31;
-    public float orginalTime;
-    private logicManager instance;
+    private bool startTimer = false;
     [SerializeField] private List<GameObject> weaponsListCommon;
     [SerializeField] private List<GameObject> weaponsListRare;
     [SerializeField] private List<GameObject> weaponsListSuperRare;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider fuelBar;
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(instance);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(instance);
-    }
+
     void Start()
     {
-        orginalTime = time;
+
         player =  GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckFOrDuplicate();
-        //time -= Time.deltaTime;
-        timer.text = "Time: " + ((int)time).ToString();
+
+        
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
         ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
-
+        pointText.text = "Point: " + ((int)point).ToString();
         money.text = "Money: " + player.ReturnMoney().ToString();
+        pointMultiplierText.text = "Point Multiplier: " + pointMultiplier.ToString();
         healthBar.value = player.ReturnHealth();
         fuelBar.value = player.ReturnFuel();
         if (player.ReturnHealth() <= 0)
@@ -74,6 +62,22 @@ public class logicManager : MonoBehaviour
         else
         {
             reloadIndicator.text = "";
+        }
+        if(startTimer)
+        {
+            
+            timerText.enabled = true;
+            timerReal -= Time.deltaTime;
+            timerText.text = "Time: " + ((int)timerReal).ToString();
+            if(timerReal == 0)
+            {
+                startTimer = false;
+                timerText.enabled = false;
+            }
+        }
+        else
+        {
+            timerText.enabled = false;
         }
     }
    
@@ -95,8 +99,6 @@ public class logicManager : MonoBehaviour
     void GameOver()
     {
         player.enabled = false;
-        spawnerL.enabled = false;
-        spawnerR.enabled = false;
         gameOver.SetActive(true);
         // navigate to game over screen
         SceneManager.LoadScene("gameOver");
@@ -112,6 +114,14 @@ public class logicManager : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    public void addPoint(int amount)
+    {
+        point +=  amount * pointMultiplier;
+    }
+    public void setMutiplier(double amount)
+    {
+        pointMultiplier += amount;
+    }
     public void spawnRandomWeapon()
     {
         Transform playerSprite = FindAnyObjectByType<rotateSprite>().transform;
@@ -134,5 +144,11 @@ public class logicManager : MonoBehaviour
         }
         
          
+    }
+
+    public void setTimerFlagToTrue()
+    {
+        startTimer = true;
+        timerReal = time;
     }
 }

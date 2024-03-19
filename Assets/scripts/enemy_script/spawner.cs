@@ -37,6 +37,8 @@ public class spawner : MonoBehaviour
     public float waveInterval;
     [Header("SpawnPosition")]
     public List<Transform> relativeSpawnPos;
+
+    public bool pauseFlag = false;
     private void Start()
     {
         player = FindObjectOfType<playerControl>().transform;
@@ -47,7 +49,7 @@ public class spawner : MonoBehaviour
     private void FixedUpdate()
     {
        
-        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0)
+        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
         {
             StartCoroutine(BeginNextWave());
         }
@@ -121,6 +123,7 @@ public class spawner : MonoBehaviour
         {
             logicManager lm = FindObjectOfType<logicManager>();
             lm.spawnRandomWeapon();
+            lm.setTimerFlagToTrue();
         }
     }
 

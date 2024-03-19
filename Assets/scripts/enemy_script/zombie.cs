@@ -8,14 +8,17 @@ public class zombie : enemy
 
     private AudioSource hitSound;
     public Animator sprite;
-    //private int score = 1;
-    public int health = 10;
-    public int enemyDamage = 3;
+   
     [SerializeField] private float speed = 3.0f;
     private playerControl playerControl;
     public bool change = false;
- 
     
+    private zombie()
+    {
+        health = 10;
+        point = 1;
+        enemyDamage = 5;
+    }
 
     // Update is called once per frame
     void Update()

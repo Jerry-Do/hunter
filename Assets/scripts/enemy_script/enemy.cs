@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class enemy : MonoBehaviour
 {
-    public float despawnDistance = 20f;
+    [SerializeField] protected float despawnDistance = 20f;
     protected Transform player;
+    protected int point;
+    protected int health;
+    protected int enemyDamage;
     public abstract void minusHealth(int damage);
     private void Start()
     {
@@ -14,6 +17,8 @@ public abstract class enemy : MonoBehaviour
     private void OnDestroy()
     {
         spawner es = FindObjectOfType<spawner>();
+        logicManager lm = FindAnyObjectByType<logicManager>();
+        lm.addPoint(point);
         es.OnEnemyKilled();
     }
 
