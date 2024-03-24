@@ -120,6 +120,7 @@ public class logicManager : MonoBehaviour
         player.enabled = false;
         gameOver.SetActive(true);
         // navigate to game over screen
+        soundManager.instance.PlayMusic("GameOver");
         SceneManager.LoadScene("gameOver");
     }
  

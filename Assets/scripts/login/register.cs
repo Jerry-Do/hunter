@@ -3,9 +3,13 @@ using MongoDB.Driver;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Security.Cryptography;
 using System.Text;
 using System;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class register : MonoBehaviour
 {
@@ -17,6 +21,11 @@ public class register : MonoBehaviour
     public string email;
     public string password;
     int n, m;
+
+    EventSystem system;
+    //public Selectable firstInput;
+    public Button submitButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +33,34 @@ public class register : MonoBehaviour
         client = new MongoClient("mongodb+srv://esomeh:ZndxWXyeRBTpe2GG@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
         database = client.GetDatabase("RegisterDB");
         collection = database.GetCollection<BsonDocument>("RegisterUnityCollection");
+        system = EventSystem.current;
+        //firstInput.Select();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Selectable prev = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            if (prev != null)
+            {
+                prev.Select();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            if (next != null)
+            {
+                
+                next.Select();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            submitButton.onClick.Invoke();
+        }
     }
 
     public void readEmailInput(string emailInput)
@@ -48,7 +79,7 @@ public class register : MonoBehaviour
     {
         n++;
         Debug.Log("Login Button clicked " + n + " times.");
-        //SceneManager.LoadScene("login");
+        SceneManager.LoadScene("login");
     }
     // register function
 
@@ -76,6 +107,10 @@ public class register : MonoBehaviour
         {
             await collection.InsertOneAsync(newUser);
             Debug.Log("User registered successfully.");
+            var filter = Builders<BsonDocument>.Filter.Eq("email", email);
+            var user = await collection.Find(filter).FirstOrDefaultAsync();
+            UserDataHolder.Instance.UserDocument = user;
+            SceneManager.LoadScene("profile");
         }
         catch (Exception ex)
         {

@@ -8,6 +8,7 @@ public class pauseMenuController : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject controlMenu;
     [SerializeField] GameObject soundMenu;
+    [SerializeField] GameObject quitConfirmation;
     public gameStateManager gameStateManager;
     private void Start()
     {
@@ -30,6 +31,20 @@ public class pauseMenuController : MonoBehaviour
     // quit game 
     public void quit()
     {
+        Time.timeScale = 0f;
+        Debug.Log("quit");
+        pauseMenu.SetActive(false);
+        quitConfirmation.SetActive(true);
+        //#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        //UnityEditor.EditorApplication.isPlaying = false;
+        //#else
+        //Application.Quit();
+        //#endif  
+    }
+    public void ConfirmQuit()
+    {
         Time.timeScale = 1f;
         Debug.Log("quit");
         #if UNITY_EDITOR
@@ -38,7 +53,15 @@ public class pauseMenuController : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         #else
         Application.Quit();
-        #endif  
+        #endif
+    }
+    // resume game 
+    public void ConfirmResume()
+    {
+        pauseMenu.SetActive(false);
+        quitConfirmation.SetActive(false);
+        Time.timeScale = 1f;
+        gameStateManager.IsGamePaused = false; // weapon rotation is enabled
     }
     // navigate back to main menu
     public void backToMainMenu()
