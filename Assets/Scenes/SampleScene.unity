@@ -902,7 +902,6 @@ MonoBehaviour:
   pointMultiplierText: {fileID: 1504883344}
   timerText: {fileID: 1886295614}
   weaponName: {fileID: 0}
-  player: {fileID: 0}
   weaponPickupMul: 0.5
   weaponsListCommon:
   - {fileID: 2844658226922663890, guid: a5c67f1d12922094698e73d4400fd3ab, type: 3}
@@ -6254,6 +6253,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1009518110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1316262377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1316262378}
+  m_Layer: 0
+  m_Name: tracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1316262378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316262377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.25, y: 14.2, z: -1.8399539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1317301118
 GameObject:
   m_ObjectHideFlags: 0
@@ -10832,7 +10862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.7397, y: 7.9604}
+  m_AnchoredPosition: {x: -0.000014961, y: 335}
   m_SizeDelta: {x: 448.5544, y: 163.9207}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1886295614
@@ -26834,3 +26864,4 @@ SceneRoots:
   - {fileID: 981389083}
   - {fileID: 1587217090}
   - {fileID: 13241081038182903}
+  - {fileID: 1316262378}

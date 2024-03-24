@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Manages the handgun's logic and its attributes
+/// </summary>
 public class handGun : weapon
 {
     public handGun()

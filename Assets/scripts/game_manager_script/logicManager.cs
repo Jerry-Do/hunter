@@ -7,7 +7,11 @@ using Unity.VisualScripting;
 using TMPro;
 using System.Data.SqlTypes;
 //using static UnityEngine.Rendering.VirtualTexturing.Debugging;
-
+/// <summary>
+/// Logic manager for the game. Manages the UI elements on the screen, the enemy spawner 
+/// and the point system. Right now also deals with the weapon spawner, might remove 
+/// it in the future
+/// </summary>
 public class logicManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -25,10 +29,11 @@ public class logicManager : MonoBehaviour
     public TMP_Text pointMultiplierText;
     public TMP_Text timerText;
     public Text weaponName;
-    public playerControl player;
+    private playerControl player;
     private GameObject weapon;
     private bool waveEnd = false;
     private bool startTimer = false;
+    private bool weaponDuplication;
     [SerializeField] private float weaponPickupMul;
     [SerializeField] private List<GameObject> weaponsListCommon;
     [SerializeField] private List<GameObject> weaponsListRare;
@@ -67,7 +72,7 @@ public class logicManager : MonoBehaviour
         {
             reloadIndicator.text = "";
         }
-        if(startTimer)//Pause the spawner until the timer runs out or an item is picked up
+        if(startTimer)//Start the timer
         {
             
             spw.setPauseFlag(true);
@@ -79,9 +84,9 @@ public class logicManager : MonoBehaviour
                 startTimer = false;
                 timerText.enabled = false;
             }  
-            if (weapon.IsDestroyed())
+            if (weapon.IsDestroyed())//If the spawned weapon picked up
             {
-                pointMultiplier += weaponPickupMul;
+                pointMultiplier += weaponDuplication ? weaponPickupMul * 2 : weaponPickupMul;//if the picked up weapon is the same as the player's weapon, then double the multiplier
                 spw.setPauseFlag(false);
                 startTimer = false;
             }
@@ -139,31 +144,42 @@ public class logicManager : MonoBehaviour
     public void spawnRandomWeapon()
     {
         Transform playerSprite = FindAnyObjectByType<rotateSprite>().transform;
-        Transform player = FindAnyObjectByType<playerControl>().transform;
+        Transform playerPos = FindAnyObjectByType<playerControl>().transform;
         float randomType = UnityEngine.Random.Range(1f, 10f);
         if(randomType <= 5)
         {
             int randomWeapon =  Random.Range(0, weaponsListCommon.Count);
-            weapon = Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+            weapon = Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(playerPos.transform.position.x + 5, playerPos.transform.position.y, 0), playerSprite.rotation);
         }
         else if(randomType <= 8)
         {
             int randomWeapon = Random.Range(0, weaponsListCommon.Count);
-            weapon = Instantiate(weaponsListRare[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
+            weapon = Instantiate(weaponsListRare[randomWeapon], new Vector3(playerPos.transform.position.x + 5, playerPos.transform.position.y, 0), playerSprite.rotation);
         }
         else if(randomType <= 10)
         {
             int randomWeapon = Random.Range(0, weaponsListCommon.Count);
-            weapon = Instantiate(weaponsListCommon[randomWeapon], new Vector3(player.transform.position.x + 5, player.transform.position.y, 0), playerSprite.rotation);
-            
+            weapon = Instantiate(weaponsListCommon[randomWeapon], new Vector3(playerPos.transform.position.x + 5, playerPos.transform.position.y, 0), playerSprite.rotation);
         }
+        weapon w = weapon.GetComponent<weapon>();
+        weaponDuplication = w.returnName().Equals(player.ReturnWeaponName());//Check if the spawned is the same as the player's weapon
+        
         waveEnd = true;
          
     }
-    //get the reference of the instantiated gun, keep checking
+    
     public void setTimerFlagToTrue()
     {
         startTimer = true;
         timerReal = time;
+    }
+
+    public double getPoint()
+    {
+        return point;
+    }
+    public double getMultiplier()
+    {
+        return pointMultiplier;
     }
 }

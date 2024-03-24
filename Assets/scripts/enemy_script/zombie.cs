@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Manages the zombie enemy's logic and attributes
+/// </summary>
 public class zombie : enemy
 {
     // Start is called before the first frame update

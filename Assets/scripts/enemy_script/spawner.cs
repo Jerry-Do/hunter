@@ -2,7 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Manages the logic the spawner.
+/// EnemyGroup is the enemies are going to spawn 
+/// in a wave
+/// </summary>
 public class spawner : MonoBehaviour
 {
     [System.Serializable]

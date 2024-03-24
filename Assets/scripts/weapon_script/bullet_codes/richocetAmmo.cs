@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.IK;
-
+/// <summary>
+/// Logic the richocet ammo
+/// </summary>
 public class richocetAmmo : bullet
 {
     // Start is called before the first frame update

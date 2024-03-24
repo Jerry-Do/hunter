@@ -11,7 +11,9 @@ using UnityEngine.InputSystem.Composites;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
+/// <summary>
+/// Manages the control for the character along with its attribute
+/// </summary>
 public class playerControl : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -148,7 +150,7 @@ public class playerControl : MonoBehaviour
                 rs.RotateForward();
             }
             moveDirection.Normalize();
-        //transform.position += moveDirection * activeSpeed * Time.fixedDeltaTime;
+      
 
 
 
@@ -229,14 +231,15 @@ public class playerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("weapon"))//Pick up weapon
         {
+            dataTracker dt = FindObjectOfType<dataTracker>();
             gunSprite = gun.GetComponent<SpriteRenderer>();
             weapon = collision.gameObject.GetComponent<weapon>();
             gunSprite.sprite = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             ammo = weapon.returnMaxNumAmmo();
-            weaponName = weapon.returnName();
-             
+            weaponName = weapon.returnName();          
             maxNumAmmo = weapon.returnMaxNumAmmo();
             reloadTimer = weapon.returnReloadTimer();
+            dt.addWeapon(weaponName);
             Destroy(collision.gameObject);    
         }
         if(collision.gameObject.CompareTag("obsticle"))
@@ -314,5 +317,10 @@ public class playerControl : MonoBehaviour
     public float ReturnFuel()
     {
         return speedFuel;
+    }
+    
+    public string ReturnWeaponName()
+    {
+        return weaponName;
     }
 }
