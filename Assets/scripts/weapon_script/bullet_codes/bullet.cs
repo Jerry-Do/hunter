@@ -11,7 +11,7 @@ public class bullet : MonoBehaviour
     private Vector3 mousePos;
     private Camera mainCam;
     public Rigidbody2D rb2D;
-    public Vector2 test;
+    
     // Start is called before the first frame update
     void Start()
     {

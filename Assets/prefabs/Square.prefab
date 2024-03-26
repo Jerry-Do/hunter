@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 3284562769097656863}
+  gameStateManager: {fileID: 0}
 --- !u!212 &3284562769097656863
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -366,6 +367,7 @@ MonoBehaviour:
   dashCooldown: 3
   dashCoolCounter: 0
   InputActionsManager: {fileID: 0}
+  gameStateManager: {fileID: 0}
 --- !u!114 &3284562770142554761
 MonoBehaviour:
   m_ObjectHideFlags: 0
