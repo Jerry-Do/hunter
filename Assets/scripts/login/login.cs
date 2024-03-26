@@ -2,7 +2,11 @@ using System.Security.Cryptography;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour
 {
@@ -12,6 +16,10 @@ public class Login : MonoBehaviour
     public string email;
     public string password;
 
+    EventSystem system;
+    //public Selectable firstInput;
+    public Button submitButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +27,35 @@ public class Login : MonoBehaviour
         client = new MongoClient("mongodb+srv://esomeh:ZndxWXyeRBTpe2GG@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
         var database = client.GetDatabase("RegisterDB");
         collection = database.GetCollection<BsonDocument>("RegisterUnityCollection");
+        system = EventSystem.current;
+        //firstInput.Select();
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Selectable prev = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            if (prev != null)
+            {
+                prev.Select();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            if (next != null)
+            {
+                Debug.Log(next);
+                next.Select();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            submitButton.onClick.Invoke();
+        }
+        
+    }
+
     public void readEmailInput(string emailInput)
     {
         email = emailInput;
@@ -48,7 +84,6 @@ public class Login : MonoBehaviour
 
     public async void OnLoginButtonPress()
     {
-       
 
         var filter = Builders<BsonDocument>.Filter.Eq("email", email);
         var user = await collection.Find(filter).FirstOrDefaultAsync();
@@ -62,6 +97,11 @@ public class Login : MonoBehaviour
             if (hashedPassword == storedHashedPassword)
             {
                 Debug.Log("Login successful.");
+                // Set user data
+                //UserDataHolder.Instance.Email = email;
+                //UserDataHolder.Instance.Email = user.GetValue("email").AsString;
+                UserDataHolder.Instance.UserDocument = user;
+                SceneManager.LoadScene("profile");
             }
             else
             {
@@ -73,7 +113,12 @@ public class Login : MonoBehaviour
             Debug.LogError("Email not found.");
         }
     }
-   
+    public async void OnRegisterButtonPress()
+    {
+        Debug.Log("Register Button clicked ");
+        SceneManager.LoadScene("register");
+    }
 
-  
+
+
 }
