@@ -5,8 +5,8 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    protected float speed;
-    protected int damage;
+    [SerializeField] protected float speed;
+    [SerializeField] protected int damage;
     protected GameObject player;
     private Vector3 mousePos;
     private Camera mainCam;

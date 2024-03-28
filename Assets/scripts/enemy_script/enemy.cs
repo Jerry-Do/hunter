@@ -22,6 +22,7 @@ public abstract class enemy : MonoBehaviour
         spawner es = FindObjectOfType<spawner>();
         logicManager lm = FindAnyObjectByType<logicManager>();
         lm.addPoint(point);
+        lm.addNoEnemyKilled();
         es.OnEnemyKilled();
         dt.increaseKillCount();
     }

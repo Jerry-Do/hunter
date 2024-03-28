@@ -10,16 +10,11 @@ public class bomerangBullet : bullet
     private bool returnFlag = false;
     public bomerangBullet()
     {
-        speed = 10;
+        speed = 15;
         
     }
  
     
-    /*
-     * TODO:
-     * Make a speical case for the reloading of the bomerang where the ammo would not go up until the bomerang hit the player
-     * make sprite for the gun disappear until the bomerang hit the player.
-     */
     void Update()
     {
         returnTimer -= Time.deltaTime;
@@ -36,7 +31,19 @@ public class bomerangBullet : bullet
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+            rb2D.velocity = Vector2.zero;
             Destroy(gameObject);
         }
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            enemy enemyObject = collision.gameObject.GetComponent<enemy>();
+            enemyObject.minusHealth(damage);
+            returnTimer = 0;
+        }
+        if (collision.gameObject.CompareTag("obsticle"))
+        {
+            returnTimer = 0;
+        }
+     
     }
 }

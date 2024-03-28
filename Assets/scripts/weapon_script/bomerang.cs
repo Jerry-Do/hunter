@@ -11,7 +11,7 @@ public class bomerang : weapon
         rateOfFire = 99f;
         maxNumAmmo = 1;
         damage = 4;
-        rarity = "r";
+        rarity = "c";
     }
     private playerControl playerControl;
     public GameObject ammo;
@@ -23,6 +23,7 @@ public class bomerang : weapon
         if (collision.gameObject.CompareTag("Player"))
         {
             playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
+            Destroy(gameObject);
 
         }
 
@@ -30,10 +31,8 @@ public class bomerang : weapon
     // Update is called once per frame
     public override void shooting(bool speedingFlag)
     {
-       
-        
 
-        Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
+        Instantiate(ammo, new Vector2(playerControl.shooter.transform.position.x, playerControl.shooter.transform.position.y), Quaternion.identity);
 
     }
     public override string returnName()

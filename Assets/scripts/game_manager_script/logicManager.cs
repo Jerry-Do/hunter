@@ -15,12 +15,9 @@ using System.Data.SqlTypes;
 public class logicManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject gameOver;
-    public Text speedFuel;
-    private double point = 0;
-    [SerializeField] private int time;
-    private float timerReal;
-    private double pointMultiplier = 1.0f;
+   
+    
+    [Header("UI Text and Elements")]
     public Text ammo;
     public Text pointText;
     public Text reloadIndicator;
@@ -28,18 +25,33 @@ public class logicManager : MonoBehaviour
     public Text money;
     public TMP_Text pointMultiplierText;
     public TMP_Text timerText;
+    public TMP_Text comboTimerText;
     public Text weaponName;
+    [SerializeField] private Slider healthBar;
+    [SerializeField] private Slider fuelBar;
+
+    public GameObject gameOver;
+    public Text speedFuel;
     private playerControl player;
     private GameObject weapon;
-    private bool waveEnd = false;
+    private double point = 0;  
+    private float timerReal;
+    private double pointMultiplier = 1.0f;
+    private int enemyKilled = 0;
     private bool startTimer = false;
     private bool weaponDuplication;
+    private bool startComboTimer;
+    private float comboTimeUsed;
+    [SerializeField] private int noEnemyKilledToIncreasePointMul;
     [SerializeField] private float weaponPickupMul;
+    [SerializeField] private int time;
+    [SerializeField] private float comboTime;
+
+    [Header("Spawning weapon")]
     [SerializeField] private List<GameObject> weaponsListCommon;
     [SerializeField] private List<GameObject> weaponsListRare;
     [SerializeField] private List<GameObject> weaponsListSuperRare;
-    [SerializeField] private Slider healthBar;
-    [SerializeField] private Slider fuelBar;
+    
 
     void Start()
     {
@@ -54,7 +66,7 @@ public class logicManager : MonoBehaviour
         spawner spw = FindAnyObjectByType<spawner>();
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
-        ammo.text = "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString();
+        ammo.text = player.ReturnCurrentAmmo() != 0 ? "Ammo: " + player.ReturnCurrentAmmo().ToString() + "/" + player.ReturnMaxAmmo().ToString() : "Reloading...";
         pointText.text = "Point: " + ((int)point).ToString();
         money.text = "Money: " + player.ReturnMoney().ToString();
         pointMultiplierText.text = "Point Multiplier: " + pointMultiplier.ToString();
@@ -63,14 +75,6 @@ public class logicManager : MonoBehaviour
         if (player.ReturnHealth() <= 0)
         {
             GameOver();
-        }
-        if(player.ReturnCurrentAmmo() == 0)
-        {
-            reloadIndicator.text = "Reloading...";
-        }
-        else
-        {
-            reloadIndicator.text = "";
         }
         if(startTimer)//Start the timer
         {
@@ -83,6 +87,7 @@ public class logicManager : MonoBehaviour
             {
                 startTimer = false;
                 timerText.enabled = false;
+                Destroy(weapon);
             }  
             if (weapon.IsDestroyed())//If the spawned weapon picked up
             {
@@ -97,9 +102,28 @@ public class logicManager : MonoBehaviour
             timerText.enabled = false;
             spw.setPauseFlag(false);
         }
-       
+        /*
+         *Killed enemy -> start timer -> if enough enemy killed -> increase point multiplier 
+        */
+        if (startComboTimer)
+        {
+            comboTimeUsed -= Time.deltaTime;
+            
+            if (enemyKilled == noEnemyKilledToIncreasePointMul && comboTimeUsed > 0)
+            {
+                setMutiplier(0.1);
+                enemyKilled = 0;
+            }
+            else if(comboTimeUsed < 0)
+            {
+                startComboTimer = false;
+                comboTimeUsed = 0;
+            }
+            comboTimerText.text = "Combo Timer: " + comboTimeUsed.ToString();
+        }
+
     }
-   
+
     void CheckFOrDuplicate()
     {
         if (GameObject.FindGameObjectsWithTag("UI").Length == 2)
@@ -165,7 +189,7 @@ public class logicManager : MonoBehaviour
         weapon w = weapon.GetComponent<weapon>();
         weaponDuplication = w.returnName().Equals(player.ReturnWeaponName());//Check if the spawned is the same as the player's weapon
         
-        waveEnd = true;
+        
          
     }
     
@@ -182,5 +206,11 @@ public class logicManager : MonoBehaviour
     public double getMultiplier()
     {
         return pointMultiplier;
+    }
+    public void addNoEnemyKilled()
+    {
+        enemyKilled++;
+        startComboTimer = true;
+        comboTimeUsed = comboTime;
     }
 }

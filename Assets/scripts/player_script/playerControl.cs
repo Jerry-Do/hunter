@@ -116,7 +116,7 @@ public class playerControl : MonoBehaviour
         }
 
 
-        if (ammo == 0 && weaponName != "")
+        if (ammo == 0 && weaponName != "" && weaponName != "Bomerang")
         {
 
             StartCoroutine(ReloadTime());
@@ -230,7 +230,7 @@ public class playerControl : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("weapon"))//Pick up weapon
-        {
+        {        
             dataTracker dt = FindObjectOfType<dataTracker>();
             gunSprite = gun.GetComponent<SpriteRenderer>();
             weapon = collision.gameObject.GetComponent<weapon>();
@@ -239,8 +239,10 @@ public class playerControl : MonoBehaviour
             weaponName = weapon.returnName();          
             maxNumAmmo = weapon.returnMaxNumAmmo();
             reloadTimer = weapon.returnReloadTimer();
+            Destroy(collision.gameObject);
             dt.addWeapon(weaponName);
-            Destroy(collision.gameObject);    
+           
+            
         }
         if(collision.gameObject.CompareTag("obsticle"))
         {
@@ -251,6 +253,11 @@ public class playerControl : MonoBehaviour
             Item item = collision.gameObject.GetComponent<Item>();
             item.pick(this);
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.name.Equals("bomerangBullet(Clone)"))
+        {
+            StartCoroutine(ReloadTime());
+           
         }
     }
 

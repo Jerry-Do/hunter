@@ -171,5 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e5d952fa1ed414299171f8e4fc9b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 15
+  damage: 10
   rb2D: {fileID: 2532267900653572321}
   returnTimer: 2
