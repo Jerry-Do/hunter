@@ -1,12 +1,16 @@
-using System.Security.Cryptography;
-using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography;
+using System.Text;
+using System;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using System.Text.RegularExpressions;
 
 public class Login : MonoBehaviour
 {
@@ -15,9 +19,11 @@ public class Login : MonoBehaviour
 
     public string email;
     public string password;
-
+    [SerializeField] GameObject EmailWarning;
+    [SerializeField] GameObject EmailNotValid;
+    [SerializeField] GameObject PasswordWarning;
     EventSystem system;
-    //public Selectable firstInput;
+    public Selectable firstInput;
     public Button submitButton;
 
     // Start is called before the first frame update
@@ -28,14 +34,17 @@ public class Login : MonoBehaviour
         var database = client.GetDatabase("RegisterDB");
         collection = database.GetCollection<BsonDocument>("RegisterUnityCollection");
         system = EventSystem.current;
-        //firstInput.Select();
+        firstInput.Select();
+        EmailWarning.SetActive(false);
+        PasswordWarning.SetActive(false);
+        EmailNotValid.SetActive(false);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Selectable prev = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+            Selectable prev = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnUp();
             if (prev != null)
             {
                 prev.Select();
@@ -45,11 +54,10 @@ public class Login : MonoBehaviour
             Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
             if (next != null)
             {
-                Debug.Log(next);
                 next.Select();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.Return) && ValidateEmail(email))
         {
             submitButton.onClick.Invoke();
         }
@@ -59,13 +67,20 @@ public class Login : MonoBehaviour
     public void readEmailInput(string emailInput)
     {
         email = emailInput;
-        Debug.Log(email);
+        if (ValidateEmail(email) == false)
+        {
+            EmailNotValid.SetActive(true);
+        }
+        else
+        {
+            EmailNotValid.SetActive(false);
+           
+        }
     }
 
     public void readPasswordInput(string passwordInput)
     {
         password = passwordInput;
-        Debug.Log(password);
     }
 
     public string HashPassword(string password)
@@ -84,7 +99,8 @@ public class Login : MonoBehaviour
 
     public async void OnLoginButtonPress()
     {
-
+        EmailWarning.SetActive(false);
+        PasswordWarning.SetActive(false);
         var filter = Builders<BsonDocument>.Filter.Eq("email", email);
         var user = await collection.Find(filter).FirstOrDefaultAsync();
 
@@ -98,27 +114,51 @@ public class Login : MonoBehaviour
             {
                 Debug.Log("Login successful.");
                 // Set user data
-                //UserDataHolder.Instance.Email = email;
-                //UserDataHolder.Instance.Email = user.GetValue("email").AsString;
                 UserDataHolder.Instance.UserDocument = user;
                 SceneManager.LoadScene("profile");
+
+                PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag 
+                PlayerPrefs.Save();
             }
             else
             {
+                PasswordWarning.SetActive(true);
                 Debug.LogError("Invalid password.");
             }
         }
         else
         {
+            EmailWarning.SetActive(true);
             Debug.LogError("Email not found.");
         }
     }
-    public async void OnRegisterButtonPress()
+    public void OnRegisterButtonPress()
     {
         Debug.Log("Register Button clicked ");
         SceneManager.LoadScene("register");
     }
 
+   
+    public const string EmailPattern =
+    @"^([a-zA-Z0-9]+(?:[._-][a-zA-Z0-9]+)*)@" + // Local part: Starts with alphanumeric, allows '.', '_', and '-' as separators within.
+    @"(([a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*\.)+" + // Subdomains: Allows '-' as separator within, followed by a period.
+    @"[a-zA-Z]{2,})$"; // TLD: At least two characters long.
 
+
+
+    // validate an email address using the regex pattern defined above
+    public static bool ValidateEmail(string email)
+    {
+        // Check if the email is not null or empty to proceed with regex matching
+        if (!string.IsNullOrEmpty(email))
+        {
+            return Regex.IsMatch(email, EmailPattern);
+        }
+        else
+        {
+            // Return false if the email is null, meaning it's not a valid email address
+            return false;
+        }
+    }
 
 }

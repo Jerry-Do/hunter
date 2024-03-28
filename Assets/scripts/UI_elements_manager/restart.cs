@@ -12,6 +12,6 @@ public class restart : MonoBehaviour
     {
         n++;
         Debug.Log("Restart Button clicked " + n + " times.");
-        //SceneManager.LoadScene("starting");
+        SceneManager.LoadScene("profile");
     }
 }

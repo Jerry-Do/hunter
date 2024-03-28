@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class pauseMenuController : MonoBehaviour
 {
@@ -9,15 +10,19 @@ public class pauseMenuController : MonoBehaviour
     [SerializeField] GameObject controlMenu;
     [SerializeField] GameObject soundMenu;
     [SerializeField] GameObject quitConfirmation;
+    public Image pauseButton;
     public gameStateManager gameStateManager;
+    public logicManager logicManager;
     private void Start()
     {
         gameStateManager = FindObjectOfType<gameStateManager>();
+        logicManager = FindAnyObjectByType<logicManager>();
     }
     // show pause menu
     public void pause()
     {
         pauseMenu.SetActive(true);
+        pauseButton.enabled = false;
         Time.timeScale = 0f;
         gameStateManager.IsGamePaused = true; // set pause state, weapon rotation is diabled
     }
@@ -25,6 +30,7 @@ public class pauseMenuController : MonoBehaviour
     public void resume()
     {
         pauseMenu.SetActive(false);
+        pauseButton.enabled = true;
         Time.timeScale = 1f;
         gameStateManager.IsGamePaused = false; // weapon rotation is enabled
     }
@@ -59,6 +65,7 @@ public class pauseMenuController : MonoBehaviour
     public void ConfirmResume()
     {
         pauseMenu.SetActive(false);
+        pauseButton.enabled = true;
         quitConfirmation.SetActive(false);
         Time.timeScale = 1f;
         gameStateManager.IsGamePaused = false; // weapon rotation is enabled
@@ -66,9 +73,13 @@ public class pauseMenuController : MonoBehaviour
     // navigate back to main menu
     public void backToMainMenu()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         Debug.Log("mainMenu");
-        //SceneManager.LoadScene("starting");
+        //pauseMenu.SetActive(false);
+        logicManager.GameOver();
+        //gameStateManager.IsGamePaused = false;
+        //soundManager.instance.StopMusic("theme");
+        //SceneManager.LoadScene("gameOver");
     }
     // go to control menu
     public void control()

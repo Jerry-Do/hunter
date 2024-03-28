@@ -19,13 +19,12 @@ public class InputActionsManager : MonoBehaviour
     public InputAction dash;
 
     public Button[] buttons;
-    private bool clickFlag = false;
     public Dictionary<string, KeyCode> controls = new Dictionary<string, KeyCode>();
     [HideInInspector]
     public bool listening = false;
     [HideInInspector]
     public string control_name = "";
-
+    public static InputActionsManager Instance { get; private set; }
     public DefaultInputActions GetDefaultInputActions()
     {
         return defaultInputActions;
@@ -38,6 +37,15 @@ public class InputActionsManager : MonoBehaviour
     
     private void Awake()
     {
+        /*if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(Instance);
+        }*/
         defaultInputActions = new DefaultInputActions();
         // initialize 
         move = defaultInputActions.Player.Move;
@@ -65,8 +73,7 @@ public class InputActionsManager : MonoBehaviour
             LoadBindings();
             //clickFlag = false;
         }
-        PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
-        PlayerPrefs.Save();
+        
         // update button labels
         UpdateButtonLabels();
     }
@@ -176,7 +183,7 @@ public class InputActionsManager : MonoBehaviour
         if (actionToBind == shoot)
         {
             BindFireAction(keyPath);
-            clickFlag = false;
+            
         }
         else if (actionToBind == move)
         {

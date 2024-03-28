@@ -12,6 +12,7 @@ public class homeButtonController : MonoBehaviour
     {
         n++;
         Debug.Log("Home Button clicked " + n + " times.");
-        //SceneManager.LoadScene("starting");
+        //soundManager.instance.StopMusic("GameOver");
+        SceneManager.LoadScene("profile");
     }
 }
