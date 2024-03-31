@@ -25,7 +25,7 @@ public class soundManager : MonoBehaviour
     private void Start()
     {
         // stll
-        PlayMusic("theme");
+        //PlayMusic("theme");
     }
 
     public void PlayMusic(string name)
@@ -40,6 +40,21 @@ public class soundManager : MonoBehaviour
         {
             musicSource.clip = s.clip;
             musicSource.Play();
+        }
+    }
+
+    public void StopMusic(string name)
+    {
+        Sound s = Array.Find(musicSounds, x => x.name == name); ;
+
+        if (s == null)
+        {
+            Debug.Log("sound not found");
+        }
+        else
+        {
+            musicSource.clip = s.clip;
+            musicSource.Stop();
         }
     }
 

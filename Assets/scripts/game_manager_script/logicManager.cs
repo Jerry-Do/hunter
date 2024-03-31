@@ -139,17 +139,19 @@ public class logicManager : MonoBehaviour
             Destroy(GameObject.FindGameObjectsWithTag("MainCamera")[1]);
         }
     }
-    void GameOver()
+    public void GameOver()
     {
         player.enabled = false;
-        gameOver.SetActive(true);
+        //gameOver.SetActive(true);
         // navigate to game over screen
-        soundManager.instance.PlayMusic("GameOver");
+        soundManager.instance.StopMusic("theme");
+        soundManager.instance.PlaySfx("GameOver");
         SceneManager.LoadScene("gameOver");
     }
  
     public void restartGame()
     {
+        player.enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

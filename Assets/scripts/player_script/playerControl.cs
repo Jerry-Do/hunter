@@ -57,16 +57,16 @@ public class playerControl : MonoBehaviour
     public gameStateManager gameStateManager;
     private void Awake()
     {
-        if (instance != null)
+        /*if (instance != null)
         {
             Destroy(instance);
             return;
-        }
+        }*/
         //DefaultInputActions = new DefaultInputActions();
         InputActionsManager = FindObjectOfType<InputActionsManager>();
         gameStateManager = FindObjectOfType<gameStateManager>();
-        instance = this;
-        DontDestroyOnLoad(instance);
+        //instance = this;
+        //DontDestroyOnLoad(instance);
     }
     public bool IsPointerOverUI()
     {

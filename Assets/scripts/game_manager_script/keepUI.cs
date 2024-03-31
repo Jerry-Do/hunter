@@ -5,7 +5,7 @@ using UnityEngine;
 public class keepUI : MonoBehaviour
 {
     // Start is called before the first frame update
-    private keepUI instance;
+    /*private keepUI instance;
     private void Awake()
     {
         if (instance != null)
@@ -15,5 +15,5 @@ public class keepUI : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(instance);
-    }
+    }*/
 }
