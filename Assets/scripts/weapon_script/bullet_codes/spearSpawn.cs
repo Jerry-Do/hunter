@@ -5,7 +5,7 @@ using UnityEngine;
 public class spearSpawn : MonoBehaviour
 {
     public float speed = 12.0f;
-    public int damage = 0;
+    public int damage = 5;
     private GameObject player;
     private Vector3 mousePos;
     private Camera mainCam;
@@ -36,12 +36,7 @@ public class spearSpawn : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("enemy"))
-        {
-            Destroy(gameObject);
-            enemy enemyObject = collision.gameObject.GetComponent<enemy>();
-            enemyObject.minusHealth(damage);
-        }
+        
         if (collision.gameObject.CompareTag("obsticle"))
         {
             Destroy(gameObject);
@@ -50,6 +45,16 @@ public class spearSpawn : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+           
+            enemy enemyObject = collision.gameObject.GetComponent<enemy>();
+            enemyObject.minusHealth(damage);
+            Destroy(gameObject);
         }
     }
 }

@@ -254,13 +254,16 @@ public class playerControl : MonoBehaviour
             item.pick(this);
             Destroy(collision.gameObject);
         }
+        
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
         if (collision.gameObject.name.Equals("bomerangBullet(Clone)"))
         {
             StartCoroutine(ReloadTime());
-           
+
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("door"))
