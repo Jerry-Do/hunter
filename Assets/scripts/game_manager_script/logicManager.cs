@@ -92,7 +92,7 @@ public class logicManager : MonoBehaviour
             if (weapon.IsDestroyed())//If the spawned weapon picked up
             {
                 pointMultiplier += weaponDuplication ? weaponPickupMul * 2 : weaponPickupMul;//if the picked up weapon is the same as the player's weapon, then double the multiplier
-                spw.setPauseFlag(false);
+                //spw.setPauseFlag(false);
                 startTimer = false;
             }
             
@@ -100,7 +100,7 @@ public class logicManager : MonoBehaviour
         else
         {
             timerText.enabled = false;
-            spw.setPauseFlag(false);
+            //spw.setPauseFlag(false);
         }
         /*
          *Killed enemy -> start timer -> if enough enemy killed -> increase point multiplier 
@@ -139,11 +139,19 @@ public class logicManager : MonoBehaviour
             Destroy(GameObject.FindGameObjectsWithTag("MainCamera")[1]);
         }
     }
-    public void GameOver()
+    public async void GameOver()
     {
         player.enabled = false;
-        //gameOver.SetActive(true);
-        // navigate to game over screen
+        dataTracker dt = FindObjectOfType<dataTracker>();
+        try
+        {
+            await dt.SaveGameData();
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"An error occurred while saving game data: {ex.Message}");
+
+        }
         soundManager.instance.StopMusic("theme");
         soundManager.instance.PlaySfx("GameOver");
         SceneManager.LoadScene("gameOver");

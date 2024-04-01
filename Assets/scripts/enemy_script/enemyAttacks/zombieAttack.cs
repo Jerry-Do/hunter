@@ -11,7 +11,7 @@ public class zombieAttack : enenmyAttack
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Hit");
+            
             playerControl pc = FindObjectOfType<playerControl>();
             pc.minusHealth(damage);
         }
