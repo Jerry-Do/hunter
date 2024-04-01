@@ -3483,6 +3483,7 @@ GameObject:
   - component: {fileID: 7281411363756176413}
   - component: {fileID: 8108102050471778255}
   - component: {fileID: 4949457390277650072}
+  - component: {fileID: -3771295552259335885}
   m_Layer: 3
   m_Name: NormalZombie1
   m_TagString: enemy
@@ -3606,6 +3607,27 @@ MonoBehaviour:
   sprite: {fileID: 0}
   speed: 3
   attackMove: {fileID: 0}
+--- !u!114 &-3771295552259335885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573831300888823078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81876739d2d772a48891170f4384eb22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - name: fuel
+    itemPrefab: {fileID: 6034469295008489119, guid: 375010299bba0fe458c75b68a7218a6e,
+      type: 3}
+    dropRate: 50
+  - name: health
+    itemPrefab: {fileID: 5818023116107649591, guid: fcd03e26fde199441a882bb11b54ddcb,
+      type: 3}
+    dropRate: 50
 --- !u!1 &7641525738523129613
 GameObject:
   m_ObjectHideFlags: 0

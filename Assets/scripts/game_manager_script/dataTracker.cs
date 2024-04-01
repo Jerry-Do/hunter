@@ -37,8 +37,7 @@ public class dataTracker : MonoBehaviour
     }
     public void getData()//this function is called when the game ends, move all of this code to Update if you want testing
     {
-        point = lm.getPoint();
-        pointMultiplier = lm.getMultiplier();
+        
     }
     public void increaseKillCount()
     {
@@ -56,6 +55,8 @@ public class dataTracker : MonoBehaviour
     // Call this method to save game data
     public async Task SaveGameData()
     {
+        point = lm.getPoint();
+        pointMultiplier = lm.getMultiplier();
         var gameData = new BsonDocument
         {
             {"point", point},

@@ -62,7 +62,6 @@ public class logicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         spawner spw = FindAnyObjectByType<spawner>();
         speedFuel.text = "Fuel: " + player.ReturnFuel().ToString();
         playerhealth.text = "Health: " + player.ReturnHealth().ToString();
@@ -92,7 +91,7 @@ public class logicManager : MonoBehaviour
             if (weapon.IsDestroyed())//If the spawned weapon picked up
             {
                 pointMultiplier += weaponDuplication ? weaponPickupMul * 2 : weaponPickupMul;//if the picked up weapon is the same as the player's weapon, then double the multiplier
-                //spw.setPauseFlag(false);
+                spw.setPauseFlag(false);
                 startTimer = false;
             }
             
@@ -100,7 +99,7 @@ public class logicManager : MonoBehaviour
         else
         {
             timerText.enabled = false;
-            //spw.setPauseFlag(false);
+            spw.setPauseFlag(false);
         }
         /*
          *Killed enemy -> start timer -> if enough enemy killed -> increase point multiplier 
@@ -108,7 +107,7 @@ public class logicManager : MonoBehaviour
         if (startComboTimer)
         {
             comboTimeUsed -= Time.deltaTime;
-            
+            comboTimerText.text = "Combo Timer: " + comboTimeUsed.ToString();
             if (enemyKilled == noEnemyKilledToIncreasePointMul && comboTimeUsed > 0)
             {
                 setMutiplier(0.1);
@@ -119,7 +118,7 @@ public class logicManager : MonoBehaviour
                 startComboTimer = false;
                 comboTimeUsed = 0;
             }
-            comboTimerText.text = "Combo Timer: " + comboTimeUsed.ToString();
+            
         }
 
     }
