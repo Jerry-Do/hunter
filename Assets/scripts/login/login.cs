@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Login : MonoBehaviour
 {
@@ -61,7 +62,6 @@ public class Login : MonoBehaviour
         {
             submitButton.onClick.Invoke();
         }
-        
     }
 
     public void readEmailInput(string emailInput)
