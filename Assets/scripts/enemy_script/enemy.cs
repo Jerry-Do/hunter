@@ -11,7 +11,10 @@ public abstract class enemy : MonoBehaviour
     protected int point;
     protected int health;
     protected int enemyDamage;
-    
+    public enum EnemyType { Melee, Ranged, Healer, Heavy }
+    public EnemyType enemyType;
+
+
     private void Start()
     {
         player = FindAnyObjectByType<playerControl>().transform;
@@ -33,5 +36,8 @@ public abstract class enemy : MonoBehaviour
         transform.position = player.position + es.relativeSpawnPos[UnityEngine.Random.Range(0, es.relativeSpawnPos.Count)].position;
     }
     public abstract void minusHealth(int damage);
-
+    public void Heal(int amount)
+    {
+        health += amount;
+    }
 }
