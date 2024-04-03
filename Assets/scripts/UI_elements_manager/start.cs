@@ -25,7 +25,7 @@ public class start : MonoBehaviour
         {
             SceneManager.LoadScene("SampleScene");
         }
-        
+        soundManager.instance.PlayMusic("theme");
         //SceneManager.LoadScene("SampleScene");
     }
 }
