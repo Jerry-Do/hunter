@@ -101,13 +101,11 @@ public class logicManager : MonoBehaviour
             timerText.enabled = false;
             spw.setPauseFlag(false);
         }
-        /*
-         *Killed enemy -> start timer -> if enough enemy killed -> increase point multiplier 
-        */
+       
         if (startComboTimer)
         {
             comboTimeUsed -= Time.deltaTime;
-            comboTimerText.text = "Combo Timer: " + comboTimeUsed.ToString();
+            
             if (enemyKilled == noEnemyKilledToIncreasePointMul && comboTimeUsed > 0)
             {
                 setMutiplier(0.1);
@@ -118,9 +116,10 @@ public class logicManager : MonoBehaviour
                 startComboTimer = false;
                 comboTimeUsed = 0;
             }
-            
+            comboTimerText.text = "Combo Timer: " + comboTimeUsed.ToString();
         }
 
+        
     }
 
     void CheckFOrDuplicate()
@@ -182,12 +181,12 @@ public class logicManager : MonoBehaviour
         float randomType = UnityEngine.Random.Range(1f, 10f);
         if(randomType <= 5)
         {
-            int randomWeapon =  Random.Range(0, weaponsListCommon.Count);
+            int randomWeapon =  Random.Range(0, weaponsListSuperRare.Count);
             weapon = Instantiate(weaponsListSuperRare[randomWeapon], new Vector3(playerPos.transform.position.x + 5, playerPos.transform.position.y, 0), playerSprite.rotation);
         }
         else if(randomType <= 8)
         {
-            int randomWeapon = Random.Range(0, weaponsListCommon.Count);
+            int randomWeapon = Random.Range(0, weaponsListRare.Count);
             weapon = Instantiate(weaponsListRare[randomWeapon], new Vector3(playerPos.transform.position.x + 5, playerPos.transform.position.y, 0), playerSprite.rotation);
         }
         else if(randomType <= 10)

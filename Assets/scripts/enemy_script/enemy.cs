@@ -16,7 +16,7 @@ public abstract class enemy : MonoBehaviour
     {
         player = FindAnyObjectByType<playerControl>().transform;
     }
-    private void OnDestroy()
+    protected void OnDestroy()
     {
         dataTracker dt = FindObjectOfType<dataTracker>();
         spawner es = FindObjectOfType<spawner>();
@@ -25,6 +25,7 @@ public abstract class enemy : MonoBehaviour
         lm.addNoEnemyKilled();
         es.OnEnemyKilled();
         dt.increaseKillCount();
+        Debug.Log("On destroyed called");
     }
 
     protected void ReturnEnemy()
@@ -33,5 +34,6 @@ public abstract class enemy : MonoBehaviour
         transform.position = player.position + es.relativeSpawnPos[UnityEngine.Random.Range(0, es.relativeSpawnPos.Count)].position;
     }
     public abstract void minusHealth(int damage);
+
 
 }
