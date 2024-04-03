@@ -16,6 +16,7 @@ public class start : MonoBehaviour
     {
         //Application.LoadLevel(Application.loadedLevel);
         //Time.timeScale = 1f;
+        
         if (logicManager != null)
         {
             logicManager.restartGame();
@@ -24,6 +25,7 @@ public class start : MonoBehaviour
         {
             SceneManager.LoadScene("SampleScene");
         }
+        
         //SceneManager.LoadScene("SampleScene");
     }
 }
