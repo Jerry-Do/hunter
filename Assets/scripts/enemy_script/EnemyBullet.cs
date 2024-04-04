@@ -6,32 +6,32 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public float speed = 10f;
-    public int damage = 1;
-    public float lifespan = 2f;
+    public float speed = 10f; // The speed at which the bullet moves.
+    public int damage = 1; // The damage the bullet will deal upon hitting the player.
+    public float lifespan = 2f; // How long the bullet exists before being automatically destroyed.
 
     private Rigidbody2D rb;
-    private float startTime;
-    private Vector2 direction;
+    private float creationTime; // To track the bullet's age and destroy it after its lifespan.
 
-    void Start()
+    void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); 
+        creationTime = Time.time; // Record the time of creation.
+    }
 
-        // Calculate the direction the bullet should move based on its rotation
-        direction = transform.up;
+    public void Initialize(Vector2 direction)
+    {
+        rb.velocity = direction.normalized * speed; // Set the bullet's velocity in the specified direction.
 
-        // Set the velocity of the bullet
-        rb.velocity = direction * speed;
-
-        // Start tracking the time the bullet was created
-        startTime = Time.time;
+    
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90; // Adjust rotation to align with direction.
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void Update()
     {
-        // Check if the bullet has exceeded its lifespan
-        if (Time.time - startTime >= lifespan)
+        // Destroy the bullet if it exceeds its lifespan.
+        if (Time.time - creationTime >= lifespan)
         {
             Destroy(gameObject);
         }
@@ -39,28 +39,23 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Handle collision with player
+        // React to collisions with specific tags.
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            // Optionally deal damage to the player.
             playerControl player = collision.gameObject.GetComponent<playerControl>();
             if (player != null)
             {
                 player.minusHealth(damage);
             }
+
+            Destroy(gameObject); // Destroy the bullet on collision.
         }
-
-
-
-
-        // Destroy the bullet upon collision with an obstacle or another bullet
-        if (collision.gameObject.CompareTag("Obstacle"))
+        else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy the bullet when hitting an obstacle.
         }
+        
     }
-
-
-
 }
 

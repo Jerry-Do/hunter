@@ -30,7 +30,7 @@ public class HealerEnemy : enemy
         {
             if (otherEnemy != this && Vector2.Distance(transform.position, otherEnemy.transform.position) <= healRange)
             {
-                otherEnemy.Heal(healAmount);
+         //       otherEnemy.Heal(healAmount);
             }
         }
     }
