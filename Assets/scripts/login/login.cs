@@ -99,37 +99,44 @@ public class Login : MonoBehaviour
 
     public async void OnLoginButtonPress()
     {
-        EmailWarning.SetActive(false);
-        PasswordWarning.SetActive(false);
-        var filter = Builders<BsonDocument>.Filter.Eq("email", email);
-        var user = await collection.Find(filter).FirstOrDefaultAsync();
-
-        if (user != null)
+        if (ValidateEmail(email))
         {
-            // Email found, now check the password
-            string storedHashedPassword = user.GetValue("password").AsString;
-            string hashedPassword = HashPassword(password);
+            EmailWarning.SetActive(false);
+            PasswordWarning.SetActive(false);
+            var filter = Builders<BsonDocument>.Filter.Eq("email", email);
+            var user = await collection.Find(filter).FirstOrDefaultAsync();
 
-            if (hashedPassword == storedHashedPassword)
+            if (user != null)
             {
-                Debug.Log("Login successful.");
-                // Set user data
-                UserDataHolder.Instance.UserDocument = user;
-                SceneManager.LoadScene("profile");
+                // Email found, now check the password
+                string storedHashedPassword = user.GetValue("password").AsString;
+                string hashedPassword = HashPassword(password);
 
-                PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag 
-                PlayerPrefs.Save();
+                if (hashedPassword == storedHashedPassword)
+                {
+                    Debug.Log("Login successful.");
+                    // Set user data
+                    UserDataHolder.Instance.UserDocument = user;
+                    SceneManager.LoadScene("profile");
+
+                    PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag 
+                    PlayerPrefs.Save();
+                }
+                else
+                {
+                    PasswordWarning.SetActive(true);
+                    Debug.LogError("Invalid password.");
+                }
             }
             else
             {
-                PasswordWarning.SetActive(true);
-                Debug.LogError("Invalid password.");
+                EmailWarning.SetActive(true);
+                Debug.LogError("Email not found.");
             }
         }
         else
         {
-            EmailWarning.SetActive(true);
-            Debug.LogError("Email not found.");
+            EmailNotValid.SetActive(true);
         }
     }
     public void OnRegisterButtonPress()

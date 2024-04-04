@@ -23,6 +23,7 @@ public class register : MonoBehaviour
     public string password;
     int n, m;
     [SerializeField] GameObject EmailNotValid;
+    [SerializeField] GameObject EmailNotAvailable;
     EventSystem system;
     public Selectable firstInput;
     public Button submitButton;
@@ -37,6 +38,7 @@ public class register : MonoBehaviour
         system = EventSystem.current;
         firstInput.Select();
         EmailNotValid.SetActive(false);
+        EmailNotAvailable.SetActive(false);
     }
 
     // Update is called once per frame
@@ -105,25 +107,45 @@ public class register : MonoBehaviour
     }
     public async void OnRegisterButtonPress()
     {
-        var newUser = new BsonDocument{
-        {"email", email},
-        {"password", password}
-        };
-
-        try
+        if (ValidateEmail(email))
         {
-            await collection.InsertOneAsync(newUser);
-            Debug.Log("User registered successfully.");
+            EmailNotValid.SetActive(false);
             var filter = Builders<BsonDocument>.Filter.Eq("email", email);
             var user = await collection.Find(filter).FirstOrDefaultAsync();
-            UserDataHolder.Instance.UserDocument = user;
-            SceneManager.LoadScene("profile");
-            PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
-            PlayerPrefs.Save();
+
+            if (user == null)
+            {
+                EmailNotAvailable.SetActive(false);
+                var newUser = new BsonDocument{
+                {"email", email},
+                {"password", password}
+                };
+
+                try
+                {
+                    await collection.InsertOneAsync(newUser);
+                    Debug.Log("User registered successfully.");
+                    var filter1 = Builders<BsonDocument>.Filter.Eq("email", email);
+                    var user1 = await collection.Find(filter1).FirstOrDefaultAsync();
+                    UserDataHolder.Instance.UserDocument = user1;
+                    SceneManager.LoadScene("profile");
+                    PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
+                    PlayerPrefs.Save();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"An error occurred: {ex.Message}");
+                }
+            }
+            else
+            {
+                EmailNotAvailable.SetActive(true);
+                Debug.Log("email is already registered.");
+            }
         }
-        catch (Exception ex)
+        else
         {
-            Debug.LogError($"An error occurred: {ex.Message}");
+            EmailNotValid.SetActive(true);
         }
     }
     public const string EmailPattern =
