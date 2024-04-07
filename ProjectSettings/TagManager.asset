@@ -19,6 +19,7 @@ TagManager:
   - SceneManager
   - item
   - pauseButton
+  - hiding
   layers:
   - Default
   - TransparentFX

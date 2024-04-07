@@ -13,8 +13,8 @@ public class zombie : enemy
     private enum state
     { 
         run,
-        attack
-    
+        attack,
+        idle
     }
     private state enemyState;
     private AudioSource hitSound;
@@ -56,6 +56,9 @@ public class zombie : enemy
         {
             Destroy(gameObject);
         }
+ 
+        enemyState = playerObj.returnHidingFlag() ? state.idle : state.run;
+       
     }
     public override void minusHealth(int damage)
     {
@@ -94,6 +97,9 @@ public class zombie : enemy
                     break;
                 case state.attack:
                     ac.PlayStateAnimation("attack");
+                    break;
+                case state.idle:
+                    ac.PlayStateAnimation("idle");
                     break;
             default:
                 break;                

@@ -3465,12 +3465,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   despawnDistance: 20
+  enemyType: 0
   summonDistance: 10
   speed: 3
   enemyList:
   - {fileID: 7573831300888823078, guid: 2e2d8848918074ced85fd4e82acd7d11, type: 3}
   summoningTime: 1.5
   cooldown: 2
+  maxEnemyAllowed: 4
 --- !u!1 &7641525738523129613
 GameObject:
   m_ObjectHideFlags: 0

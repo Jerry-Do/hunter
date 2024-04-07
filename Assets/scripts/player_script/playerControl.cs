@@ -30,6 +30,7 @@ public class playerControl : MonoBehaviour
     public GameObject gun;
     private rotateSprite sprite;
     private bool speedingFlag;
+    private bool isHiding = false;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private rotateSprite rs;
 
@@ -139,6 +140,7 @@ public class playerControl : MonoBehaviour
         //Moving Character
         float speedBoost = 1;
         speedingFlag = false;
+        
         moveDirection = InputActionsManager.move.ReadValue<Vector2>();
         
             if(InputActionsManager.move.IsPressed() && moveDirection.x < 0)
@@ -258,17 +260,23 @@ public class playerControl : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("bomerangBullet(Clone)"))
+        if (collision.gameObject.CompareTag("hiding"))
         {
-            StartCoroutine(ReloadTime());
-
+            isHiding = false;
+            Debug.Log("Is not hiding");
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("door"))
+        if(collision.gameObject.CompareTag("hiding"))
         {
-            logic.LoadScene(collision.gameObject.name);
+            isHiding = true;
+            Debug.Log("Is hiding");
+        }
+        if (collision.gameObject.name.Equals("bomerangBullet(Clone)"))
+        {
+            StartCoroutine(ReloadTime());
+
         }
     }
 
@@ -278,7 +286,10 @@ public class playerControl : MonoBehaviour
     }
     public void plusFuel(int amount)
     {
-        speedFuel += amount;
+        if (speedFuel < maxFuel)
+        {
+            speedFuel += amount;
+        }
     }
   
     IEnumerator ReloadTime()
@@ -332,5 +343,9 @@ public class playerControl : MonoBehaviour
     public string ReturnWeaponName()
     {
         return weaponName;
+    }
+    public bool returnHidingFlag()
+    {
+        return isHiding;
     }
 }

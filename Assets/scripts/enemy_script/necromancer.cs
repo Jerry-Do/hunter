@@ -28,7 +28,10 @@ public class necromancer : enemy
         point = 1;
         enemyDamage = 5;
     }
-
+    private void Awake()
+    {
+        gameObject.name = gameObject.GetInstanceID().ToString();   
+    }
     // Update is called once per frame
     void Update()
     {
@@ -75,7 +78,7 @@ public class necromancer : enemy
                 cooldownUse = 0;
             }
         }
-       
+        enemyState = playerObj.returnHidingFlag() ? state.idle : state.run;
     }
     public override void minusHealth(int damage)
     {
@@ -93,6 +96,9 @@ public class necromancer : enemy
             case state.attack:
                 ac.PlayStateAnimation("attack");
                 break;
+            case state.idle:
+                ac.PlayStateAnimation("idle");
+                break;
             default:
                 break;
         }
@@ -103,23 +109,14 @@ public class necromancer : enemy
     {
         yield return new WaitForSeconds(summoningTime);
         int randomNo = UnityEngine.Random.Range(0, enemyList.Count);
-        int summoned = Instantiate(enemyList[randomNo], new Vector3(transform.position.x + 5 + randomNo, transform.position.y, 0), transform.rotation).GetInstanceID();
-        enemiesSummoned.Append(summoned);
+        summonedEnemy summoned = Instantiate(enemyList[randomNo], new Vector3(transform.position.x + 5 + randomNo, transform.position.y, 0), transform.rotation).GetComponent<summonedEnemy>();
+        summoned.setSummonerID(gameObject.GetInstanceID());
 
     }
 
-    public void MinusEnemyCount(int id)//testing
-    {
-        int i = enemiesSummoned.FindIndex(x => x == id);
-        if(i > -1)
-        {
+    public void MinusEnemyCount(int id)
+    {   
             currentEnemyNo--;
-            enemiesSummoned.RemoveAt(i);
-
-        }
-            
-        
-
-        
+  
     }
 }

@@ -82,8 +82,9 @@ public class logicManager : MonoBehaviour
             timerText.enabled = true;
             timerReal -= Time.deltaTime;
             timerText.text = "Time: " + ((int)timerReal).ToString();
-            if(timerReal == 0)
+            if(timerReal <= 0)
             {
+                spw.setPauseFlag(false);
                 startTimer = false;
                 timerText.enabled = false;
                 Destroy(weapon);
@@ -93,6 +94,7 @@ public class logicManager : MonoBehaviour
                 pointMultiplier += weaponDuplication ? weaponPickupMul * 2 : weaponPickupMul;//if the picked up weapon is the same as the player's weapon, then double the multiplier
                 spw.setPauseFlag(false);
                 startTimer = false;
+                timerText.enabled = false;
             }
             
         }

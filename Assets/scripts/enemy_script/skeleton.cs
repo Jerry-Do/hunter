@@ -10,13 +10,8 @@ public class skeleton : summonedEnemy
 {
     // Start is called before the first frame update
 
-    private enum state
-    { 
-        run,
-        attack
     
-    }
-    private state enemyState;
+    
     private AudioSource hitSound;
     private bool rageMode = false;
     public Animator sprite;
@@ -55,6 +50,7 @@ public class skeleton : summonedEnemy
         {
             Destroy(gameObject);
         }
+        enemyState = playerObj.returnHidingFlag() ? state.idle : state.run;
     }
     public override void minusHealth(int damage)
     {
@@ -93,6 +89,9 @@ public class skeleton : summonedEnemy
                     break;
                 case state.attack:
                     ac.PlayStateAnimation("attack");
+                    break;
+                case state.idle:
+                    ac.PlayStateAnimation("idle");
                     break;
             default:
                 break;                

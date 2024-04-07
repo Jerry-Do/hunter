@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class summonedEnemy : enemy
 {
+    private int summonerID;
     protected new void OnDestroy()
     {
         dataTracker dt = FindObjectOfType<dataTracker>();
@@ -16,5 +17,10 @@ public abstract class summonedEnemy : enemy
         es.OnEnemyKilled();
         dt.increaseKillCount();
         Debug.Log("On destroyed called");
+    }
+
+    public void setSummonerID(int id)
+    {
+        summonerID = id;
     }
 }
