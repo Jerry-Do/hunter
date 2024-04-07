@@ -662,6 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 64254391}
   - component: {fileID: 64254390}
+  - component: {fileID: 64254392}
   m_Layer: 0
   m_Name: logicManager
   m_TagString: logic
@@ -706,6 +707,7 @@ MonoBehaviour:
   - {fileID: 2549600242900192294, guid: 2f919a6ed0e86144d9c529771193c779, type: 3}
   weaponsListSuperRare:
   - {fileID: 3994399682485130871, guid: 7f6ade2a62b6f4d4e89b873c3ac115ee, type: 3}
+  dataTrackerInstance: {fileID: 64254392}
 --- !u!4 &64254391
 Transform:
   m_ObjectHideFlags: 0
@@ -721,6 +723,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &64254392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64254389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0c1c7544939c84981ade7ff5984e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &77244094
 GameObject:
   m_ObjectHideFlags: 0
@@ -7040,6 +7054,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316262378}
+  - component: {fileID: 1316262379}
   m_Layer: 0
   m_Name: tracker
   m_TagString: Untagged
@@ -7062,6 +7077,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1316262379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316262377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0c1c7544939c84981ade7ff5984e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1317301118
 GameObject:
   m_ObjectHideFlags: 0

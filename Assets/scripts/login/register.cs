@@ -131,6 +131,7 @@ public class register : MonoBehaviour
                     SceneManager.LoadScene("profile");
                     PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag for the next session
                     PlayerPrefs.Save();
+                    PlayerPrefs.SetString("UserEmail", email); // Assuming 'email' is the user's email
                 }
                 catch (Exception ex)
                 {

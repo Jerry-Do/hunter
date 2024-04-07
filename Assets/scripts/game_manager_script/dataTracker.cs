@@ -25,9 +25,9 @@ public class dataTracker : MonoBehaviour
         lm = FindObjectOfType<logicManager>();
 
         // Initialize MongoDB connection
-        client = new MongoClient("mongodb+srv://esomeh:<password>@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
-        database = client.GetDatabase("Game");
-        collection = database.GetCollection<BsonDocument>("RecordScore");
+        client = new MongoClient("mongodb+srv://esomeh:ZndxWXyeRBTpe2GG@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
+        database = client.GetDatabase("RegisterDB");
+        collection = database.GetCollection<BsonDocument>("RegisterUnityCollection");
     }
 
     // Update is called once per frame
@@ -55,26 +55,45 @@ public class dataTracker : MonoBehaviour
     // Call this method to save game data
     public async Task SaveGameData()
     {
-        point = lm.getPoint();
-        pointMultiplier = lm.getMultiplier();
+        string userEmail = PlayerPrefs.GetString("UserEmail", "defaultUser@example.com"); // Default if not found
+        logicManager lM = FindAnyObjectByType<logicManager>();
+        point = lM.getPoint();
+        pointMultiplier = lM.getMultiplier();
+
         var gameData = new BsonDocument
         {
+            {"email", userEmail},
             {"point", point},
             {"pointMultiplier", pointMultiplier},
             {"enemyKilled", enemyKilled},
             {"weaponNames", new BsonArray(weaponNames)}
         };
 
+        var filter = Builders<BsonDocument>.Filter.Eq("email", userEmail);
+        var options = new ReplaceOptions { IsUpsert = true }; // Ensures a new document is inserted if no existing document matches the filter
+
         try
         {
-            await collection.InsertOneAsync(gameData);
-            Debug.Log("Game data saved successfully.");
-            
+            ReplaceOneResult result = await collection.ReplaceOneAsync(filter, gameData, options);
+            if (result.IsAcknowledged)
+            {
+                if (result.MatchedCount > 0)
+                {
+                    Debug.Log($"Game data updated successfully for email: {userEmail}");
+                }
+                else
+                {
+                    Debug.Log($"Game data inserted successfully for email: {userEmail}");
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to save game data.");
+            }
         }
         catch (System.Exception ex)
         {
-            throw (ex);
-            
+            Debug.LogError($"An error occurred while saving game data: {ex.Message}");
         }
     }
 }
