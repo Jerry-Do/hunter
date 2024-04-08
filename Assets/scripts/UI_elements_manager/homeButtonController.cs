@@ -8,11 +8,19 @@ public class homeButtonController : MonoBehaviour
 {
     int n;
     // navigate title screen
-    public void OnButtonPress()
+    public async void OnButtonPress()
     {
-        n++;
-        Debug.Log("Home Button clicked " + n + " times.");
-        //soundManager.instance.StopMusic("GameOver");
+        dataTracker dt = FindObjectOfType<dataTracker>();
+        Debug.Log("home");
+        try
+        {
+            await dt.SaveGameData();
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"An error occurred while saving game data: {ex.Message}");
+        }
+        
         SceneManager.LoadScene("profile");
     }
 }

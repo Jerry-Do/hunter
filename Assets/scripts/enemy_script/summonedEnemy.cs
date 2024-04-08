@@ -15,7 +15,7 @@ public abstract class summonedEnemy : enemy
         lm.addPoint(point);
         lm.addNoEnemyKilled();
         es.OnEnemyKilled();
-        dt.increaseKillCount();
+        lm.increaseKillCount();
         Debug.Log("On destroyed called");
     }
 

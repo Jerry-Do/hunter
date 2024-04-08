@@ -242,7 +242,7 @@ public class playerControl : MonoBehaviour
             maxNumAmmo = weapon.returnMaxNumAmmo();
             reloadTimer = weapon.returnReloadTimer();
             Destroy(collision.gameObject);
-            dt.addWeapon(weaponName);
+            logic.addWeapon(weaponName);
            
             
         }

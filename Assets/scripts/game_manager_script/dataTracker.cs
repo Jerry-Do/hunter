@@ -20,8 +20,23 @@ public class dataTracker : MonoBehaviour
     private double pointMultiplier;
     private int enemyKilled;
     private List<string> weaponNames = new List<string>();
+    public static dataTracker instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
+        
         lm = FindObjectOfType<logicManager>();
 
         // Initialize MongoDB connection
@@ -39,7 +54,16 @@ public class dataTracker : MonoBehaviour
     {
         
     }
-    public void increaseKillCount()
+    public void UpdateGameData(double point, double pointMultiplier, int enemyKilled, List<string> weaponNames)
+    {
+        this.point = point;
+        this.pointMultiplier = pointMultiplier;
+        this.enemyKilled = enemyKilled;
+        this.weaponNames = new List<string>(weaponNames); // Create a copy if necessary
+    }
+
+
+    /*public void increaseKillCount()
     {
         enemyKilled++;
     }
@@ -50,16 +74,15 @@ public class dataTracker : MonoBehaviour
         {
             weaponNames.Add(name);
         }
-    }
+    }*/
 
     // Call this method to save game data
     public async Task SaveGameData()
     {
         //string userEmail = PlayerPrefs.GetString("UserEmail", "defaultUser@example.com"); // Default if not found
         string email = UserDataHolder.Instance.UserDocument.GetValue("email").AsString;
-        logicManager lM = FindAnyObjectByType<logicManager>();
-        point = lM.getPoint();
-        pointMultiplier = lM.getMultiplier();
+        //logicManager lM = FindAnyObjectByType<logicManager>();
+       
 
         var gameData = new BsonDocument
         {

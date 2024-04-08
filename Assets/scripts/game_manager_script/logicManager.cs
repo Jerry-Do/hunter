@@ -51,12 +51,13 @@ public class logicManager : MonoBehaviour
     [SerializeField] private List<GameObject> weaponsListCommon;
     [SerializeField] private List<GameObject> weaponsListRare;
     [SerializeField] private List<GameObject> weaponsListSuperRare;
-    
 
+    private int enemyKilledTrack;
+    private List<string> weaponNames = new List<string>();
 
     void Start()
     {
-
+        //gameOver.SetActive(false);
         player =  GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
     }
 
@@ -140,10 +141,10 @@ public class logicManager : MonoBehaviour
             Destroy(GameObject.FindGameObjectsWithTag("MainCamera")[1]);
         }
     }
-    public async void GameOver()
+    public void GameOver()
     {
         player.enabled = false;
-        dataTracker dt = FindObjectOfType<dataTracker>();
+        /*dataTracker dt = FindObjectOfType<dataTracker>();
         try
         {
             await dt.SaveGameData();
@@ -151,13 +152,32 @@ public class logicManager : MonoBehaviour
         catch (System.Exception ex)
         {
             Debug.LogError($"An error occurred while saving game data: {ex.Message}");
-        }
-
-            // Proceed to load the game over scene.
-            soundManager.instance.StopMusic("theme");
+        }*/
+        //PrepareForSceneChange();
+        // Proceed to load the game over scene.
+        soundManager.instance.StopMusic("theme");
         soundManager.instance.PlaySfx("GameOver");
         SceneManager.LoadScene("gameOver");
     }
+    public void increaseKillCount()
+    {
+        enemyKilledTrack++;
+    }
+
+    public void addWeapon(string name)
+    {
+        if (!weaponNames.Contains(name))
+        {
+            weaponNames.Add(name);
+        }
+    }
+    // Method within logicManager
+    public void PrepareForSceneChange()
+    {
+        dataTracker.instance.UpdateGameData(getPoint(), getMultiplier(), enemyKilledTrack, weaponNames);
+        // Proceed with scene transition after this
+    }
+
 
     public void restartGame()
     {
