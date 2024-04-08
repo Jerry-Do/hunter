@@ -153,7 +153,7 @@ public class logicManager : MonoBehaviour
         {
             Debug.LogError($"An error occurred while saving game data: {ex.Message}");
         }*/
-        //PrepareForSceneChange();
+        PrepareForSceneChange();
         // Proceed to load the game over scene.
         soundManager.instance.StopMusic("theme");
         soundManager.instance.PlaySfx("GameOver");
