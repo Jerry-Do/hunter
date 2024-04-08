@@ -26,13 +26,13 @@ public class RangedEnemy : enemy
     {
         health = 10;
         point = 1;
-        
+
     }
 
     private state enemyState;
 
-    public Animator sprite; // Make sure it's attached in the inspector.
-    private animationController ac; // Attach this in the inspector as well.
+    public Animator sprite; 
+    private animationController ac; 
 
     void Start()
     {
@@ -75,27 +75,25 @@ public class RangedEnemy : enemy
             enemyState = state.run;
         }
 
-        
+
     }
 
     void Shoot()
     {
-        // Instantiate the bullet at the firePoint position, without any rotation.
+      
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-        // Calculate the direction from the enemy to the player, normalized to get a unit vector.
         Vector2 shootDirection = (player.position - firePoint.position).normalized;
 
-        // Attempt to get the EnemyBullet component on the newly instantiated bullet object.
+       
         EnemyBullet bulletScript = bullet.GetComponent<EnemyBullet>();
         if (bulletScript != null)
         {
-            // If the component is found, call the Initialize method, passing the calculated direction.
+          
             bulletScript.Initialize(shootDirection);
         }
 
-        // Update the nextFireTime by adding the reciprocal of the fire rate to the current time.
-        // This ensures that the enemy will only shoot again after the specified fire rate interval has passed.
+      
         nextFireTime = Time.time + 1f / fireRate;
     }
 
@@ -116,13 +114,13 @@ public class RangedEnemy : enemy
                 break;
             case state.attack_magic:
                 ac.PlayStateAnimation("attack_magic"); // Play the attack animation.
-                
+
                 if (Time.time >= nextFireTime)
                 {
                     Shoot();
                     break;
                 }
-            
+
                 break;
         }
     }
