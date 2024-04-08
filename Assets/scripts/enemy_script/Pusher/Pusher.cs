@@ -1,105 +1,113 @@
 using System.Collections;
 using System.Collections.Generic;
+using MongoDB.Driver;
 using UnityEngine;
-using static PlayerObj;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-/// <summary>
-/// Manages the zombie enemy's logic and attributes
-/// </summary>
+using static PlayerObj; // Make sure PlayerObj is correctly defined in your project.
+
 public class Pusher : enemy
 {
-    // Start is called before the first frame update
 
     private enum state
     {
         run,
         attack
-
     }
-    private state enemyState;
-  
-    private bool rageMode = false;
-    public Animator sprite;
-    private animationController ac;
-    [SerializeField] private float speed = 4.0f;
-    private playerControl playerControl;
 
-    public GameObject attackMove;
+
+    [SerializeField] private float speed = 4.0f;
+    public int damage = 1;
 
     private Pusher()
     {
         health = 15;
         point = 1;
-        enemyDamage = 5;
+
+
     }
 
-    // Update is called once per frame
+    private state enemyState;
+
+    public Animator sprite;
+    private animationController ac;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+
     void Update()
     {
 
-        ac = gameObject.GetComponent<animationController>();
+
+        ac = GetComponent<animationController>();
         EnemyLogic();
-        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
+
+        if (health <= 0)
         {
-            ReturnEnemy();
+            Destroy(gameObject);
+            return; // Avoids further execution after destruction.
         }
-        if ((player.transform.position.x - transform.position.x) <= 0)//turn the object's direction based on where the player is
+
+        // Flipping direction based on the player's position.
+        if ((player.transform.position.x - transform.position.x) <= 0)
         {
+            // Enemy faces left.
             transform.eulerAngles = Vector3.forward * 0;
         }
         else
         {
-
+            // Enemy faces right.
             transform.eulerAngles = Vector3.up * 180;
         }
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
-    public override void minusHealth(int damage)
-    {
-        //hitSound.Play();
-        health -= damage;
-        if (health <= (health / 2) && !rageMode)//Enter rage mode if below 50 persent health
-        {
-            speed *= 1.5f;
-            enemyDamage *= 2;
-            rageMode = true;
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            enemyState = state.attack;
 
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        
+        if (Vector2.Distance(transform.position, player.position) > 1)
         {
             enemyState = state.run;
-
         }
+        else if (Vector2.Distance(transform.position, player.position) <= 1f)
+        {
+            enemyState = state.attack;
+        }
+
+
+
+
+
+
     }
+
+    
+
+    
+
+    public override void minusHealth(int damage)
+    {
+        health -= damage;
+        // Handle health reducing logic...
+    }
+
     private void EnemyLogic()
     {
         switch (enemyState)
         {
             case state.run:
                 ac.PlayStateAnimation("run");
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
+                if (Vector2.Distance(transform.position, player.transform.position) > 1f)
+                    transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
                 break;
             case state.attack:
                 ac.PlayStateAnimation("attack");
-                break;
-            default:
+                playerControl Hplayer = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
+                if (Hplayer != null)
+                {
+                    Hplayer.minusHealth(damage);
+                }
                 break;
         }
-
     }
+
 
 
 }

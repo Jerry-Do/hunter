@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class SniperEnemy : enemy
 {
-    private enum State
+    private enum state
     {
-        Run,
-        AttackMagic
+        run,
+        attack_magic
     }
+
 
     private SniperEnemy()
     {
@@ -18,16 +19,16 @@ public class SniperEnemy : enemy
 
     public GameObject bulletPrefab;
     public Transform firePoint;
- private float speed = 3.0f;
-private float stopDistance = 5f;
- private float fireRate = 2f;
-private float shootingRange = 15f;
+    private float speed = 3.0f;
+    private float stopDistance = 5f;
+    private float fireRate = 0.5f;
+    private float shootingRange = 15f;
     private float nextFireTime;
 
 
 
 
-    private State enemyState;
+    private state enemyState;
     public Animator sprite; 
     private animationController ac; 
 
@@ -40,26 +41,36 @@ private float shootingRange = 15f;
 
     void Update()
     {
+        ac = GetComponent<animationController>();
+        EnemyLogic();
+
         if (health <= 0)
         {
             Destroy(gameObject);
-            return;
+            return; // Avoids further execution after destruction.
         }
 
-        // Update the direction to face the player
-        UpdateDirection();
-
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if (distanceToPlayer <= shootingRange && Time.time >= nextFireTime)
+        // Flipping direction based on the player's position.
+        if ((player.transform.position.x - transform.position.x) <= 0)
         {
-            enemyState = State.AttackMagic;
+            // Enemy faces left.
+            transform.eulerAngles = Vector3.forward * 0;
         }
-        else if (distanceToPlayer > stopDistance)
+        else
         {
-            enemyState = State.Run;
+            // Enemy faces right.
+            transform.eulerAngles = Vector3.up * 180;
         }
 
-        EnemyLogic();
+        // Check for shooting or moving.
+        if (Vector2.Distance(transform.position, player.position) <= shootingRange && Time.time >= nextFireTime)
+        {
+            enemyState = state.attack_magic;
+        }
+        else if (Vector2.Distance(transform.position, player.position) > shootingRange)
+        {
+            enemyState = state.run;
+        }
     }
 
     void UpdateDirection()
@@ -79,14 +90,19 @@ private float shootingRange = 15f;
 
     void Shoot()
     {
+
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+
         Vector2 shootDirection = (player.position - firePoint.position).normalized;
+
 
         EnemyBullet bulletScript = bullet.GetComponent<EnemyBullet>();
         if (bulletScript != null)
         {
+
             bulletScript.Initialize(shootDirection);
         }
+
 
         nextFireTime = Time.time + 1f / fireRate;
     }
@@ -95,11 +111,11 @@ private float shootingRange = 15f;
     {
         switch (enemyState)
         {
-            case State.Run:
-                ac.PlayStateAnimation("Run");
+            case state.run:
+                ac.PlayStateAnimation("run");
                 MoveTowardsPlayer();
                 break;
-            case State.AttackMagic:
+            case state.attack_magic:
                 if (Time.time >= nextFireTime)
                 {
                     ac.PlayStateAnimation("attack_magic");

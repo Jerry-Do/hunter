@@ -3677,8 +3677,8 @@ GameObject:
   - component: {fileID: 6971871698419888264}
   - component: {fileID: 5288378828543692974}
   m_Layer: 5
-  m_Name: Pusher
-  m_TagString: Untagged
+  m_Name: Unit005
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3737,7 +3737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc83cbb6c415d8d46803f2bac33283a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabs: {fileID: 0}
+  _prefabs: {fileID: 3201172290605465319}
 --- !u!114 &6971871698419888264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3750,6 +3750,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a702d8d59d87510499eb7ca695f8f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  despawnDistance: 20
+  enemyType: 0
+  sprite: {fileID: 0}
+  speed: 4
+  attackMove: {fileID: 0}
 --- !u!61 &5288378828543692974
 BoxCollider2D:
   m_ObjectHideFlags: 0
