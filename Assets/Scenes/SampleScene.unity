@@ -6032,6 +6032,50 @@ MonoBehaviour:
     spawnInterval: 3
     spawnCount: 0
     enemyAlive: 0
+  - waveName: 
+    enemyGroups:
+    - enemyName: knight
+      enemyCount: 1
+      spawnCount: 0
+      enemyPrefab: {fileID: 5746387422127145956, guid: a2917c08096d04841a2893d2522af7ea,
+        type: 3}
+    waveQuota: 1
+    spawnInterval: 3
+    spawnCount: 0
+    enemyAlive: 0
+  - waveName: 
+    enemyGroups:
+    - enemyName: Zombie
+      enemyCount: 1
+      spawnCount: 0
+      enemyPrefab: {fileID: 7573831300888823078, guid: 89bb2143bd6d04e579bef0bb58be6fdd,
+        type: 3}
+    waveQuota: 1
+    spawnInterval: 3
+    spawnCount: 0
+    enemyAlive: 0
+  - waveName: 
+    enemyGroups:
+    - enemyName: Robot
+      enemyCount: 1
+      spawnCount: 0
+      enemyPrefab: {fileID: 1113936439146374093, guid: 2d2a77ee6a8197440be0ec92a2c1371d,
+        type: 3}
+    waveQuota: 1
+    spawnInterval: 3
+    spawnCount: 0
+    enemyAlive: 0
+  - waveName: 
+    enemyGroups:
+    - enemyName: Pusher
+      enemyCount: 1
+      spawnCount: 0
+      enemyPrefab: {fileID: 8909035994146476278, guid: f735e40dbd0642e4ea43c3721ca5e086,
+        type: 3}
+    waveQuota: 1
+    spawnInterval: 3
+    spawnCount: 0
+    enemyAlive: 0
   currentWaveCount: 0
   enemiesAlive: 0
   maxEnemiesAllowed: 10

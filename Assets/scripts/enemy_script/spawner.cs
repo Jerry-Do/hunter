@@ -53,13 +53,14 @@ public class spawner : MonoBehaviour
     private void FixedUpdate()
     {
        
-        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
-        {
-            StartCoroutine(BeginNextWave());
-        }
+        
         spawnTimer += Time.fixedDeltaTime;
         if(spawnTimer >= waves[currentWaveCount].spawnInterval)
         {
+            if (currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
+            {
+                StartCoroutine(BeginNextWave());
+            }
             spawnTimer = 0f;
             SpawnEnemy();
         }
@@ -87,7 +88,6 @@ public class spawner : MonoBehaviour
         }
         waves[currentWaveCount].waveQuota = currentWaveQuota;
         waves[currentWaveCount].enemyAlive = currentWaveQuota;
-        Debug.Log(currentWaveQuota);
     }
 
     void SpawnEnemy()
