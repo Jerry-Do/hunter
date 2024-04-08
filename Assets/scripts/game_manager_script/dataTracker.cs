@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Drawing;
 /// <summary>
 /// Keep track of metadata like point, point multiplier, enemy killed and weapons picked up
 /// </summary>
@@ -15,7 +16,7 @@ public class dataTracker : MonoBehaviour
     private IMongoCollection<BsonDocument> collection;
 
     // Start is called before the first frame update
-    private logicManager lm;
+    //private logicManager lm;
     private double point;
     private double pointMultiplier;
     private int enemyKilled;
@@ -37,7 +38,7 @@ public class dataTracker : MonoBehaviour
     void Start()
     {
         
-        lm = FindObjectOfType<logicManager>();
+        //lm = FindObjectOfType<logicManager>();
 
         // Initialize MongoDB connection
         client = new MongoClient("mongodb+srv://esomeh:ZndxWXyeRBTpe2GG@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
@@ -60,6 +61,7 @@ public class dataTracker : MonoBehaviour
         this.pointMultiplier = pointMultiplier;
         this.enemyKilled = enemyKilled;
         this.weaponNames = new List<string>(weaponNames); // Create a copy if necessary
+        Debug.Log(this.point);
     }
 
 
@@ -82,8 +84,8 @@ public class dataTracker : MonoBehaviour
         //string userEmail = PlayerPrefs.GetString("UserEmail", "defaultUser@example.com"); // Default if not found
         string email = UserDataHolder.Instance.UserDocument.GetValue("email").AsString;
         //logicManager lM = FindAnyObjectByType<logicManager>();
-       
 
+        Debug.Log(point);
         var gameData = new BsonDocument
         {
             {"point", point},
