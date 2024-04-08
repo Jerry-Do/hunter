@@ -51,7 +51,7 @@ public class logicManager : MonoBehaviour
     [SerializeField] private List<GameObject> weaponsListCommon;
     [SerializeField] private List<GameObject> weaponsListRare;
     [SerializeField] private List<GameObject> weaponsListSuperRare;
-    [SerializeField] private dataTracker dataTrackerInstance; // Add this line
+    
 
 
     void Start()
@@ -142,37 +142,19 @@ public class logicManager : MonoBehaviour
     }
     public async void GameOver()
     {
-        // Disable player controls to prevent further actions.
-        if (player != null)
+        player.enabled = false;
+        dataTracker dt = FindObjectOfType<dataTracker>();
+        try
         {
-            player.enabled = false;
+            await dt.SaveGameData();
         }
-        else
+        catch (System.Exception ex)
         {
-            Debug.LogError("Player control script not found.");
-            return; // Exit if no player control is found to avoid further errors.
-        }
-
-        if (dataTrackerInstance != null)
-        {
-            try
-            {
-                await dataTrackerInstance.SaveGameData();
-                Debug.Log("Game data saved successfully.");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"An error occurred while saving game data: {ex.Message}");
-            }
-        }
-        else
-        {
-            Debug.LogError("dataTracker instance not found.");
+            Debug.LogError($"An error occurred while saving game data: {ex.Message}");
         }
 
-
-        // Proceed to load the game over scene.
-        soundManager.instance.StopMusic("theme");
+            // Proceed to load the game over scene.
+            soundManager.instance.StopMusic("theme");
         soundManager.instance.PlaySfx("GameOver");
         SceneManager.LoadScene("gameOver");
     }
