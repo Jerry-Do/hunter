@@ -3,7 +3,19 @@ guid: 346d0fe80ccaa48a7a7f032cbff29db8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - emailText: {instanceID: 0}
+  - pointText: {fileID: 3969856310663274534, guid: c4eb5bdfed21e4335a42d344d8d7c108,
+      type: 3}
+  - killedEnemy: {fileID: 6818778774954496375, guid: 8cdf396064e9a4481ae517b822a48169,
+      type: 3}
+  - pointMultiplierText: {fileID: 6630311940024303177, guid: fb467d57778024f71a6cdaca968e31ad,
+      type: 3}
+  - weaponNameText: {fileID: 5132075725892968897, guid: 32f7ee8c3462a43f0ba0bb48b65e9e9b,
+      type: 3}
+  - separator: {fileID: 4558232585429382289, guid: c684bc2e456db41b9a2c6d2a0131de15,
+      type: 3}
+  - pointsParent: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
