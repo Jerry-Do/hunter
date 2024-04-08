@@ -263,7 +263,7 @@ public class playerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("hiding"))
         {
             isHiding = false;
-            Debug.Log("Is not hiding");
+            
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -271,7 +271,7 @@ public class playerControl : MonoBehaviour
         if(collision.gameObject.CompareTag("hiding"))
         {
             isHiding = true;
-            Debug.Log("Is hiding");
+           
         }
         if (collision.gameObject.name.Equals("bomerangBullet(Clone)"))
         {
@@ -347,5 +347,9 @@ public class playerControl : MonoBehaviour
     public bool returnHidingFlag()
     {
         return isHiding;
+    }
+    public bool returnShootFlag()
+    {
+        return shootFlag;
     }
 }

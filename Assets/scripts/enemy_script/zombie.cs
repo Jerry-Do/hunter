@@ -10,13 +10,7 @@ public class zombie : enemy
 {
     // Start is called before the first frame update
 
-    private enum state
-    { 
-        run,
-        attack,
-        idle
-    }
-    private state enemyState;
+    
     private AudioSource hitSound;
     private bool rageMode = false;
     public Animator sprite;

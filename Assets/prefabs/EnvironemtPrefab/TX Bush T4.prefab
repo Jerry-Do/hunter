@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1824698772348906998}
   - component: {fileID: 6232781599209911461}
   - component: {fileID: 8299974539195244624}
+  - component: {fileID: 464849608379310744}
   m_Layer: 0
   m_Name: TX Bush T4
   m_TagString: hiding
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.60328615, y: 0.5384201}
   m_EdgeRadius: 0
+--- !u!114 &464849608379310744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359778723586377379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508ffac479fa0294c9bc71bc0a5473a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

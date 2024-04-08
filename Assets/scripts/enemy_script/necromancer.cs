@@ -15,13 +15,6 @@ public class necromancer : enemy
     private List<int> enemiesSummoned;
     private float currentEnemyNo = 0;
     private float cooldownUse;
-    private enum state
-    {
-        run,
-        attack,
-        idle, 
-    }
-    private state enemyState;
     private necromancer()
     {
         health = 10;

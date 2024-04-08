@@ -934,7 +934,7 @@ SpriteRenderer:
   m_Size: {x: 0.1875, y: 0.15625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1659347879749455775
@@ -1103,7 +1103,7 @@ SpriteRenderer:
   m_Size: {x: 0.375, y: 0.28125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1725142032488042066
@@ -3245,7 +3245,7 @@ SpriteRenderer:
   m_Size: {x: 0.1875, y: 0.15625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7452357533327276347
@@ -3464,15 +3464,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb7880a037ac064b8a07967ed3bd5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  despawnDistance: 20
+  despawnDistance: 10
   enemyType: 0
   summonDistance: 10
   speed: 3
   enemyList:
   - {fileID: 7573831300888823078, guid: 2e2d8848918074ced85fd4e82acd7d11, type: 3}
-  summoningTime: 1.5
+  summoningTime: 2
   cooldown: 2
-  maxEnemyAllowed: 4
+  maxEnemyAllowed: 2
 --- !u!1 &7641525738523129613
 GameObject:
   m_ObjectHideFlags: 0

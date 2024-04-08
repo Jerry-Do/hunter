@@ -10,8 +10,6 @@ public abstract class summonedEnemy : enemy
         dataTracker dt = FindObjectOfType<dataTracker>();
         spawner es = FindObjectOfType<spawner>();
         logicManager lm = FindObjectOfType<logicManager>();
-        necromancer necro = FindObjectOfType<necromancer>();
-        necro.MinusEnemyCount(gameObject.GetInstanceID());
         lm.addPoint(point);
         lm.addNoEnemyKilled();
         es.OnEnemyKilled();

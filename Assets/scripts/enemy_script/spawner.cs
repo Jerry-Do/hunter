@@ -53,17 +53,22 @@ public class spawner : MonoBehaviour
     private void FixedUpdate()
     {
        
-        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
+        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount <= 0 && !pauseFlag)
         {
             StartCoroutine(BeginNextWave());
+        }else if(currentWaveCount > waves.Count)//Temperoray way to create end game
+        {
+            logicManager lm = FindObjectOfType<logicManager>();
+            lm.GameOver();
         }
         spawnTimer += Time.fixedDeltaTime;
         if(spawnTimer >= waves[currentWaveCount].spawnInterval)
         {
             spawnTimer = 0f;
             SpawnEnemy();
+            
         }
-      
+       
     }
 
     IEnumerator BeginNextWave()
@@ -74,8 +79,9 @@ public class spawner : MonoBehaviour
         //If there are more waves to start after the current wave, spawn the next wave
         if(currentWaveCount < waves.Count - 1)
         {
-            currentWaveCount++;
             CalculateWaveQuota();
+            
+
         }
     }
     void CalculateWaveQuota()//Calculate the quota of the current wave
@@ -88,6 +94,7 @@ public class spawner : MonoBehaviour
         waves[currentWaveCount].waveQuota = currentWaveQuota;
         waves[currentWaveCount].enemyAlive = currentWaveQuota;
         Debug.Log(currentWaveQuota);
+
     }
 
     void SpawnEnemy()
@@ -128,6 +135,7 @@ public class spawner : MonoBehaviour
             logicManager lm = FindObjectOfType<logicManager>();
             lm.spawnRandomWeapon();
             lm.setTimerFlagToTrue();
+            currentWaveCount++;
         }
     }
 
@@ -135,4 +143,9 @@ public class spawner : MonoBehaviour
    {
         pauseFlag = flag;
    }
+    public void IncreaseEnemyCount()
+    {
+        waves[currentWaveCount].enemyAlive++;
+        enemiesAlive++;
+    }
 }
