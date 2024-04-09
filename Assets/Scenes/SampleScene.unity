@@ -441,6 +441,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
+        type: 3}
       propertyPath: m_TagString
       value: obsticle
       objectReference: {fileID: 0}
@@ -1173,6 +1178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: IWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
@@ -2207,7 +2217,7 @@ Transform:
   m_GameObject: {fileID: 260963007}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.509998, y: 10.500001, z: 0}
+  m_LocalPosition: {x: 6.92, y: 7.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5866,6 +5876,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
+        type: 3}
       propertyPath: m_TagString
       value: obsticle
       objectReference: {fileID: 0}
@@ -5932,12 +5947,12 @@ PrefabInstance:
     - target: {fileID: 615567722362937262, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
       propertyPath: m_Size.y
-      value: 2.7948985
+      value: 3.7776806
       objectReference: {fileID: 0}
     - target: {fileID: 615567722362937262, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
       propertyPath: m_Offset.y
-      value: -0.07892853
+      value: 0.4124626
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5959,7 +5974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 952395261}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: LevelIWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6415,7 +6430,7 @@ MonoBehaviour:
   - waveName: 
     enemyGroups:
     - enemyName: Zombie
-      enemyCount: 1
+      enemyCount: 10
       spawnCount: 0
       enemyPrefab: {fileID: 7573831300888823078, guid: 89bb2143bd6d04e579bef0bb58be6fdd,
         type: 3}
@@ -6426,9 +6441,25 @@ MonoBehaviour:
   - waveName: 
     enemyGroups:
     - enemyName: Necromancer
-      enemyCount: 1
+      enemyCount: 5
       spawnCount: 0
       enemyPrefab: {fileID: 7573831300888823078, guid: c8d417a9f76c64d3d82aea0283a7d0a3,
+        type: 3}
+    waveQuota: 0
+    spawnInterval: 0.5
+    spawnCount: 0
+    enemyAlive: 0
+  - waveName: 
+    enemyGroups:
+    - enemyName: Necromancer
+      enemyCount: 3
+      spawnCount: 0
+      enemyPrefab: {fileID: 7573831300888823078, guid: c8d417a9f76c64d3d82aea0283a7d0a3,
+        type: 3}
+    - enemyName: Zombie
+      enemyCount: 15
+      spawnCount: 0
+      enemyPrefab: {fileID: 7573831300888823078, guid: 89bb2143bd6d04e579bef0bb58be6fdd,
         type: 3}
     waveQuota: 0
     spawnInterval: 0.5
@@ -6737,6 +6768,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: IWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
@@ -8463,7 +8499,7 @@ Transform:
   m_GameObject: {fileID: 1379014386}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.47, y: 3.55, z: 0}
+  m_LocalPosition: {x: 4.34, y: 3.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8481,6 +8517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: IWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 615567722362937248, guid: f560edb544756bf4d89e086b0183bf1b,
         type: 3}
@@ -29385,7 +29426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2119299664
 Transform:
   m_ObjectHideFlags: 0
