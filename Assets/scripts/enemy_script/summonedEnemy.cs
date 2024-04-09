@@ -10,11 +10,13 @@ public abstract class summonedEnemy : enemy
         dataTracker dt = FindObjectOfType<dataTracker>();
         spawner es = FindObjectOfType<spawner>();
         logicManager lm = FindObjectOfType<logicManager>();
+        necromancer nm = GameObject.Find(summonerID.ToString()).GetComponent<necromancer>();
+        nm.MinusEnemyCount(gameObject.GetInstanceID());
         lm.addPoint(point);
         lm.addNoEnemyKilled();
         es.OnEnemyKilled();
         lm.increaseKillCount();
-        Debug.Log("On destroyed called");
+      
     }
 
     public void setSummonerID(int id)

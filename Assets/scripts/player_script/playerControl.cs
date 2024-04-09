@@ -212,7 +212,7 @@ public class playerControl : MonoBehaviour
         {
             //sound.Play();
             soundManager.instance.PlaySfx("shot");
-            weapon.shooting(speedingFlag);
+            weapon.shooting(isHiding);
             shootFlag = false;
             ammo--;
 

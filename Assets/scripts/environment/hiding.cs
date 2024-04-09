@@ -9,7 +9,7 @@ public class hiding : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        if(Input.GetMouseButtonDown(0) && collision.gameObject.CompareTag("Player"))
+        if(Input.GetMouseButtonDown(1) && collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Desri");
             Destroy(gameObject);

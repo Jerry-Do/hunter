@@ -10,8 +10,14 @@ public class skeleton : summonedEnemy
 {
     // Start is called before the first frame update
 
-    
-    
+    protected enum state
+    {
+        run,
+        attack,
+        idle
+    }
+    protected state enemyState;
+
     private AudioSource hitSound;
     private bool rageMode = false;
     public Animator sprite;
@@ -38,10 +44,7 @@ public class skeleton : summonedEnemy
         
         ac = gameObject.GetComponent<animationController>();
         EnemyLogic();
-        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
-        {
-            ReturnEnemy();
-        }
+        
         if((player.transform.position.x - transform.position.x) <= 0)//turn the object's direction based on where the player is
         {
             transform.eulerAngles = Vector3.forward * 0;
@@ -55,7 +58,7 @@ public class skeleton : summonedEnemy
         {
             Destroy(gameObject);
         }
-        enemyState = playerObj.returnHidingFlag() ? state.idle : state.run;
+       
     }
     public override void minusHealth(int damage)
     {
@@ -88,19 +91,35 @@ public class skeleton : summonedEnemy
    {
         switch(enemyState)
             {
-                case state.run:
+            case state.run:
+                if (playerObj.returnHidingFlag())
+                {
+                    enemyState = state.idle;
+                }
+                else
+                {
+                    enemyState = state.run;
                     ac.PlayStateAnimation("run");
                     transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
+                }
                 break;
-                case state.attack:
-                    ac.PlayStateAnimation("attack");
-                    break;
-                case state.idle:
+            case state.attack:
+                ac.PlayStateAnimation("attack");
+                break;
+            case state.idle:
+                if (!playerObj.returnHidingFlag())
+                {
+                    enemyState = state.run;
+                }
+                else
+                {
                     ac.PlayStateAnimation("idle");
-                    break;
+
+                }
+                break;
             default:
-                break;                
-            }
+                break;
+        }
         
    }
 

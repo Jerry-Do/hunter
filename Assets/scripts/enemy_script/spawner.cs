@@ -53,16 +53,16 @@ public class spawner : MonoBehaviour
     private void FixedUpdate()
     {
        
-        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount <= 0 && !pauseFlag)
+        if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
         {
             StartCoroutine(BeginNextWave());
-        }else if(currentWaveCount > waves.Count)//Temperoray way to create end game
+        }else if(currentWaveCount == waves.Count)//Temperoray way to create end game
         {
             logicManager lm = FindObjectOfType<logicManager>();
             lm.GameOver();
         }
         spawnTimer += Time.fixedDeltaTime;
-        if(spawnTimer >= waves[currentWaveCount].spawnInterval)
+        if(spawnTimer >= waves[currentWaveCount].spawnInterval && !pauseFlag)
         {
             spawnTimer = 0f;
             SpawnEnemy();
@@ -77,8 +77,9 @@ public class spawner : MonoBehaviour
         yield return new WaitForSeconds(waveInterval);
 
         //If there are more waves to start after the current wave, spawn the next wave
-        if(currentWaveCount < waves.Count - 1)
+        if(currentWaveCount < waves.Count)
         {
+            
             CalculateWaveQuota();
             
 
@@ -111,7 +112,7 @@ public class spawner : MonoBehaviour
                         return;
                     }
 
-                    Instantiate(enemyGroup.enemyPrefab, player.position + relativeSpawnPos[UnityEngine.Random.Range(0, relativeSpawnPos.Count)].position, Quaternion.identity);
+                    Instantiate(enemyGroup.enemyPrefab,  relativeSpawnPos[UnityEngine.Random.Range(0, relativeSpawnPos.Count)].position, Quaternion.identity);
                     enemyGroup.spawnCount++;
                     waves[currentWaveCount].spawnCount++;
                     enemiesAlive++;

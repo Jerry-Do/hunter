@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6232781599209911461}
   - component: {fileID: 8299974539195244624}
   - component: {fileID: 464849608379310744}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TX Bush T4
   m_TagString: hiding
   m_Icon: {fileID: 0}
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300138, guid: c3a40e1c46727b94e959990527f8e7fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

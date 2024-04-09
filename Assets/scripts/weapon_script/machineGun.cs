@@ -30,9 +30,10 @@ public class machineGun : weapon
     // Update is called once per frame
     public override void shooting(bool speedingFlag)
     {
+        float randomAngle = speedingFlag == true ? UnityEngine.Random.Range(-0.75f, 1f) : 0;
         ammo.GetComponent<spearSpawn>().damage = damage;
-        Instantiate(ammo, playerControl.shooter.transform.position, Quaternion.identity);
 
+        Instantiate(ammo, new Vector3(playerControl.shooter.transform.position.x, playerControl.shooter.transform.position.y + randomAngle), Quaternion.identity);
     }
 
     public override string returnName()

@@ -32,9 +32,8 @@ public class richocetGun : weapon
     // Update is called once per frame
     public override void shooting(bool speedingFlag)
     {
-        float randomAngle = UnityEngine.Random.Range(-5, 5);
-        Instantiate(ammo, playerControl.shooter.transform.position, (speedingFlag == true ? Quaternion.Euler(new Vector3(randomAngle, 0, 0)) : Quaternion.identity));
-
+        float randomAngle = speedingFlag == true ? UnityEngine.Random.Range(-0.75f, 1f) : 0;
+        Instantiate(ammo, new Vector3(playerControl.shooter.transform.position.x, playerControl.shooter.transform.position.y + randomAngle), Quaternion.identity);
     }
 
     public override string returnName()
