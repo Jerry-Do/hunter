@@ -1,16 +1,13 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ProfileDisplay : MonoBehaviour
 {
-    public Text emailText;
+    public TMP_Text emailText;
     public GameObject pointText;
     public GameObject killedEnemy;
     public GameObject pointMultiplierText;
