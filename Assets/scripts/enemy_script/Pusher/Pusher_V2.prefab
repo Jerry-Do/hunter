@@ -3448,7 +3448,7 @@ GameObject:
   - component: {fileID: 3790982329745309077}
   - component: {fileID: 2767265538272760956}
   - component: {fileID: 7758705625592608289}
-  - component: {fileID: 4610185519540428192}
+  - component: {fileID: 6384881820905044455}
   m_Layer: 3
   m_Name: Pusher_V2
   m_TagString: enemy
@@ -3556,7 +3556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs: {fileID: 3790982329745309077}
---- !u!114 &4610185519540428192
+--- !u!114 &6384881820905044455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3565,7 +3565,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7573831300888823078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e74e10cf409bff945ad135730a70baba, type: 3}
+  m_Script: {fileID: 11500000, guid: a702d8d59d87510499eb7ca695f8f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   despawnDistance: 20

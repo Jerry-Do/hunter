@@ -6,13 +6,7 @@ using UnityEngine;
 /// </summary>
 public abstract class enemy : MonoBehaviour
 {
-    protected enum state
-    {
-        run,
-        attack,
-        idle
-    }
-    protected state enemyState;
+  
     [SerializeField] protected float despawnDistance = 20f;
     protected Transform player;
     protected playerControl playerObj; 

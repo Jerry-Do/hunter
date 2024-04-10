@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class necromancer : enemy
 {
+    protected enum state
+    {
+        run,
+        attack,
+        idle
+    }
+    protected state enemyState;
     private animationController ac;
     [SerializeField] private float summonDistance;
     [SerializeField] private float speed = 3.0f;
@@ -15,13 +22,6 @@ public class necromancer : enemy
     private List<int> enemiesSummoned;
     private float currentEnemyNo = 0;
     private float cooldownUse;
-    private enum state
-    {
-        run,
-        attack,
-        idle, 
-    }
-    private state enemyState;
     private necromancer()
     {
         health = 10;
@@ -37,10 +37,7 @@ public class necromancer : enemy
     {
         ac = gameObject.GetComponent<animationController>();
         EnemyLogic();
-        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
-        {
-            ReturnEnemy();
-        }
+        
         if ((player.transform.position.x - transform.position.x) <= 0)//turn the object's direction based on where the player is
         {
             transform.eulerAngles = Vector3.forward * 0;
@@ -51,6 +48,10 @@ public class necromancer : enemy
         }
         if (health <= 0)
         {
+            foreach (GameObject enemy in enemyList)
+            {
+                Destroy(enemy);
+            }
             Destroy(gameObject);
         }
         if(Vector2.Distance(transform.position, player.position) <= summonDistance )
@@ -65,10 +66,14 @@ public class necromancer : enemy
             } 
             
         }
-        else
+        else if(!playerObj.returnHidingFlag())
         {
             enemyState = state.run;
             
+        }
+        else
+        {
+            enemyState = state.idle;
         }
         if(cooldownUse > 0)
         {
@@ -78,7 +83,7 @@ public class necromancer : enemy
                 cooldownUse = 0;
             }
         }
-        enemyState = playerObj.returnHidingFlag() ? state.idle : state.run;
+        
     }
     public override void minusHealth(int damage)
     {
@@ -90,8 +95,7 @@ public class necromancer : enemy
         {
             case state.run:
                 ac.PlayStateAnimation("run");
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
-                
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);                
                 break;
             case state.attack:
                 ac.PlayStateAnimation("attack");
@@ -108,15 +112,18 @@ public class necromancer : enemy
     IEnumerator Summoning()
     {
         yield return new WaitForSeconds(summoningTime);
-        int randomNo = UnityEngine.Random.Range(0, enemyList.Count);
-        summonedEnemy summoned = Instantiate(enemyList[randomNo], new Vector3(transform.position.x + 5 + randomNo, transform.position.y, 0), transform.rotation).GetComponent<summonedEnemy>();
-        summoned.setSummonerID(gameObject.GetInstanceID());
+        int randomNo = UnityEngine.Random.Range(0,0);
+        GameObject enemySummoned = Instantiate(enemyList[randomNo], new Vector3(transform.position.x + 5 + randomNo, transform.position.y, 0), transform.rotation);
+        summonedEnemy summonedScript = enemySummoned.GetComponent<summonedEnemy>();
+        summonedScript.setSummonerID(gameObject.GetInstanceID());
+        enemyList.Add(enemySummoned);
 
     }
 
     public void MinusEnemyCount(int id)
-    {   
-            currentEnemyNo--;
-  
+    {
+        enemyList.RemoveAll(e => e.GetInstanceID() == id);
+        currentEnemyNo--;
+        Debug.Log(currentEnemyNo);
     }
 }

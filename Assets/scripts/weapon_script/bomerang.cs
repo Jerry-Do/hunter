@@ -31,8 +31,8 @@ public class bomerang : weapon
     // Update is called once per frame
     public override void shooting(bool speedingFlag)
     {
-
-        Instantiate(ammo, new Vector2(playerControl.shooter.transform.position.x, playerControl.shooter.transform.position.y), Quaternion.identity);
+        float randomAngle = speedingFlag == true ? UnityEngine.Random.Range(-0.75f, 1f) : 0;
+        Instantiate(ammo, new Vector3(playerControl.shooter.transform.position.x, playerControl.shooter.transform.position.y + randomAngle), Quaternion.identity);
 
     }
     public override string returnName()

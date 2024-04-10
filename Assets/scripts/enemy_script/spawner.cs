@@ -56,14 +56,19 @@ public class spawner : MonoBehaviour
         if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
         {
             StartCoroutine(BeginNextWave());
+        }else if(currentWaveCount == waves.Count)//Temperoray way to create end game
+        {
+            logicManager lm = FindObjectOfType<logicManager>();
+            lm.GameOver();
         }
         spawnTimer += Time.fixedDeltaTime;
-        if(spawnTimer >= waves[currentWaveCount].spawnInterval)
+        if(spawnTimer >= waves[currentWaveCount].spawnInterval && !pauseFlag)
         {
             spawnTimer = 0f;
             SpawnEnemy();
+            
         }
-      
+       
     }
 
     IEnumerator BeginNextWave()
@@ -72,10 +77,12 @@ public class spawner : MonoBehaviour
         yield return new WaitForSeconds(waveInterval);
 
         //If there are more waves to start after the current wave, spawn the next wave
-        if(currentWaveCount < waves.Count - 1)
+        if(currentWaveCount < waves.Count)
         {
-            currentWaveCount++;
+            
             CalculateWaveQuota();
+            
+
         }
     }
     void CalculateWaveQuota()//Calculate the quota of the current wave
@@ -88,6 +95,7 @@ public class spawner : MonoBehaviour
         waves[currentWaveCount].waveQuota = currentWaveQuota;
         waves[currentWaveCount].enemyAlive = currentWaveQuota;
         Debug.Log(currentWaveQuota);
+
     }
 
     void SpawnEnemy()
@@ -104,7 +112,7 @@ public class spawner : MonoBehaviour
                         return;
                     }
 
-                    Instantiate(enemyGroup.enemyPrefab, player.position + relativeSpawnPos[UnityEngine.Random.Range(0, relativeSpawnPos.Count)].position, Quaternion.identity);
+                    Instantiate(enemyGroup.enemyPrefab,  relativeSpawnPos[UnityEngine.Random.Range(0, relativeSpawnPos.Count)].position, Quaternion.identity);
                     enemyGroup.spawnCount++;
                     waves[currentWaveCount].spawnCount++;
                     enemiesAlive++;
@@ -128,6 +136,7 @@ public class spawner : MonoBehaviour
             logicManager lm = FindObjectOfType<logicManager>();
             lm.spawnRandomWeapon();
             lm.setTimerFlagToTrue();
+            currentWaveCount++;
         }
     }
 
@@ -135,4 +144,9 @@ public class spawner : MonoBehaviour
    {
         pauseFlag = flag;
    }
+    public void IncreaseEnemyCount()
+    {
+        waves[currentWaveCount].enemyAlive++;
+        enemiesAlive++;
+    }
 }
