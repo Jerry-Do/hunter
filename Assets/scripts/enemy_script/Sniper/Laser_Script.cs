@@ -1,25 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserSight : MonoBehaviour
+public class Laser : MonoBehaviour
 {
-    public Transform firePoint; // The firing point of the sniper's rifle
-    public Transform target; // Public to allow assignment directly or from another script
+     
     private LineRenderer lineRenderer;
+    public Transform LaserPoint;
 
-    void Awake()
+
+    void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = false; // Initially disabled, enable when preparing to shoot
-    }
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
+    }   
 
     void Update()
     {
-        // Ensure the laser sight is pointing from the firePoint to the target
-        if (target != null)
-        {
-            lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, target.position);
-        }
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right);
+        
+            LaserPoint.position = hit.point;
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, LaserPoint.position);
+
+            
+
     }
 
     // Call these methods from the sniper enemy script when appropriate

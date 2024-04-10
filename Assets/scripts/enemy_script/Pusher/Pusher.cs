@@ -1,113 +1,105 @@
 using System.Collections;
 using System.Collections.Generic;
-using MongoDB.Driver;
 using UnityEngine;
-using static PlayerObj; // Make sure PlayerObj is correctly defined in your project.
-
-public class Pusher : enemy
+using static PlayerObj;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+/// <summary>
+/// Manages the zombie enemy's logic and attributes
+/// </summary>
+public class Pusher : summonedEnemy
 {
+    // Start is called before the first frame update
 
     private enum state
     {
         run,
         attack
+
     }
-
-
+    private state enemyState;
+    private AudioSource hitSound;
+    private bool rageMode = false;
+    public Animator sprite;
+    private animationController ac;
     [SerializeField] private float speed = 4.0f;
-    public int damage = 1;
+    private playerControl playerControl;
+
+    public GameObject attackMove;
 
     private Pusher()
     {
         health = 15;
-        point = 1;
-
-
+        point = 2;
     }
 
-    private state enemyState;
-
-    public Animator sprite;
-    private animationController ac;
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-
+    // Update is called once per frame
     void Update()
     {
 
-
-        ac = GetComponent<animationController>();
+        ac = gameObject.GetComponent<animationController>();
         EnemyLogic();
-
-        if (health <= 0)
+        if (Vector2.Distance(transform.position, player.position) >= despawnDistance)
         {
-            Destroy(gameObject);
-            return; // Avoids further execution after destruction.
+            ReturnEnemy();
         }
-
-        // Flipping direction based on the player's position.
-        if ((player.transform.position.x - transform.position.x) <= 0)
+        if ((player.transform.position.x - transform.position.x) <= 0)//turn the object's direction based on where the player is
         {
-            // Enemy faces left.
             transform.eulerAngles = Vector3.forward * 0;
         }
         else
         {
-            // Enemy faces right.
+
             transform.eulerAngles = Vector3.up * 180;
         }
-
-        
-        if (Vector2.Distance(transform.position, player.position) > 1)
+        if (health <= 0)
         {
-            enemyState = state.run;
+            Destroy(gameObject);
         }
-        else if (Vector2.Distance(transform.position, player.position) <= 1f)
-        {
-            enemyState = state.attack;
-        }
-
-
-
-
-
-
     }
-
-    
-
-    
-
     public override void minusHealth(int damage)
     {
+        //hitSound.Play();
         health -= damage;
-        // Handle health reducing logic...
+        if (health <= (health / 2) && !rageMode)//Enter rage mode if below 50 persent health
+        {
+            speed *= 1.5f;
+            enemyDamage *= 2;
+            rageMode = true;
+        }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            enemyState = state.attack;
 
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            enemyState = state.run;
+
+        }
+    }
     private void EnemyLogic()
     {
         switch (enemyState)
         {
             case state.run:
                 ac.PlayStateAnimation("run");
-                if (Vector2.Distance(transform.position, player.transform.position) > 1f)
-                    transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
                 break;
             case state.attack:
                 ac.PlayStateAnimation("attack");
-                playerControl Hplayer = GameObject.FindGameObjectWithTag("Player").GetComponent<playerControl>();
-                if (Hplayer != null)
-                {
-                    Hplayer.minusHealth(damage);
-                }
+                break;
+            default:
+                ac.PlayStateAnimation("idle");
                 break;
         }
-    }
 
+    }
 
 
 }

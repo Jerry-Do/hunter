@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SniperEnemy : enemy
@@ -16,7 +17,8 @@ public class SniperEnemy : enemy
 
     }
 
-
+    public GameObject laserDevice;
+    
     public GameObject bulletPrefab;
     public Transform firePoint;
     private float speed = 3.0f;
@@ -24,7 +26,7 @@ public class SniperEnemy : enemy
     private float fireRate = 0.5f;
     private float shootingRange = 15f;
     private float nextFireTime;
-
+    private Laser laserSight;
 
 
 
@@ -33,14 +35,19 @@ public class SniperEnemy : enemy
     private animationController ac; 
 
 
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
 
-    }
 
     void Update()
     {
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+
+
+
+
+
+
         ac = GetComponent<animationController>();
         EnemyLogic();
 
@@ -65,7 +72,10 @@ public class SniperEnemy : enemy
         // Check for shooting or moving.
         if (Vector2.Distance(transform.position, player.position) <= shootingRange && Time.time >= nextFireTime)
         {
+            
+            
             enemyState = state.attack_magic;
+
         }
         else if (Vector2.Distance(transform.position, player.position) > shootingRange)
         {
@@ -87,7 +97,18 @@ public class SniperEnemy : enemy
             transform.eulerAngles = Vector3.up * 180;
         }
     }
+    void DoDelayAction(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
 
+    IEnumerator DelayAction(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
+    }
     void Shoot()
     {
 
@@ -118,8 +139,13 @@ public class SniperEnemy : enemy
             case state.attack_magic:
                 if (Time.time >= nextFireTime)
                 {
+
+
+
+
                     ac.PlayStateAnimation("attack_magic");
                     Shoot();
+                    
                 }
                 break;
         }
