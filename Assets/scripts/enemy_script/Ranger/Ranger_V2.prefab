@@ -4012,7 +4012,7 @@ GameObject:
   - component: {fileID: 1146608527200503323}
   - component: {fileID: -8366448335483154036}
   - component: {fileID: -4598306411801050859}
-  - component: {fileID: -7428072030269989113}
+  - component: {fileID: 4335525396852661597}
   m_Layer: 3
   m_Name: Ranger_V2
   m_TagString: enemy
@@ -4121,7 +4121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs: {fileID: 1146608527200503323}
---- !u!114 &-7428072030269989113
+--- !u!114 &4335525396852661597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4130,17 +4130,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 5746387422127145956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 591c4217e0ff11e429fc5521a10ae8bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 077daba71d8d7fd4bb092efbdb95efb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   despawnDistance: 20
   enemyType: 1
-  bulletPrefab: {fileID: 6410885771569676923, guid: 47373b5a68e326840aab8b1e81f2b789,
+  bulletPrefab: {fileID: 6410885771569676923, guid: cd55611441b070c47a0d2211ff100193,
     type: 3}
   firePoint: {fileID: 5809711994655222885}
   speed: 3
   stopDistance: 4
-  fireRate: 1
+  fireRate: 0.3
   shootingRange: 7
   sprite: {fileID: 0}
 --- !u!1 &5813055288455654053

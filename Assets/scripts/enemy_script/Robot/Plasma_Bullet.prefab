@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6664468145569370752}
   - component: {fileID: 8246106663592418158}
   - component: {fileID: 7134260706386960573}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Plasma_Bullet
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0052876025, y: -0.0017145872}
+  m_Offset: {x: 0.0031384826, y: -0.01620701}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -93,7 +93,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.58814347, y: 0.55253184}
+  m_Size: {x: 0.24903387, y: 0.3457446}
   m_EdgeRadius: 0
 --- !u!50 &7134260706386960573
 Rigidbody2D:
@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8773149640896769521}
   - component: {fileID: 1651871719227005408}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

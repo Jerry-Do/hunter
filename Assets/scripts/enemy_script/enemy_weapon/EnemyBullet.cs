@@ -51,7 +51,7 @@ public class EnemyBullet : MonoBehaviour
 
             Destroy(gameObject); // Destroy the bullet on collision.
         }
-        else if (collision.gameObject.CompareTag("Obstacle"))
+        else 
         {
             Destroy(gameObject); // Destroy the bullet when hitting an obstacle.
         }
