@@ -20,7 +20,7 @@ public class ProfileDisplay : MonoBehaviour
     private int itemsPerPage = 2; 
     private int totalPages;
 
-    // UI elements for navigation (assign these in the editor)
+    // UI elements for navigation 
     public Button nextButton;
     public Button previousButton;
 
@@ -37,6 +37,7 @@ public class ProfileDisplay : MonoBehaviour
         string email = UserDataHolder.Instance.UserDocument.GetValue("email").AsString;
         var filter = Builders<BsonDocument>.Filter.Eq("email", email);
         var user = await collection.Find(filter).FirstOrDefaultAsync();
+        // retrieve user data
         if (user != null)
         {
             emailText.text = "Email: " + UserDataHolder.Instance.UserDocument.GetValue("email").AsString;
@@ -59,6 +60,7 @@ public class ProfileDisplay : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        // retrieve user data array
         var dataArray = UserDataHolder.Instance.UserDocument.GetValue("data", new BsonArray()).AsBsonArray;
         // Calculate range of data to display
         int start = pageIndex * itemsPerPage;
@@ -69,30 +71,25 @@ public class ProfileDisplay : MonoBehaviour
             // Instantiate UI elements for each item in the range
             var gameDoc = dataArray[i].AsBsonDocument;
 
-            //var gameDoc = gameData.AsBsonDocument;
+            // get point 
             double points = gameDoc.GetValue("point", 0.0).ToDouble();
-            Debug.Log(points);
             var pointTextInstance = Instantiate(pointText, pointsParent, false);
             pointTextInstance.GetComponent<Text>().text = "Point: " + points;
-
+            // get point multiplier
             double pointsMultiplier = gameDoc.GetValue("pointMultiplier", 0.0).ToDouble();
             var pointMultiplierTextInstance = Instantiate(pointMultiplierText, pointsParent, false);
             pointMultiplierTextInstance.GetComponent<Text>().text = "Point Multiplier: " + pointsMultiplier;
-
+            // get number of killed enemy
             double enemy = gameDoc.GetValue("enemyKilled", 0.0).ToDouble();
             var enemyTextInstance = Instantiate(killedEnemy, pointsParent, false);
             enemyTextInstance.GetComponent<Text>().text = "Killed Enemies: " + enemy;
             var weaponsArray = gameDoc.GetValue("weaponNames", new BsonArray()).AsBsonArray;
-
+            // get picked weapon names
             string weaponNamesString = string.Join(", ", weaponsArray.Select(weapon => weapon.AsString));
             var weaponNameTextInstance = Instantiate(weaponNameText, pointsParent, false);
             weaponNameTextInstance.GetComponent<Text>().text = weaponNamesString;
-            /*foreach (var weaponName in weaponsArray)
-            {
-                weapons += ", " + weaponName;
-                var weaponNameTextInstance = Instantiate(weaponNameText, weaponsParent, false);
-                weaponNameTextInstance.GetComponent<Text>().text = weaponName.AsString;
-            }*/
+            
+            // set separator for each game session
             var separatorTextInstance = Instantiate(separator, pointsParent, false);
             separatorTextInstance.GetComponent<Text>().text = "---------------------------------";
         }
@@ -101,7 +98,7 @@ public class ProfileDisplay : MonoBehaviour
         previousButton.interactable = pageIndex > 0;
         nextButton.interactable = pageIndex < totalPages - 1;
     }
-
+    // navigate to next page if available
     public void NextPage()
     {
         if (currentPage < totalPages - 1)
@@ -110,7 +107,7 @@ public class ProfileDisplay : MonoBehaviour
             DisplayPage(currentPage);
         }
     }
-
+    // navigate to previous page if available
     public void PreviousPage()
     {
         if (currentPage > 0)

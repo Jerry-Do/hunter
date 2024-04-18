@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class loginController : MonoBehaviour
 {
+    // navigate to login scene
     public void OnButtonPress()
     {
         SceneManager.LoadScene("login");

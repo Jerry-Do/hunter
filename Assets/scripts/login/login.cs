@@ -35,7 +35,9 @@ public class Login : MonoBehaviour
         var database = client.GetDatabase("RegisterDB");
         collection = database.GetCollection<BsonDocument>("RegisterUnityCollection");
         system = EventSystem.current;
+        // select email input firstly
         firstInput.Select();
+        // hide warnings
         EmailWarning.SetActive(false);
         PasswordWarning.SetActive(false);
         EmailNotValid.SetActive(false);
@@ -43,6 +45,7 @@ public class Login : MonoBehaviour
 
     void Update()
     {
+        // when receving arrow up input, select upper element 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             Selectable prev = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnUp();
@@ -51,6 +54,7 @@ public class Login : MonoBehaviour
                 prev.Select();
             }
         }
+        // when receving arrow down input, select down element 
         else if (Input.GetKeyDown(KeyCode.DownArrow)) {
             Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
             if (next != null)
@@ -58,15 +62,17 @@ public class Login : MonoBehaviour
                 next.Select();
             }
         }
+        // press enter to send login form if email is valid
         else if (Input.GetKeyDown(KeyCode.Return) && ValidateEmail(email))
         {
             submitButton.onClick.Invoke();
         }
     }
-
+    // receive email input
     public void readEmailInput(string emailInput)
     {
         email = emailInput;
+        // email is not valid, display warning
         if (ValidateEmail(email) == false)
         {
             EmailNotValid.SetActive(true);
@@ -77,12 +83,12 @@ public class Login : MonoBehaviour
            
         }
     }
-
+    // receive password input
     public void readPasswordInput(string passwordInput)
     {
         password = passwordInput;
     }
-
+    
     public string HashPassword(string password)
     {
         using (SHA256 sha256 = SHA256.Create())
@@ -99,10 +105,12 @@ public class Login : MonoBehaviour
 
     public async void OnLoginButtonPress()
     {
+        // check if email input is valid
         if (ValidateEmail(email))
         {
             EmailWarning.SetActive(false);
             PasswordWarning.SetActive(false);
+
             var filter = Builders<BsonDocument>.Filter.Eq("email", email);
             var user = await collection.Find(filter).FirstOrDefaultAsync();
 
@@ -111,41 +119,45 @@ public class Login : MonoBehaviour
                 // Email found, now check the password
                 string storedHashedPassword = user.GetValue("password").AsString;
                 string hashedPassword = HashPassword(password);
-
+                // password is accurate
                 if (hashedPassword == storedHashedPassword)
                 {
                     Debug.Log("Login successful.");
                     // Set user data
                     UserDataHolder.Instance.UserDocument = user;
                     SceneManager.LoadScene("profile");
-
-                    PlayerPrefs.SetInt("BindingsModified", 0); // Reset the flag 
+                    // Reset the input keys flag 
+                    PlayerPrefs.SetInt("BindingsModified", 0); 
                     PlayerPrefs.Save();
                 }
                 else
                 {
+                    // display password warning
                     PasswordWarning.SetActive(true);
                     Debug.LogError("Invalid password.");
                 }
             }
             else
             {
+                // display email warning
                 EmailWarning.SetActive(true);
                 Debug.LogError("Email not found.");
             }
         }
         else
         {
+            // display email valid warning
             EmailNotValid.SetActive(true);
         }
     }
+    // navigate to register scene
     public void OnRegisterButtonPress()
     {
         Debug.Log("Register Button clicked ");
         SceneManager.LoadScene("register");
     }
 
-   
+    // email pattern
     public const string EmailPattern =
     @"^([a-zA-Z0-9]+(?:[._-][a-zA-Z0-9]+)*)@" + // Local part: Starts with alphanumeric, allows '.', '_', and '-' as separators within.
     @"(([a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*\.)+" + // Subdomains: Allows '-' as separator within, followed by a period.

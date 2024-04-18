@@ -16,7 +16,6 @@ public class dataTracker : MonoBehaviour
     private IMongoCollection<BsonDocument> collection;
 
     // Start is called before the first frame update
-    //private logicManager lm;
     private double point;
     private double pointMultiplier;
     private int enemyKilled;
@@ -37,9 +36,6 @@ public class dataTracker : MonoBehaviour
     }
     void Start()
     {
-        
-        //lm = FindObjectOfType<logicManager>();
-
         // Initialize MongoDB connection
         client = new MongoClient("mongodb+srv://esomeh:ZndxWXyeRBTpe2GG@senecaweb.7jxhv5v.mongodb.net/?retryWrites=true&w=majority");
         database = client.GetDatabase("RegisterDB");
@@ -55,37 +51,20 @@ public class dataTracker : MonoBehaviour
     {
         
     }
+    // get game data after game over
     public void UpdateGameData(double point, double pointMultiplier, int enemyKilled, List<string> weaponNames)
     {
         this.point = point;
         this.pointMultiplier = pointMultiplier;
         this.enemyKilled = enemyKilled;
         this.weaponNames = new List<string>(weaponNames); // Create a copy if necessary
-        Debug.Log(this.point);
     }
-
-
-    /*public void increaseKillCount()
-    {
-        enemyKilled++;
-    }
-
-    public void addWeapon(string name)
-    {
-        if (!weaponNames.Contains(name))
-        {
-            weaponNames.Add(name);
-        }
-    }*/
 
     // Call this method to save game data
     public async Task SaveGameData()
     {
-        //string userEmail = PlayerPrefs.GetString("UserEmail", "defaultUser@example.com"); // Default if not found
         string email = UserDataHolder.Instance.UserDocument.GetValue("email").AsString;
-        //logicManager lM = FindAnyObjectByType<logicManager>();
 
-        Debug.Log(point);
         var gameData = new BsonDocument
         {
             {"point", point},
@@ -108,29 +87,5 @@ public class dataTracker : MonoBehaviour
             Debug.LogError("Error saving game data: " + ex.Message);
             // Consider more sophisticated error handling here
         }
-
-        /*try
-        {
-            ReplaceOneResult result = await collection.ReplaceOneAsync(filter, gameData, options);
-            if (result.IsAcknowledged)
-            {
-                if (result.MatchedCount > 0)
-                {
-                    Debug.Log($"Game data updated successfully for email: {email}");
-                }
-                else
-                {
-                    Debug.Log($"Game data inserted successfully for email: {email}");
-                }
-            }
-            else
-            {
-                Debug.LogError("Failed to save game data.");
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"An error occurred while saving game data: {ex.Message}");
-        }*/
     }
 }

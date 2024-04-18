@@ -6,12 +6,11 @@ using UnityEngine.UI;
 
 public class homeButtonController : MonoBehaviour
 {
-    int n;
     // navigate title screen
     public async void OnButtonPress()
     {
         dataTracker dt = FindObjectOfType<dataTracker>();
-        Debug.Log("home");
+        // save game session to database
         try
         {
             await dt.SaveGameData();
