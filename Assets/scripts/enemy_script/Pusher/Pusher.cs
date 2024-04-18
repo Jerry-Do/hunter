@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using static PlayerObj;
 using static UnityEngine.RuleTile.TilingRuleOutput;
-/// <summary>
-/// Manages the zombie enemy's logic and attributes
-/// </summary>
-public class Pusher : enemy
+
+public class Pusher : summonedEnemy
 {
     // Start is called before the first frame update
 
     private enum state
     {
         run,
-        attack
-
+        attack,
+        idle
     }
     private state enemyState;
-  
+    private AudioSource hitSound;
     private bool rageMode = false;
     public Animator sprite;
     private animationController ac;
@@ -29,8 +27,7 @@ public class Pusher : enemy
     private Pusher()
     {
         health = 15;
-        point = 1;
-        enemyDamage = 5;
+        point = 3;
     }
 
     // Update is called once per frame
@@ -95,7 +92,7 @@ public class Pusher : enemy
             case state.attack:
                 ac.PlayStateAnimation("attack");
                 break;
-            default:
+            default: ac.PlayStateAnimation("idle");
                 break;
         }
 

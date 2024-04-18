@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6664468145569370752}
   - component: {fileID: 8246106663592418158}
   - component: {fileID: 7134260706386960573}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: Sniper_Bullet
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.70857865, w: -0.70563185}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8773149640896769521}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  damage: 5
+  damage: 3
   lifespan: 4
 --- !u!61 &8246106663592418158
 BoxCollider2D:
@@ -82,7 +82,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0061095357, y: 0.01985605}
+  m_Offset: {x: -0.006060913, y: 0.4132383}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -93,7 +93,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.23630917, y: 0.23936394}
+  m_Size: {x: 0.7647928, y: 3.745153}
   m_EdgeRadius: 0
 --- !u!50 &7134260706386960573
 Rigidbody2D:
@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8773149640896769521}
   - component: {fileID: 1651871719227005408}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d8a140c8a75947f479d36e8be12e6d05, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab0826e82f4112b4b956558fa2d6af61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

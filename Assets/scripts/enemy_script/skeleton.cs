@@ -41,30 +41,30 @@ public class skeleton : summonedEnemy
     // Update is called once per frame
     void Update()
     {
-        
+
         ac = gameObject.GetComponent<animationController>();
         EnemyLogic();
-        
-        if((player.transform.position.x - transform.position.x) <= 0)//turn the object's direction based on where the player is
+
+        if ((player.transform.position.x - transform.position.x) <= 0)//turn the object's direction based on where the player is
         {
             transform.eulerAngles = Vector3.forward * 0;
         }
         else
         {
-            
+
             transform.eulerAngles = Vector3.up * 180;
         }
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
-       
+
     }
     public override void minusHealth(int damage)
     {
         //hitSound.Play();
         health -= damage;
-        if(health <= (health/2) && !rageMode)//Enter rage mode if below 50 persent health
+        if (health <= (health / 2) && !rageMode)//Enter rage mode if below 50 persent health
         {
             speed *= 1.5f;
             enemyDamage *= 2;
@@ -88,9 +88,9 @@ public class skeleton : summonedEnemy
         }
     }
     private void EnemyLogic()
-   {
-        switch(enemyState)
-            {
+    {
+        switch (enemyState)
+        {
             case state.run:
                 if (playerObj.returnHidingFlag())
                 {
@@ -120,8 +120,8 @@ public class skeleton : summonedEnemy
             default:
                 break;
         }
-        
-   }
 
-    
+    }
+
+
 }
