@@ -359,7 +359,7 @@ MonoBehaviour:
   gun: {fileID: 3284562769097656860}
   rb: {fileID: -4720296652207591808}
   rs: {fileID: 3284562769485986662}
-  maxHealth: 10
+  maxHealth: 30
   maxFuel: 100
   speedFuel: 100
   dashCounter: 0
