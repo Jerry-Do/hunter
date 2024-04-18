@@ -6,6 +6,7 @@ public class exit : MonoBehaviour
 {
     public void OnButtonPress()
     {
+        // exit game application
         #if UNITY_EDITOR
                 // Application.Quit() does not work in the editor so
                 // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game

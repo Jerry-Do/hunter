@@ -36,7 +36,7 @@ public class playerControl : MonoBehaviour
 
     [Header("PlayerStats")]
 
-    [SerializeField] private float maxHealth = 10.0f;
+    [SerializeField] private float maxHealth = 40.0f;
     [SerializeField] private float maxFuel = 100.0f;
     [SerializeField] private float speedFuel = 100.00f;
     [SerializeField] private float dashCounter = 0.0f;
@@ -45,7 +45,7 @@ public class playerControl : MonoBehaviour
     [SerializeField] private float dashCoolCounter = 0.0f;
 
     private string weaponName;
-    private int health = 10;
+    private int health = 40;
     private int ammo = -1;
     private int maxNumAmmo = 0;
     private float reloadTimer = 0;

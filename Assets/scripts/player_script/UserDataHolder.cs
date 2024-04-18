@@ -12,8 +12,6 @@ public class UserDataHolder : MonoBehaviour
     public string Email { get; set; }
     public string Name { get; set; }
 
-    // Add other user details you need
-
     private void Awake()
     {
         if (Instance == null)
