@@ -56,7 +56,7 @@ public class spawner : MonoBehaviour
         if(currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !pauseFlag)
         {
             StartCoroutine(BeginNextWave());
-        }else if(currentWaveCount == waves.Count)//Temperoray way to create end game
+        }else if(currentWaveCount >= waves.Count)//Temperoray way to create end game
         {
             logicManager lm = FindObjectOfType<logicManager>();
             lm.GameOver();

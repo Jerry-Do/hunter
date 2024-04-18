@@ -4,7 +4,7 @@ using UnityEngine;
 using static PlayerObj;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class Pusher : summonedEnemy
+public class Pusher : enemy
 {
     // Start is called before the first frame update
 
@@ -86,13 +86,32 @@ public class Pusher : summonedEnemy
         switch (enemyState)
         {
             case state.run:
-                ac.PlayStateAnimation("run");
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
+                if (playerObj.returnHidingFlag())
+                {
+                    enemyState = state.idle;
+                }
+                else
+                {
+                    enemyState = state.run;
+                    ac.PlayStateAnimation("run");
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), speed * Time.deltaTime);
+                }
                 break;
             case state.attack:
                 ac.PlayStateAnimation("attack");
                 break;
-            default: ac.PlayStateAnimation("idle");
+            case state.idle:
+                if (!playerObj.returnHidingFlag())
+                {
+                    enemyState = state.run;
+                }
+                else
+                {
+                    ac.PlayStateAnimation("idle");
+
+                }
+                break;
+            default:
                 break;
         }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1095219610385823441}
   - component: {fileID: 7051980234428063520}
   - component: {fileID: -8388816351043657280}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: richocet_ammo
   m_TagString: ammo
   m_Icon: {fileID: 0}

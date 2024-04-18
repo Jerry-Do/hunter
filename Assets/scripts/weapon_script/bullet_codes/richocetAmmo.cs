@@ -39,6 +39,6 @@ public class richocetAmmo : bullet
         }
 
     }
-    
+
     
 }
