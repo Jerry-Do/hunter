@@ -2318,7 +2318,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.028433606, y: 0.4211086}
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   enemyType: 1
   laserDevice: {fileID: 9063045850231200255, guid: 87c15aa130f395041821ed143d1d191c,
     type: 3}
-  bulletPrefab: {fileID: 6410885771569676923, guid: b2c30818b98395545bbde517a4799c87,
+  bulletPrefab: {fileID: 6410885771569676923, guid: 49a5781837a2d084cb0d97d4952c674e,
     type: 3}
   firePoint: {fileID: 1362088761524964994}
   sprite: {fileID: 0}
