@@ -128,6 +128,14 @@ public class SniperEnemy : enemy
         nextFireTime = Time.time + 1f / fireRate;
     }
 
+
+    public override void minusHealth(int damage)
+    {
+        health -= damage;
+        // Handle health reducing logic...
+    }
+
+
     private void EnemyLogic()
     {
         switch (enemyState)
@@ -159,9 +167,5 @@ public class SniperEnemy : enemy
         }
     }
 
-    public override void minusHealth(int damage) // Adjusted method name to match C# naming conventions
-    {
-        health -= damage;
-        
-    }
+
 }

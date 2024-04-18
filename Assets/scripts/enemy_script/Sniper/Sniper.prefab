@@ -2359,11 +2359,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa061d05a39b3f64a99a245fc687ef10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSeparationDistance: 1
+  maxSeparationDistance: 1.5
+  correctionStrength: 0.05
+  playerProximityThreshold: 3
   despawnDistance: 20
-  enemyType: 0
+  enemyType: 1
   laserDevice: {fileID: 9063045850231200255, guid: 87c15aa130f395041821ed143d1d191c,
     type: 3}
-  bulletPrefab: {fileID: 6410885771569676923, guid: 49a5781837a2d084cb0d97d4952c674e,
+  bulletPrefab: {fileID: 6410885771569676923, guid: b2c30818b98395545bbde517a4799c87,
     type: 3}
   firePoint: {fileID: 1362088761524964994}
   sprite: {fileID: 0}
