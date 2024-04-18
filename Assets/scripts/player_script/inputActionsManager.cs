@@ -29,23 +29,9 @@ public class InputActionsManager : MonoBehaviour
     {
         return defaultInputActions;
     }
-
-    /*public void OnButtonPress()
-    {
-        SceneManager.LoadScene("SampleScene");
-    }*/
     
     private void Awake()
     {
-        /*if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(Instance);
-        }*/
         defaultInputActions = new DefaultInputActions();
         // initialize 
         move = defaultInputActions.Player.Move;
@@ -71,7 +57,6 @@ public class InputActionsManager : MonoBehaviour
         {
             // load modified key bindings
             LoadBindings();
-            //clickFlag = false;
         }
         
         // update button labels
@@ -138,13 +123,9 @@ public class InputActionsManager : MonoBehaviour
         foreach (Button button in buttons)
         {
             if (button.name == controlName + "Button")
-            {
-                
-                    button.GetComponentInChildren<Text>().text = ConvertKeyCodeToPath(key);
-                
-            }
-            
-            
+            {                
+                button.GetComponentInChildren<Text>().text = ConvertKeyCodeToPath(key);                
+            }    
         }
     }
     // check if shoot is binding to left click
@@ -273,20 +254,16 @@ public class InputActionsManager : MonoBehaviour
         if (actionName == "Dash")
         {
             dash.Disable();
-            //dash.ChangeBinding(key);
-            //dash.ApplyBindingOverride(key);
 
-            // assgin new key binding to dash
+            // assign new key binding to dash
             dash = new InputAction("Dash", binding: key);
             dash.Enable();
         }
         else if (actionName == "Speed")
         {
             speedUp.Disable();
-            //speedUp.ChangeBinding(key);
-            //speedUp.ApplyBindingOverride(key);
 
-            // assgin new key binding to speedUp
+            // assign new key binding to speedUp
             speedUp = new InputAction("Speed", binding: key);
             speedUp.Enable();
         }
@@ -315,9 +292,7 @@ public class InputActionsManager : MonoBehaviour
     // enable input actions
     public void EnableInputActions()
     {
-        //move = defaultInputActions.Player.Move;
         move.Enable();
-        //shoot = defaultInputActions.Player.Fire;
         shoot.Enable();
         dash.Enable();
         speedUp.Enable();
@@ -341,8 +316,6 @@ public class InputActionsManager : MonoBehaviour
         {
             if (shoot.bindings[i].groups.Contains("Keyboard&Mouse"))
             {
-                //shoot.ChangeBinding(i).Erase();
-                //shoot.AddBinding(newPath).WithGroup("Keyboard&Mouse");
                 shoot.ChangeBinding(i).WithPath(newPath);
                 shoot.ApplyBindingOverride(i, newPath);
                 break;

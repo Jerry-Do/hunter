@@ -38,24 +38,13 @@ public class pauseMenuController : MonoBehaviour
     public void quit()
     {
         Time.timeScale = 0f;
-        Debug.Log("quit");
         pauseMenu.SetActive(false);
         quitConfirmation.SetActive(true);
-        //#if UNITY_EDITOR
-        // Application.Quit() does not work in the editor so
-        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-        //UnityEditor.EditorApplication.isPlaying = false;
-        //#else
-        //Application.Quit();
-        //#endif  
     }
     public void ConfirmQuit()
     {
         Time.timeScale = 1f;
-        Debug.Log("quit");
         #if UNITY_EDITOR
-        // Application.Quit() does not work in the editor so
-        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
         UnityEditor.EditorApplication.isPlaying = false;
         #else
         Application.Quit();
@@ -74,12 +63,7 @@ public class pauseMenuController : MonoBehaviour
     public void backToMainMenu()
     {
         Time.timeScale = 1f;
-        Debug.Log("mainMenu");
-        //pauseMenu.SetActive(false);
         logicManager.GameOver();
-        //gameStateManager.IsGamePaused = false;
-        //soundManager.instance.StopMusic("theme");
-        //SceneManager.LoadScene("gameOver");
     }
     // go to control menu
     public void control()

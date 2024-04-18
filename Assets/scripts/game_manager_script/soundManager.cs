@@ -24,10 +24,9 @@ public class soundManager : MonoBehaviour
 
     private void Start()
     {
-        // stll
         PlayMusic("theme");
     }
-
+    // play music 
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name); ;
@@ -42,7 +41,7 @@ public class soundManager : MonoBehaviour
             musicSource.Play();
         }
     }
-
+    // stop music
     public void StopMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name); ;
@@ -57,7 +56,7 @@ public class soundManager : MonoBehaviour
             musicSource.Stop();
         }
     }
-
+    // play sound effect
     public void PlaySfx(string name)
     {
         Sound s = Array.Find(sfxSounds, x => x.name == name);
@@ -81,12 +80,12 @@ public class soundManager : MonoBehaviour
     {
         sfxSource.mute = !sfxSource.mute;
     }
-
+    // set audio volume
     public void MusicVolume(float volume)
     {
         musicSource.volume = volume;
     }
-
+    // set sound effects volume
     public void SFXVolume(float volume)
     {
         sfxSource.volume = volume;

@@ -12,11 +12,9 @@ public class start : MonoBehaviour
     {
         logicManager = FindAnyObjectByType<logicManager>();
     }
+    // start new game session
     public void OnButtonPress()
-    {
-        //Application.LoadLevel(Application.loadedLevel);
-        //Time.timeScale = 1f;
-        
+    {   
         if (logicManager != null)
         {
             logicManager.restartGame();
@@ -25,7 +23,5 @@ public class start : MonoBehaviour
         {
             SceneManager.LoadScene("SampleScene");
         }
-        soundManager.instance.PlayMusic("theme");
-        //SceneManager.LoadScene("SampleScene");
     }
 }
